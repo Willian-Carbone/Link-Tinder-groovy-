@@ -1,3 +1,4 @@
 static void main(String[] args) {
-    println "Hello world!"
+
+    println(Metodos.normalizador("ceara"))
 }
