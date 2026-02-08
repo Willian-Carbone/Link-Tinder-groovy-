@@ -8,4 +8,5 @@ import groovy.transform.Canonical
     String cep
     Estados estado
     String descricao
+    ArrayList<String> competencias
 }
