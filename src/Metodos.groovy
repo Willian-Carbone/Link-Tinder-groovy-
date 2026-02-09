@@ -2,8 +2,18 @@ import java.text.Normalizer
 
 abstract class Metodos {
 
-    static validador_cep (String cep){
-        return cep ==~ /\d{5}-d{3}/ || cep ==~ /\d{8}/
+    static boolean validador_cep (String cep){
+        return cep ==~ /\d{5}-\d{3}/ || cep ==~ /\d{8}/
+    }
+
+    static String padronizar_cpf (String cpf){
+        return cpf.replaceAll(/\D/, "")
+
+    }
+
+    static String padronizar_cnpj (String cnpj){
+        return cnpj.replaceAll(/\D/, "")
+
     }
 
 
@@ -30,7 +40,7 @@ abstract class Metodos {
 
 
     static boolean validador_cnpj (String cnpj){
-        return (cnpj ==~ /\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}/ || cnpj ==~ /\d{14}/) // regex referete ao cnpj
+        return (cnpj ==~ /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/ || cnpj ==~ /\d{14}/) // regex referete ao cnpj
 
 
     }
@@ -40,7 +50,7 @@ abstract class Metodos {
     }
 
     static boolean validador_cpf (String cpf){
-        return (cpf ==~ /\d{3}.\d{3}.\d{3}-\d{2}/ || cpf ==~ /\d{11}/) // regex referente ao cpf
+        return (cpf ==~ /\d{3}\.\d{3}\.\d{3}-\d{2}/ || cpf ==~ /\d{11}/) // regex referente ao cpf
 
 
     }
