@@ -2,6 +2,15 @@ import java.text.Normalizer
 
 abstract class Metodos {
 
+    static validador_cep (String cep){
+        return cep ==~ /\d{5}-d{3}/ || cep ==~ /\d{8}/
+    }
+
+
+
+    static boolean checar_competencia(String competencia){
+        return Especialidades.values().any {it.name() == competencia}
+    }
 
 
 
@@ -29,6 +38,23 @@ abstract class Metodos {
     static boolean validador_email (String email){
         return (email ==~ /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/) //regex referente ao email (letras nuemros . _ % + - em (1 ou mais) @ letras nuemors .- (1 ou mais) . minimo 2 letras
     }
+
+    static boolean validador_cpf (String cpf){
+        return (cpf ==~ /\d{3}.\d{3}.\d{3}-\d{2}/ || cpf ==~ /\d{11}/) // regex referente ao cpf
+
+
+    }
+
+    static boolean validador_idade(String idade){
+        try{
+            return Integer.parseInt(idade)>=18
+        }
+        catch (ignored){
+            return false
+        }
+    }
+
+
 
 
 

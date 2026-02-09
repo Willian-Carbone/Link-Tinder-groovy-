@@ -1,3 +1,5 @@
+
+
 class Cadastro_empresa {
 
     static void terminal_empresas (){
@@ -27,20 +29,71 @@ class Cadastro_empresa {
         println("Insira o país de atuação da empresa")
         String pais = scan.nextLine()  // ideia de validação descartada
 
+        println("Insira o cep da empresa")
+        String cep = scan.nextLine()
+
+        while (!Metodos.validador_cep(cep)){
+            println ("Insira um cep válido")
+            cep=scan.nextLine()
+        }
+
 
         println("insira o estado de atuação")
         String possivel_estado = scan.nextLine()
 
         while(Metodos.normalizador(possivel_estado)==null) {
             println("Insira um estado existente")
-            possivel_estado = scan.nextLine()
+            possivel_estado = scan.next()
         }
 
 
         Estados estado_confirmado = Estados.valueOf(Metodos.normalizador(possivel_estado))
 
-        print(estado_confirmado.getsigla())
 
+
+
+        ArrayList<Especialidades> competencias = new ArrayList<>()
+
+        println("informe as habilidades que sua empresa busca em um candidato da lista abaixo ao menos uma deve ser selecionada")
+
+        println ("""
+                   PT --> phyton
+                   JAV --> java
+                   Ang --> Angular
+                   Spr --> spring
+                   HT--> html
+                   Cs --> para css
+                   Fim --> saida
+                                """)
+
+        String especialidade = scan.nextLine().toUpperCase()
+
+
+        while (especialidade != "FIM" || competencias.size() == 0){
+
+
+                if (Metodos.checar_competencia(especialidade)){
+
+                    Especialidades espec = Especialidades.valueOf(especialidade)
+                    if (!competencias.contains(espec)){
+                        competencias.add(espec)
+                    }
+                    especialidade = scan.nextLine().toUpperCase()
+                }
+
+                else{
+
+                    println("insira um valor válido")
+                    especialidade = scan.nextLine().toUpperCase()
+
+                }
+
+
+        }
+
+        println("Empresa cadastrada com sucesso")
+
+        Empresa cadastrado = new Empresa (nome,cnpj,pais,cep,email,estado_confirmado,desc,competencias)
 
 
 
