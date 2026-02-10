@@ -6,15 +6,13 @@ abstract class Metodos {
         return cep ==~ /\d{5}-\d{3}/ || cep ==~ /\d{8}/
     }
 
-    static String padronizar_cpf (String cpf){
-        return cpf.replaceAll(/\D/, "")
+
+
+    static String padronizar_entrada (String entrada){
+        return entrada.replaceAll(/\D/, "")
 
     }
 
-    static String padronizar_cnpj (String cnpj){
-        return cnpj.replaceAll(/\D/, "")
-
-    }
 
 
 
@@ -63,6 +61,8 @@ abstract class Metodos {
             return false
         }
     }
+
+
 
 
 

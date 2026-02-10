@@ -11,12 +11,12 @@ class Cadastro_empresa {
         println("Digite o CNPJ da empresa")
         String entrada_cnpj =scan.nextLine()
 
-        while ( !Metodos.validador_cnpj(entrada_cnpj) || FileManager.cnpj_em_uso(Metodos.padronizar_cnpj(entrada_cnpj))){
+        while ( !Metodos.validador_cnpj(entrada_cnpj) || FileManager.cnpj_em_uso(Metodos.padronizar_entrada(entrada_cnpj))){
             println("Insira um  cnpj válido")
             entrada_cnpj=scan.nextLine()
         }
 
-        String cnpj_padronizado= Metodos.padronizar_cnpj(entrada_cnpj)
+        String cnpj_padronizado= Metodos.padronizar_entrada(entrada_cnpj)
 
         println("Digite o email comercial da empresa")
         String email = scan.nextLine()
@@ -38,6 +38,8 @@ class Cadastro_empresa {
             println ("Insira um cep válido")
             cep=scan.nextLine()
         }
+
+        String cep_padronizado = Metodos.padronizar_entrada(cep)
 
 
         println("insira o estado de atuação")
@@ -95,9 +97,9 @@ class Cadastro_empresa {
 
         println("Empresa cadastrada com sucesso")
 
-        Empresa cadastrado = new Empresa (nome,cnpj_padronizado,pais,cep,email,estado_confirmado,desc,competencias)
+        Empresa cadastrado = new Empresa (nome,cnpj_padronizado,pais,cep_padronizado,email,estado_confirmado,desc,competencias)
 
-        FileManager.adicionar(cadastrado,"empresa")
+        FileManager.adicionar(cadastrado,"Empresa")
 
 
 

@@ -1,9 +1,194 @@
 {
-    "candidatos": [
-        
+    "Candidato": [
+        {
+            "cpf": "12345678998",
+            "idade": 20,
+            "cep": "12345678",
+            "competencias": [
+                "HT",
+                "CS"
+            ],
+            "descricao": "estudante",
+            "email": "j@gmail.com",
+            "estado": "RIODEJANEIRO",
+            "nome": "joao"
+        },
+        {
+            "cpf": "12345678901",
+            "idade": 28,
+            "cep": "12345678",
+            "competencias": [
+                "CS",
+                "JAV",
+                "HT"
+            ],
+            "descricao": "designer",
+            "email": "m@m.gamil.com",
+            "estado": "RIODEJANEIRO",
+            "nome": "maria"
+        },
+        {
+            "cpf": "12345678902",
+            "idade": 24,
+            "cep": "12345679",
+            "competencias": [
+                "ANG",
+                "SPR"
+            ],
+            "descricao": "programador",
+            "email": "j@gmail.com",
+            "estado": "CEARA",
+            "nome": "jose"
+        },
+        {
+            "cpf": "12314516798",
+            "idade": 30,
+            "cep": "12345698",
+            "competencias": [
+                "PT",
+                "ANG"
+            ],
+            "descricao": "que mario?",
+            "email": "m@m.com",
+            "estado": "MARANHAO",
+            "nome": "mario"
+        },
+        {
+            "cpf": "12387653424",
+            "idade": 35,
+            "cep": "SANTACATARINA",
+            "competencias": [
+                "HT",
+                "CS",
+                "ANG",
+                "JAV",
+                "SPR"
+            ],
+            "descricao": "dev senior",
+            "email": "12309876",
+            "estado": "p@p.com",
+            "nome": "pedro"
+        },
+        {
+            "cpf": "12345675684",
+            "idade": 23,
+            "cep": "12376589",
+            "competencias": [
+                "CS",
+                "HT",
+                "PT"
+            ],
+            "descricao": "dev junior",
+            "email": "j@asd.asd",
+            "estado": "RORAIMA",
+            "nome": "joana"
+        },
+        {
+            "cpf": "12345673242",
+            "idade": 18,
+            "cep": "12309890",
+            "competencias": [
+                "CS",
+                "HT"
+            ],
+            "descricao": "iniciante",
+            "email": "b@b.com",
+            "estado": "MARANHAO",
+            "nome": "bernardo"
+        },
+        {
+            "cpf": "12345678903",
+            "idade": 25,
+            "cep": "12357690",
+            "competencias": [
+                "JAV",
+                "ANG"
+            ],
+            "descricao": "dev java",
+            "email": "alf@af.af",
+            "estado": "SERGIPE",
+            "nome": "alfredo"
+        }
     ],
-    "empresas": [
-
-
+    "Empresa": [
+        {
+            "cnpj": "12345678901234",
+            "pais": "brasil",
+            "cep": "12345678",
+            "competencias": [
+                "HT",
+                "CS"
+            ],
+            "descricao": "empresa de combustivel",
+            "email": "petro@gmai.com",
+            "estado": "RIODEJANEIRO",
+            "nome": "petrobras"
+        },
+        {
+            "cnpj": "12345678901235",
+            "pais": "brasil",
+            "cep": "56748293",
+            "competencias": [
+                "SPR",
+                "HT"
+            ],
+            "descricao": "minas e energia",
+            "email": "vale@gamil.com",
+            "estado": "RIODEJANEIRO",
+            "nome": "vale"
+        },
+        {
+            "cnpj": "12345678900987",
+            "pais": "brasil",
+            "cep": "12349898",
+            "competencias": [
+                "JAV",
+                "ANG"
+            ],
+            "descricao": "perfumaria",
+            "email": "nat@gamil.com",
+            "estado": "SAOPAULO",
+            "nome": "natura"
+        },
+        {
+            "cnpj": "38473902746582",
+            "pais": "brasil",
+            "cep": "12345678",
+            "competencias": [
+                "PT",
+                "JAV",
+                "ANG"
+            ],
+            "descricao": "varejo",
+            "email": "mag@gmail.com",
+            "estado": "PERNAMBUCO",
+            "nome": "magazine luisa"
+        },
+        {
+            "cnpj": "12345678453902",
+            "pais": "estados unidos",
+            "cep": "12312356",
+            "competencias": [
+                "ANG",
+                "JAV"
+            ],
+            "descricao": "empresa top",
+            "email": "meuemail.@gmail.com",
+            "estado": "TOCANTINS",
+            "nome": "minhaempresamuitolegal"
+        },
+        {
+            "cnpj": "12345678909876",
+            "pais": "brasil",
+            "cep": "12309874",
+            "competencias": [
+                "HT",
+                "CS"
+            ],
+            "descricao": "tech",
+            "email": "asd@asd.asd",
+            "estado": "CEARA",
+            "nome": "technic"
+        }
     ]
 }

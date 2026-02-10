@@ -1,6 +1,6 @@
 static void main(String[] args) {
 
-    println("Digite o serviço desejado, 1 para cadastro e 2 para visualização")
+    println("Digite o serviço desejado, 1 para cadastro ,2 para listagem")
     Scanner scan = new Scanner(System.in)
     String entrada=scan.nextLine()
 
@@ -34,10 +34,33 @@ static void main(String[] args) {
             break
 
 
+        case "2" :
 
 
-        case "2":
-            println("foi 2")
+
+
+            println("Digite 1 para listar as empresas cadastradas ou 2 para listar os candidatos")
+
+            String escolha_listagem = scan.nextLine()
+            while (escolha_listagem != "1" && escolha_listagem!="2" ){
+                println("Insira um valor válido")
+                escolha_listagem=scan.nextLine()
+            }
+
+            def lista
+
+
+            if (escolha_listagem=="2")
+
+            {lista = FileManager.listagem("Candidato")}
+
+            else
+            { lista = FileManager.listagem("Empresa")}
+
+            for (item in lista){
+                println(item)
+            }
+
     }
 
     scan.close()

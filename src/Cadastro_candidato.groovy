@@ -8,12 +8,12 @@ class Cadastro_candidato {
         println("Digite o cpf do candidato")
         String entrada_cpf =scan.nextLine()
 
-        while ( !Metodos.validador_cpf(entrada_cpf) || FileManager.cpf_em_uso(Metodos.padronizar_cpf(entrada_cpf))){
+        while ( !Metodos.validador_cpf(entrada_cpf) || FileManager.cpf_em_uso(Metodos.padronizar_entrada(entrada_cpf))){
             println("Insira um cpf válido")
             entrada_cpf=scan.nextLine()
         }
 
-        String cpf_formatado = Metodos.padronizar_cpf(entrada_cpf)
+        String cpf_formatado = Metodos.padronizar_entrada(entrada_cpf)
 
         println("Digite o email do candidato")
         String email = scan.nextLine()
@@ -35,10 +35,14 @@ class Cadastro_candidato {
         println("Insira o cep do candidato")
         String cep = scan.nextLine()
 
-        while (!Metodos.validador_cep(cep)){
+
+        while (!Metodos.validador_cep(cep) ){
             println ("Insira um cep válido")
             cep=scan.nextLine()
         }
+
+        String cep_padronizado= Metodos.padronizar_entrada(cep)
+
 
 
         println("insira o estado de atuação")
@@ -96,9 +100,9 @@ class Cadastro_candidato {
 
         println("Candidato cadastrado com sucesso")
 
-        Candidato cadastrado = new Candidato (nome,cpf_formatado,Integer.parseInt(idade),cep,email,estado_confirmado,desc,competencias)
+        Candidato cadastrado = new Candidato (nome,cpf_formatado,Integer.parseInt(idade),email,cep_padronizado,estado_confirmado,desc,competencias)
 
-        FileManager.adicionar(cadastrado,"candidato")
+        FileManager.adicionar(cadastrado,"Candidato")
 
     }
 }
