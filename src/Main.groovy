@@ -58,7 +58,8 @@ static void main(String[] args) {
             { lista = FileManager.listagem("Empresa")}
 
             for (item in lista){
-                println(item)
+
+                println("Nome : $item.nome | Descrição: $item.descricao | Estado atuação:$item.estado | Competencias :$item.competencias  " )
             }
 
     }

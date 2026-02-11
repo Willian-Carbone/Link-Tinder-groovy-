@@ -56,7 +56,7 @@
         {
             "cpf": "12387653424",
             "idade": 35,
-            "cep": "SANTACATARINA",
+            "cep": "12309876",
             "competencias": [
                 "HT",
                 "CS",
@@ -65,8 +65,8 @@
                 "SPR"
             ],
             "descricao": "dev senior",
-            "email": "12309876",
-            "estado": "p@p.com",
+            "email": "p@p.com",
+            "estado": "SANTACATARINA",
             "nome": "pedro"
         },
         {
@@ -108,6 +108,19 @@
             "email": "alf@af.af",
             "estado": "SERGIPE",
             "nome": "alfredo"
+        },
+        {
+            "cpf": "12345678945",
+            "idade": 30,
+            "cep": "12453678",
+            "competencias": [
+                "ANG",
+                "JAV"
+            ],
+            "descricao": "dev pleno",
+            "email": "asd@asd.asd",
+            "estado": "SANTACATARINA",
+            "nome": "pietro"
         }
     ],
     "Empresa": [
