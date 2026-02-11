@@ -1,5 +1,3 @@
-
-
 class Cadastro_empresa {
 
     static void terminal_empresas (){

@@ -1,10 +1,10 @@
 static void main(String[] args) {
 
-    println("Digite o serviço desejado, 1 para cadastro ,2 para listagem")
+    println("Digite o serviço desejado, 1 para cadastro ,2 para listagem, 3 para login")
     Scanner scan = new Scanner(System.in)
     String entrada=scan.nextLine()
 
-    while (entrada != "1" && entrada !="2" ){
+    while (entrada != "1" && entrada !="2" && entrada !="3" ){
         println("Insira um valor válido")
         entrada=scan.nextLine()
     }
@@ -61,6 +61,27 @@ static void main(String[] args) {
 
                 println("Nome : $item.nome | Descrição: $item.descricao | Estado atuação:$item.estado | Competencias :$item.competencias  " )
             }
+
+            break
+
+        case "3":
+            println("Informe seu cpf para logar como empresa ou cnpj para logar como candidato")
+            String entrada_id = scan.nextLine()
+
+            while ((!Metodos.validador_cpf(entrada_id) && !Metodos.validador_cnpj(entrada_id)) || (!FileManager.cnpj_em_uso(Metodos.padronizar_entrada(entrada_id)) && !FileManager.cpf_em_uso(Metodos.padronizar_entrada(entrada_id)))){
+                println("Insira um valor válido")
+                entrada_id = scan.nextLine()
+            }
+
+            //repartiçao em 2 terminais
+
+
+            if (entrada_id.length()!=11){
+                Terminal_empresa.terminal_principal(entrada_id)
+            }
+
+            else (Terminal_candidato.terminal_principal(entrada_id))
+
 
     }
 

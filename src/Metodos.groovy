@@ -62,6 +62,18 @@ abstract class Metodos {
         }
     }
 
+    static String criptografia (String cpf){
+
+       String codificado = cpf.getBytes().encodeBase64().toString()
+    }
+
+    static String descriptografia (String cpf_criptografado){
+        byte[] bytesDecodificados = cpf_criptografado.decodeBase64()
+
+        return new String(bytesDecodificados)
+    }
+
+
 
 
 

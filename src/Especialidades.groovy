@@ -1,3 +1,5 @@
+
+
 enum Especialidades {
 
     PT ("phyton"),
@@ -15,9 +17,6 @@ enum Especialidades {
 
     }
 
-    String get_valor (){
-        return this.valor
-    }
 
 
 
