@@ -24,6 +24,8 @@
     
     -Persistencia de dados feita pro meio de Dados.json para cadastros, vagas.json para as vagas registradas, e match_registrados.json para matchs confirmados
 
+    - cada curtida possui um id criptografado (encodeBase64) , que caracteriza o usuario que curtiu,mas mantem seu anonimato
+
 --> Tecnologias usadas:
 
         Groovy e java 25
