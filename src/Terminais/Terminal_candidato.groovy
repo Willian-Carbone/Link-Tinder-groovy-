@@ -34,7 +34,7 @@ class Terminal_candidato {
 
                 while (entrada!="FIM"){
                     if (entrada in empresas_contratantes) {
-                        println("Objetos.Curtida enviada a empresa ${entrada}")
+                        println("wCurtida enviada a empresa ${entrada}")
                         FileManager.registrar_curtida(entrada, user_id)
                         entrada=scan.nextLine().toUpperCase()
                     }

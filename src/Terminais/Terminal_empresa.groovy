@@ -71,7 +71,7 @@ class Terminal_empresa {
                 Vaga vaga = new Vaga(nome:nome,descricao:desc,contratante:user_id,requisitos:competencias, curtidas: curtidas )
 
                 FileManager.adicionar_vaga(vaga)
-                println("Objetos.Vaga adicionada com sucesso")
+                println("Vaga adicionada com sucesso")
 
                 break
 
@@ -94,7 +94,7 @@ class Terminal_empresa {
                     while(decisao != "fim") {
 
                      if (decisao in id_candidatos){
-                         println("Objetos.Candidato curtido com sucesso")
+                         println("Candidato curtido com sucesso")
 
                          FileManager.salvar_match(user_id, Metodos.descriptografia(decisao))
                          decisao = scan.nextLine()

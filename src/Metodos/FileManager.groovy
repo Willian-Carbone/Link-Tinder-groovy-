@@ -207,7 +207,7 @@ abstract class FileManager {
 
     static List checar_matches(String user_id) {
 
-        File arq_match = new File ("../../Matchs_registrados.json")
+        File arq_match = new File ("../Matchs_registrados.json")
         def banco_de_matchs = new JsonSlurper().parse(arq_match)
 
         def lista_de_matchs= banco_de_matchs.Match ?: []
