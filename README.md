@@ -36,7 +36,9 @@
         
         - como empresa,listar suas vagas , adicionar vagas e curtir candidados que curtiram uma vaga sua
         
-        -como candidato, lisatr toas as vagas correntes e curtir vaga
+        -como candidato, listar todas as vagas correntes e curtir vaga
         
         - listar todos os cadastros
+
+        -Listar todos os seus matchs confirmados (empresa e candidato)
 

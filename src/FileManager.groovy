@@ -197,6 +197,56 @@ abstract class FileManager {
 
 
     }
+
+    static List checar_matches(String user_id) {
+
+        File arq_match = new File ("../Matchs_registrados.json")
+        def banco_de_matchs = new JsonSlurper().parse(arq_match)
+
+        def lista_de_matchs= banco_de_matchs.Match ?: []
+
+        List resultado=[]
+
+        if (user_id.size()==11) {
+
+            def matches_candidato = lista_de_matchs.findAll { it.candidato.cpf == user_id }
+
+            if (matches_candidato) {
+                matches_candidato.each { m ->
+                    resultado.add("EMPRESA: ${m.empresa.nome} | CNPJ: ${m.empresa.cnpj} | EMAIL: ${m.empresa.email} | DESCRIÇÃO: ${m.empresa.descricao}")
+                }
+            }
+
+            else {
+                resultado.add("Nenhum match feito até o momento.")
+            }
+
+        }
+
+        else{
+
+            def matches_empresa = lista_de_matchs.findAll { it.empresa.cnpj == user_id }
+
+            if (matches_empresa) {
+                matches_empresa.each { m ->
+
+                    String cpfCripto = Metodos.criptografia(m.candidato.cpf)
+                    resultado.add("CANDIDATO: ${cpfCripto} | EMAIL: ${m.candidato.email} | ESPECIALIDADES: ${m.candidato.competencias}")
+                }
+            } else {
+                resultado.add("Nenhum match feito até o momento.")
+            }
+
+        }
+
+        return resultado
+
+
+
+
+    }
+
+
 }
 
 

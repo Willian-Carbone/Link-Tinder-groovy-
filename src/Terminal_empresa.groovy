@@ -2,12 +2,12 @@
 
 class Terminal_empresa {
     static void terminal_principal(String user_id) {
-        println("Informe a ação 1 para registrar uma vaga 2 para verificar vagas existentes ")
+        println("Informe a ação 1 para registrar uma vaga 2 para verificar vagas existentes ou 3 para verificar seus matchs ")
         Scanner scan = new Scanner(System.in)
 
         String acao = scan.nextLine()
 
-        while (acao != "1" && acao != "2") {
+        while (acao != "1" && acao != "2" && acao!="3") {
             println("Insira um valor valido")
             acao = scan.nextLine()
         }
@@ -115,6 +115,14 @@ class Terminal_empresa {
                     println("Vocẽ nao possui vagas cadastradas")
                 }
 
+                break
+
+            case "3":
+                List <String> matchs_feitos = FileManager.checar_matches(user_id)
+
+                for (match in matchs_feitos){
+                    println(match)
+                }
 
         }
 
