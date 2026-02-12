@@ -1,3 +1,11 @@
+package Terminais
+
+import Enuns.Especialidades
+import Enuns.Estados
+import Metodos.FileManager
+import Metodos.Metodos
+import Objetos.Empresa
+
 class Cadastro_empresa {
 
     static void terminal_empresas (){
@@ -93,11 +101,11 @@ class Cadastro_empresa {
 
         }
 
-        println("Empresa cadastrada com sucesso")
+        println("Objetos.Empresa cadastrada com sucesso")
 
         Empresa cadastrado = new Empresa (nome,cnpj_padronizado,pais,cep_padronizado,email,estado_confirmado,desc,competencias)
 
-        FileManager.adicionar(cadastrado,"Empresa")
+        FileManager.adicionar(cadastrado,"Objetos.Empresa")
 
 
 

@@ -1,3 +1,8 @@
+package Metodos
+
+import Enuns.Especialidades
+import Enuns.Estados
+
 import java.text.Normalizer
 
 abstract class Metodos {

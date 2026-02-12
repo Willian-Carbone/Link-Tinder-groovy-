@@ -1,3 +1,11 @@
+package Terminais
+
+import Enuns.Especialidades
+import Enuns.Estados
+import Metodos.FileManager
+import Metodos.Metodos
+import Objetos.Candidato
+
 class Cadastro_candidato {
 
     static void terminal_candidatos (){
@@ -98,11 +106,11 @@ class Cadastro_candidato {
 
         }
 
-        println("Candidato cadastrado com sucesso")
+        println("Objetos.Candidato cadastrado com sucesso")
 
         Candidato cadastrado = new Candidato (nome,cpf_formatado,Integer.parseInt(idade),email,cep_padronizado,estado_confirmado,desc,competencias)
 
-        FileManager.adicionar(cadastrado,"Candidato")
+        FileManager.adicionar(cadastrado,"Objetos.Candidato")
 
     }
 }

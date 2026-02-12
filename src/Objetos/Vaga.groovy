@@ -1,3 +1,6 @@
+package Objetos
+
+import Enuns.Especialidades
 import groovy.transform.Canonical
 
 @Canonical

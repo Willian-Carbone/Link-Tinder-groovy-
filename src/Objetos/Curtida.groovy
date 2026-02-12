@@ -1,3 +1,5 @@
+package Objetos
+
 import groovy.transform.Canonical
 
 @Canonical

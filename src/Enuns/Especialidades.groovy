@@ -1,4 +1,4 @@
-
+package Enuns
 
 enum Especialidades {
 

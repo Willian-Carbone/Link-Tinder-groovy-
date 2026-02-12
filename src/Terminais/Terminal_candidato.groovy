@@ -1,4 +1,6 @@
+package Terminais
 
+import Metodos.FileManager
 
 class Terminal_candidato {
     static void terminal_principal(String user_id){
@@ -32,7 +34,7 @@ class Terminal_candidato {
 
                 while (entrada!="FIM"){
                     if (entrada in empresas_contratantes) {
-                        println("Curtida enviada a empresa ${entrada}")
+                        println("Objetos.Curtida enviada a empresa ${entrada}")
                         FileManager.registrar_curtida(entrada, user_id)
                         entrada=scan.nextLine().toUpperCase()
                     }

@@ -1,3 +1,9 @@
+package Objetos
+
+import Enuns.Especialidades
+import Enuns.Estados
+
+
 class Empresa extends Usuario{
     String cnpj
     String pais

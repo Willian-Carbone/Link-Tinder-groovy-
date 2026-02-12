@@ -1,4 +1,9 @@
+package Terminais
 
+import Enuns.Especialidades
+import Metodos.FileManager
+import Metodos.Metodos
+import Objetos.Vaga
 
 class Terminal_empresa {
     static void terminal_principal(String user_id) {
@@ -66,12 +71,12 @@ class Terminal_empresa {
                 Vaga vaga = new Vaga(nome:nome,descricao:desc,contratante:user_id,requisitos:competencias, curtidas: curtidas )
 
                 FileManager.adicionar_vaga(vaga)
-                println("Vaga adicionada com sucesso")
+                println("Objetos.Vaga adicionada com sucesso")
 
                 break
 
             case "2":
-                List minhas_vagas=FileManager.listagem_vagas(user_id)
+                List minhas_vagas= FileManager.listagem_vagas(user_id)
 
                 ArrayList<String> id_candidatos = new ArrayList<>()
 
@@ -89,7 +94,7 @@ class Terminal_empresa {
                     while(decisao != "fim") {
 
                      if (decisao in id_candidatos){
-                         println("Candidato curtido com sucesso")
+                         println("Objetos.Candidato curtido com sucesso")
 
                          FileManager.salvar_match(user_id, Metodos.descriptografia(decisao))
                          decisao = scan.nextLine()

@@ -1,3 +1,10 @@
+import Metodos.FileManager
+import Metodos.Metodos
+import Terminais.Cadastro_candidato
+import Terminais.Cadastro_empresa
+import Terminais.Terminal_candidato
+import Terminais.Terminal_empresa
+
 static void main(String[] args) {
 
     println("Digite o serviço desejado, 1 para cadastro ,2 para listagem, 3 para login")
@@ -52,10 +59,10 @@ static void main(String[] args) {
 
             if (escolha_listagem=="2")
 
-            {lista = FileManager.listagem("Candidato")}
+            {lista = FileManager.listagem("Objetos.Candidato")}
 
             else
-            { lista = FileManager.listagem("Empresa")}
+            { lista = FileManager.listagem("Objetos.Empresa")}
 
             for (item in lista){
 

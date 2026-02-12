@@ -1,3 +1,10 @@
+package Metodos
+
+import Enuns.Estados
+import Objetos.Candidato
+import Objetos.Curtida
+import Objetos.Empresa
+import Objetos.Vaga
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
@@ -13,11 +20,11 @@ abstract class FileManager {
 
 
         switch (tipo) {
-            case "Empresa":
+            case "Objetos.Empresa":
                 bancodedados.Empresa << o
                 break
 
-            case "Candidato":
+            case "Objetos.Candidato":
                 bancodedados.Candidato << o
 
         }
@@ -55,7 +62,7 @@ abstract class FileManager {
 
         // define qual classe sera  instanciada e seu construtor, necessario poisa  automatização(obejto pra mapa)  utiliza o costrutor vazio, que nas classes nao existem
 
-        def classeAlvo = (opcao == "Candidato") ? Candidato.class : Empresa.class
+        def classeAlvo = (opcao == "Objetos.Candidato") ? Candidato.class : Empresa.class
         def construtor = classeAlvo.constructors[0]
 
         //itera em dados, que é uma lista onde cada item é um mapa de itens da classe atual, retornanando um array list contendo obejtos especiicados
@@ -79,7 +86,7 @@ abstract class FileManager {
 
             // manualmente , constroi cada objeto do tipo especificado
 
-            if (opcao == "Candidato") {
+            if (opcao == "Objetos.Candidato") {
                 args = [
                         mapa.nome as String,
                         mapa.cpf as String,
@@ -200,7 +207,7 @@ abstract class FileManager {
 
     static List checar_matches(String user_id) {
 
-        File arq_match = new File ("../Matchs_registrados.json")
+        File arq_match = new File ("../../Matchs_registrados.json")
         def banco_de_matchs = new JsonSlurper().parse(arq_match)
 
         def lista_de_matchs= banco_de_matchs.Match ?: []

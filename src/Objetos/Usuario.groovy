@@ -1,6 +1,7 @@
+package Objetos
 
-
-
+import Enuns.Especialidades
+import Enuns.Estados
 import groovy.transform.Canonical
 
 @Canonical
@@ -9,7 +10,7 @@ import groovy.transform.Canonical
     String nome
     String email
     String cep
-   Estados estado
+    Estados estado
     String descricao
     ArrayList<Especialidades> competencias
 }

@@ -1,3 +1,8 @@
+package Objetos
+import Enuns.Especialidades
+import Enuns.Estados
+
+
 class Candidato extends Usuario {
     String cpf
     int idade
