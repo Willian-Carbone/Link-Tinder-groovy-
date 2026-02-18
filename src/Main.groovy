@@ -59,10 +59,10 @@ static void main(String[] args) {
 
             if (escolha_listagem=="2")
 
-            {lista = FileManager.listagem("Objetos.Candidato")}
+            {lista = FileManager.listagem("Candidato")}
 
             else
-            { lista = FileManager.listagem("Objetos.Empresa")}
+            { lista = FileManager.listagem("Empresa")}
 
             for (item in lista){
 

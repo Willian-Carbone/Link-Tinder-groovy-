@@ -62,8 +62,8 @@ abstract class FileManager {
 
         // define qual classe sera  instanciada e seu construtor, necessario poisa  automatização(obejto pra mapa)  utiliza o costrutor vazio, que nas classes nao existem
 
-        def classeAlvo = (opcao == "Objetos.Candidato") ? Candidato.class : Empresa.class
-        def construtor = classeAlvo.constructors[0]
+        def classeAlvo = (opcao == "Candidato") ? Candidato.class : Empresa.class
+
 
         //itera em dados, que é uma lista onde cada item é um mapa de itens da classe atual, retornanando um array list contendo obejtos especiicados
 
@@ -86,7 +86,7 @@ abstract class FileManager {
 
             // manualmente , constroi cada objeto do tipo especificado
 
-            if (opcao == "Objetos.Candidato") {
+            if (opcao == "Candidato") {
                 args = [
                         mapa.nome as String,
                         mapa.cpf as String,
@@ -109,7 +109,8 @@ abstract class FileManager {
                         mapa.competencias as ArrayList<String>
                 ]
             }
-
+            //SELECIONA O CONTRUTOR CUJA QUANTIDADE DE PARAMETRO BATE COM O TAMANHO DE DE ARGS, EVITA ERRO DE CONSTRUTOR OCULTO
+            def construtor = classeAlvo.constructors.find { it.parameterCount == args.size() }
             return construtor.newInstance(args.toArray())
         }
     }
