@@ -2,13 +2,15 @@
 
 --> executando o projeto:
 
-        -execute Main.Groovy
+        -execute Main.Groovy que pode ser encontrado em app/src/main/groovy
+
+        -tambem é possivel inicializar o programa digitando no terminal ./gradlew run (ou suas alternativas ./gradlew run -q  | ./gradlew run -q --console=plain)
 
         -é possivel listar candidatos ou empresas que ja estao em dados.json
 
         -é possivel logar com cpf ou cnpj que ja estejam no mesmo arquivo
 
-        -como candidato é possivel verr vagas e dar curtidas
+        -como candidato é possivel ver vagas e dar curtidas
 
         -como empresa é possivel responder curtidas e criar vagas
 
@@ -28,7 +30,7 @@
 
 --> Tecnologias usadas:
 
-        Groovy e java 25
+        Groovy e java 21
         
 --> Funcionalidades
 
