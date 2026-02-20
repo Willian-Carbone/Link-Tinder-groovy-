@@ -102,7 +102,7 @@ class Terminal_empresa {
                      }
 
                      else{
-                         println("identificador nao encontradp")
+                         println("identificador nao encontrado")
                          decisao = scan.nextLine()
 
                      }
