@@ -30,19 +30,19 @@
 
     -existenica de testes uniarios cobrindo toda a parte essencial do codigo
 
-    -Alta atxa de desacoplamento
+    -Alta taxa de desacoplamento
 
 --> Tecnologias usadas:
 
-        Groovy e java 21
+        Groovy , java 21 , Gradle, Spock
         
 --> Funcionalidades
 
         - Adicionar cadastros (empresa e candidato)
         
-        - como empresa,listar suas vagas , adicionar vagas e curtir candidados que curtiram uma vaga sua
+        - como empresa,listar suas vagas , adicionar vagas e curtir candidados que curtiram uma vaga pela sua empresa
         
-        -como candidato, listar todas as vagas correntes e curtir vaga
+        -como candidato, listar todas as vagas correntes e curtir vagas
         
         - listar todos os cadastros
 
