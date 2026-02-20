@@ -28,6 +28,10 @@
 
     - cada curtida possui um id criptografado (encodeBase64) , que caracteriza o usuario que curtiu,mas mantem seu anonimato
 
+    -existenica de testes uniarios cobrindo toda a parte essencial do codigo
+
+    -Alta atxa de desacoplamento
+
 --> Tecnologias usadas:
 
         Groovy e java 21
