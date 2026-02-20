@@ -7,7 +7,7 @@ import Terminais.Terminal_empresa
 
 static void main(String[] args) {
 
-    println("Digite o serviço desejado, 1 para cadastro ,2 para listagem, 3 para login")
+    println("Digite o serviço desejado, 1 para cadastro , 2 para listagem (senha de admin necessária) , 3 para login")
     Scanner scan = new Scanner(System.in)
     String entrada=scan.nextLine()
 
@@ -42,6 +42,16 @@ static void main(String[] args) {
 
 
         case "2" :
+
+
+            println("Digite a senha de administração")
+
+            String senha = scan.nextLine()
+
+            if (senha != "pao de queijo"){
+                println("Senha incorreta")
+                break
+            }
 
 
 

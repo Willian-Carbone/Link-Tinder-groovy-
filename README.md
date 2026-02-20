@@ -44,7 +44,7 @@
         
         -como candidato, listar todas as vagas correntes e curtir vagas
         
-        - listar todos os cadastros
+        - listar todos os cadastros (necessita senha admin)
 
         -Listar todos os seus matchs confirmados (empresa e candidato)
 
