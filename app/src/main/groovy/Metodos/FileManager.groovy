@@ -12,13 +12,10 @@ import groovy.json.JsonOutput
 abstract class FileManager {
     // Bloco referente a tarefa principal
 
-    static adicionar(Object o, String tipo) {
+    static adicionar(Object o, String tipo ,String nomeArquivo= "Dados.json") {
 
-        //adesão feita ao passar o projeto a graddle,permite capturar meu arquivo json e transformalo em um arquivo para edição acessando a tread atual, Procura a partir da raiz do Classpath (unificaçãõ de tudo que faz parte do projeot, build/ resources ), nao funcionaao usar getclaas como referencia, pq o objeto usado como referencia nunca é instanciado
 
-        def caminhoDoArquivo = Thread.currentThread().contextClassLoader.getResource('Dados.json')
-
-        File arq = new File(caminhoDoArquivo.toURI())
+        File arq = new File(nomeArquivo)
 
         def bancodedados = new JsonSlurper().parse(arq)
 
@@ -42,12 +39,11 @@ abstract class FileManager {
     }
 
 
-    static boolean cpf_em_uso(String cpf) {
+    static boolean cpf_em_uso(String cpf , String nomeArquivo= "Dados.json") {
 
 
-        def caminhoDoArquivo = Thread.currentThread().contextClassLoader.getResource('Dados.json')
 
-        File arq = new File(caminhoDoArquivo.toURI())
+        File arq = new File(nomeArquivo)
 
         def bancodedados = new JsonSlurper().parse(arq)
         return bancodedados.Candidato.any { it.cpf == cpf }
@@ -55,14 +51,11 @@ abstract class FileManager {
 
     }
 
-    static boolean cnpj_em_uso(String cnpj) {
-
-        //adesão feita ao passar o projeto a graddle,permite capturar meu arquivo json e transformalo em um arquivo para edição
-
-        def caminhoDoArquivo = Thread.currentThread().contextClassLoader.getResource('Dados.json')
+    static boolean cnpj_em_uso(String cnpj ,String nomeArquivo= "Dados.json") {
 
 
-        File arq = new File(caminhoDoArquivo.toURI())
+
+        File arq = new File(nomeArquivo)
 
         def bancodedados = new JsonSlurper().parse(arq)
         return bancodedados.Empresa.any { it.cnpj == cnpj }
@@ -71,13 +64,11 @@ abstract class FileManager {
     }
 
 
-    static <T> ArrayList<T> listagem(String opcao) {
+    static <T> ArrayList<T> listagem(String opcao, String nomeArquivo= "Dados.json") {
 
-        //adesão feita ao passar o projeto a graddle,permite capturar meu arquivo json e transformalo em um arquivo para edição acessando a tread atual, Procura a partir da raiz do Classpath (unificaçãõ de tudo que faz parte do projeot, build/ resources ), nao funcionaao usar getclaas como referencia, pq o objeto usado como referencia nunca é instanciado
 
-        def caminhoDoArquivo = Thread.currentThread().contextClassLoader.getResource('Dados.json')
+        File arq = new File(nomeArquivo)
 
-        File arq = new File(caminhoDoArquivo.toURI())
 
         def bancodedados = new JsonSlurper().parse(arq)
         def dados = bancodedados[opcao] ?: []
@@ -141,13 +132,12 @@ abstract class FileManager {
     //bloco referente ao desafio
 
 
-    static List listagem_vagas(String contratante) {
+    static List listagem_vagas(String contratante , String nomeArquivo= "Vagas.json") {
 
 
 
-        def caminhoDoArquivo = Thread.currentThread().contextClassLoader.getResource('Vagas.json')
 
-        File arq = new File(caminhoDoArquivo.toURI())
+        File arq = new File( nomeArquivo)
 
 
         def bancodedados = new JsonSlurper().parse(arq)
@@ -173,13 +163,11 @@ abstract class FileManager {
     }
 
 
-    static void adicionar_vaga(Vaga vaga) {
+    static void adicionar_vaga(Vaga vaga ,String nomeArquivo= "Vagas.json") {
 
-        //adesão feita ao passar o projeto a graddle,permite capturar meu arquivo json e transformalo em um arquivo para edição
 
-        def caminhoDoArquivo = Thread.currentThread().contextClassLoader.getResource('Vagas.json')
 
-        File arq = new File(caminhoDoArquivo.toURI())
+        File arq = new File(nomeArquivo)
 
 
         def bancodedados = new JsonSlurper().parse(arq)
@@ -190,22 +178,18 @@ abstract class FileManager {
 
     }
 
-    static void registrar_curtida(String id_empresa, String id_candidato) {
+    static void registrar_curtida(String id_empresa, String id_candidato , String nomeArquivoDados= "Dados.json", String nomeArquivosVagas = "Vagas.json") {
 
-        //adesão feita ao passar o projeto a graddle,permite capturar meu arquivo json e transformalo em um arquivo para edição
 
-        def caminhoDoArquivoVaga = Thread.currentThread().contextClassLoader.getResource('Vagas.json')
 
-        File arq_vaga= new File(caminhoDoArquivoVaga.toURI())
+        File arq_vaga= new File(nomeArquivosVagas)
 
 
         def bancodedados_vaga = new JsonSlurper().parse(arq_vaga)
 
-        //adesão feita ao passar o projeto a graddle,permite capturar meu arquivo json e transformalo em um arquivo para edição
 
-        def caminhoDoArquivoRegistros = Thread.currentThread().contextClassLoader.getResource('Dados.json')
 
-        File arq_registros = new File(caminhoDoArquivoRegistros.toURI())
+        File arq_registros = new File(nomeArquivoDados)
 
 
         def bancodedados_registros = new JsonSlurper().parse(arq_registros)
@@ -229,18 +213,18 @@ abstract class FileManager {
 
     }
 
-    static void salvar_match(String empresa_id, String candidato_id) {
+    static void salvar_match(String empresa_id, String candidato_id, String nomeArquivoDados= "Dados.json", String nomeArquivoMatchs= "Matchs_registrados.json") {
 
-        def caminhoDoArquivoRegistros = Thread.currentThread().contextClassLoader.getResource('Dados.json')
 
-        File arq_registros = new File(caminhoDoArquivoRegistros.toURI())
+
+        File arq_registros = new File(nomeArquivoDados)
 
         def bancodedados = new JsonSlurper().parse(arq_registros)
 
 
-        def caminhoDoArquivoMatchs = Thread.currentThread().contextClassLoader.getResource('Dados.json')
 
-        File arq_match = new File(caminhoDoArquivoMatchs.toURI())
+
+        File arq_match = new File(nomeArquivoMatchs)
         def banco_de_matchs = new JsonSlurper().parse(arq_match)
 
 
@@ -261,11 +245,11 @@ abstract class FileManager {
 
     }
 
-    static List checar_matches(String user_id) {
+    static List checar_matches(String user_id , String nomeArquivoMatch = "Matchs_registrados.json") {
 
-        def caminhoDoArquivoMatchs = Thread.currentThread().contextClassLoader.getResource('Dados.json')
 
-        File arq_match = new File(caminhoDoArquivoMatchs.toURI())
+
+        File arq_match = new File(nomeArquivoMatch)
 
 
         def banco_de_matchs = new JsonSlurper().parse(arq_match)

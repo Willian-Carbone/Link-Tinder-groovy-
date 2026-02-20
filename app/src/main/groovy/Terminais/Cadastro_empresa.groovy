@@ -101,7 +101,7 @@ class Cadastro_empresa {
 
         }
 
-        println("Objetos.Empresa cadastrada com sucesso")
+        println("Empresa cadastrada com sucesso")
 
         Empresa cadastrado = new Empresa (nome,cnpj_padronizado,pais,cep_padronizado,email,estado_confirmado,desc,competencias)
 

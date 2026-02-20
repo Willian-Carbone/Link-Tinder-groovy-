@@ -106,7 +106,7 @@ class Cadastro_candidato {
 
         }
 
-        println("Objetos.Candidato cadastrado com sucesso")
+        println("Candidato cadastrado com sucesso")
 
         Candidato cadastrado = new Candidato (nome,cpf_formatado,Integer.parseInt(idade),email,cep_padronizado,estado_confirmado,desc,competencias)
 
