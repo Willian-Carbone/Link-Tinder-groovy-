@@ -38,9 +38,7 @@ enum Estados {
         this.sigla=sigla
     }
 
-    String getsigla(){
-        return this.sigla
-    }
+
 
 
 }

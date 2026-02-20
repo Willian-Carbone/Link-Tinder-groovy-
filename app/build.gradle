@@ -5,6 +5,8 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.14.4/userguide/building_java_projects.html in the Gradle documentation.
  */
 
+
+
 plugins {
     // Apply the groovy Plugin to add support for Groovy.
     id 'groovy'
@@ -12,6 +14,8 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
 }
+
+
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -47,8 +51,24 @@ application {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+
+    outputs.upToDateWhen { false }
+
+    testLogging {
+        // explicita os testes e seus resultados no terminal
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+        showStandardStreams = true
+        exceptionFormat = "full"
+    }
+
+
 }
 
 run {
+    // faz a ativação do main por comando aceiatr entradas , remover se necessario
     standardInput = System.in
+
 }
+
+
+

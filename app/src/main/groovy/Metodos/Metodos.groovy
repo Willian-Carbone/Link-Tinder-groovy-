@@ -12,8 +12,14 @@ abstract class Metodos {
     }
 
 
+    // remove tudo que nao é digito para salvamento no banco
 
     static String padronizar_entrada (String entrada){
+
+        if (entrada == null){
+            return "Dado não informado"
+        }
+
         return entrada.replaceAll(/\D/, "")
 
     }
@@ -26,15 +32,19 @@ abstract class Metodos {
     }
 
 
-
+    //verifica se é um estado valido e o retorna sem acentos e em caixa alta
     static String normalizador (String estado){
+
+        if(estado==null) {return null}
+
         String normalizado = Normalizer.normalize(estado,Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+","").replaceAll(" ","").toUpperCase() // biblioteca normalizadora de texto , ndf --> tarnsforma acento em caractere unico, troca todas as ocorrencias do regex (propriedade unicode referente a acento) por nada
        if ( Estados.values().any {it.name() ==normalizado}) // num array de enumns , pegue seu nome e compare com normalizado
        {
            return normalizado
        }
+
         else{
-           return null
+          "O estado informado não corresponde a um estado válido"
        }
 
     }
@@ -70,6 +80,7 @@ abstract class Metodos {
     static String criptografia (String cpf){
 
        String codificado = cpf.getBytes().encodeBase64().toString()
+        return codificado
     }
 
     static String descriptografia (String cpf_criptografado){
