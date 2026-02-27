@@ -44,7 +44,7 @@ abstract class Metodos {
        }
 
         else{
-          "O estado informado não corresponde a um estado válido"
+          return null
        }
 
     }
