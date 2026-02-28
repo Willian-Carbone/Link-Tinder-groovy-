@@ -32,7 +32,7 @@ abstract class Metodos {
     }
 
 
-    //verifica se é um estado valido e o retorna sem acentos e em caixa alta
+
     static String normalizador (String estado){
 
         if(estado==null) {return null}

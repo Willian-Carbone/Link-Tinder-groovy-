@@ -10,7 +10,7 @@ import groovy.json.JsonOutput
 
 
 abstract class FileManager {
-    // Bloco referente a tarefa principal
+
 
 
     static Map processarAdicao(Map bancoDados, Object o, String tipo){
@@ -26,26 +26,23 @@ abstract class FileManager {
 
     }
 
-    // partição do metodo adicionar em 2 (adicionar + porcessar adição), para manter a idea de teste unitario
-
     static adicionar(Object o, String tipo ,String nomeArquivo= "Dados.json") {
 
 
         File arq = new File(nomeArquivo)
-        // conversao do arquivo para tipo json sluper , classe inteligente, faz conversoes de map e inserçoes de forma automatizada
+
         Map bancodedados = new JsonSlurper().parse(arq)
 
         bancodedados = processarAdicao(bancodedados,o,tipo)
 
 
         arq.text = JsonOutput.prettyPrint(JsonOutput.toJson(bancodedados))
-        // rescreve arquivo realizando conversões (sem buscas/ necessidade de map/ criar array para adicioanr novo objeto)
 
 
     }
 
 
-    // de modo similar , todos os arquivos de checagem foram modificados para separar criação do mapa e checagem
+
 
     static boolean checagem(String valor , Map zonadebusca ){
 
@@ -86,7 +83,7 @@ abstract class FileManager {
     }
 
 
-    // metodo listagem passou pelo mesmo processo listagem + ConstrucaoDoObjeto
+
 
 
     static <T> ArrayList<T> ConstrucaoDoObjeto(Map listaDeMapas, String opcao) {
@@ -100,7 +97,7 @@ abstract class FileManager {
 
         return (ArrayList<T>) dados.collect { mapa ->
 
-            //correção para erro BOOM
+
 
             String estadoRaw = mapa.estado?.toString()?.trim() ?: ""
             def estadoEnum = null
@@ -108,10 +105,8 @@ abstract class FileManager {
                 String nomeLimpo = Metodos.normalizador(estadoRaw)
                 if (nomeLimpo) estadoEnum = Estados.valueOf(nomeLimpo)
             }
-            // define qual classe sera instanciada e seu construtor, necessario poisa automatização(obejto pra mapa) utiliza o costrutor vazio, que nas classes nao existem
 
 
-            //itera em dados, que é uma lista onde cada item é um mapa de itens da classe atual, retornanando um array list contendo obejtos especiicados
 
             def args = (opcao == "Candidato") ? [
                     mapa.nome as String, mapa.cpf as String, mapa.idade as Integer,
@@ -142,9 +137,7 @@ abstract class FileManager {
 
 
 
-    //bloco referente ao desafio
 
-    // divisão de funçoes (logica-listagem , listagem-vaga)
 
     static List logica_listagem(String contratante, Map dados){
 
@@ -152,14 +145,14 @@ abstract class FileManager {
         def lista = []
 
         if (contratante.size() == 11) {
-            //retorna vagas que o candidato nao curtiu ainda
+
 
             String id_criptografado = Metodos.criptografia((contratante))
 
             lista = dados.vagas.findAll { vaga -> !(vaga.curtidas?.any { curtida -> curtida.identificador == id_criptografado }) }
 
         } else {
-            // retorna somente as vagas do contratante
+
             lista = dados.vagas.findAll { it.contratante == contratante }
 
         }
@@ -190,7 +183,7 @@ abstract class FileManager {
 
 
 
-    // diviso de tarefas (adicionar_vaga, logicaAdicao)
+
 
     static Map logicAdicao(Vaga vaga, Map VagasCadastradas){
 
@@ -225,7 +218,7 @@ abstract class FileManager {
 
 
 
-    //separação registrar curtida + logicaRegistroCurtida
+
 
     static Map logicaRegistroCurtida(Map dadosVagas, Map dadosUsuarios, String id_empresa, String id_candidato){
 
@@ -276,7 +269,7 @@ abstract class FileManager {
 
 
 
-    // divisao tarefas salvar_match + logicaCriarMatch
+
 
     static Map logicaCriarMatch(Map DadosUsuarios, Map DadosMatchs, String empresa_id, String candidato_id){
 
@@ -318,7 +311,7 @@ abstract class FileManager {
 
     }
 
-    //divisao tarefas checar_matchs + logicaChecagemMatchs
+
 
     static List logicaChecagemMatchs(Map bancoMatchs, String user_id){
 

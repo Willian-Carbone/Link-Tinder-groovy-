@@ -90,7 +90,7 @@ static void main(String[] args) {
                 entrada_id = scan.nextLine()
             }
 
-            //repartiçao em 2 terminais
+
 
 
             if (entrada_id.length()!=11){
