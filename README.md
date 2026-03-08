@@ -56,5 +56,5 @@
         
         -Além de todas as caracteristicas do projeto padrão, é possivel editar e remover perfis  com uma iterface mais amigavel
 
-        - Ademais, foi incluido graficos para se ter um panorama das tecnologias utilizadas pelos usuários
+        - Ademais, foi incluido graficos para se ter um panorama das tecnologias utilizadas pelos usuários, além de informações sobre afinidade entre vaga X candidato e candidato x empresa
 
