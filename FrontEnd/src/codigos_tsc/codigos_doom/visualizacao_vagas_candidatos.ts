@@ -1,6 +1,7 @@
 import { nomeEspecialidade, criptografar } from "../codigos_logicos/utilitarios";
 import { Vaga } from "../codigos_logicos/classes/vaga";
-import { capturar_vagas,capturar_dados_usuario, capturar_usuario_logado,capturar_matchs} from "../codigos_doom/localStorageControler";
+import { capturar_vagas, capturar_usuario_logado,capturar_matchs, calcular_afinidade_vaga, capturar_dados_usuario} from "../codigos_doom/localStorageControler";
+import { Candidato } from "../codigos_logicos/classes/candidato";
 
 
 
@@ -30,7 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     vagasDisponiveis.forEach(vaga => {
 
-        const item = criarItemVaga(vaga);
+        let afinidade= calcular_afinidade_vaga(vaga,capturar_dados_usuario(usuarioLogado) as Candidato);
+
+        
+
+        const item = criarItemVaga(vaga,afinidade);
         lista_vagas.appendChild(item);
 
     });
@@ -82,7 +87,7 @@ botaoCurtir.addEventListener("click", () => {
 });
 
 
-function criarItemVaga(vaga: Vaga): HTMLLIElement {
+function criarItemVaga(vaga: Vaga,afinidade:number): HTMLLIElement {
 
     const li = document.createElement("li");
     li.className = "vaga_item";
@@ -101,6 +106,7 @@ function criarItemVaga(vaga: Vaga): HTMLLIElement {
                 <p>Descrição: ${vaga.descricao}</p>
                 <p>Contratante: ${criptografar(vaga.contratante)}</p>
                 <p>Requisitos: ${vaga.requisitos.map(nomeEspecialidade).join(", ")}</p>
+                <p>Afinidade: ${afinidade}%</p>
             </div>
 
         </label>

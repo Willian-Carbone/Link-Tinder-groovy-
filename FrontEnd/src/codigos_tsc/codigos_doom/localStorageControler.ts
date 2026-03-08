@@ -443,29 +443,8 @@ export  function capturar_vagas() : Vaga[]{
 
 
 
-export function retornar_empresa (cnpj:string){
-    const dados = localStorage.getItem("Empresas");
-
-    if (!dados) return;
-
-    const empresas: Empresa[] = JSON.parse(dados);
-    const empresa = empresas.find(e => e.cnpj === cnpj);
-    return empresa;
-
-}
-
-export function retornar_candidato(cpf:string){
-    
-    const dados = localStorage.getItem("Candidatos");
-
-    if (!dados) return;
-
-    const candidatos: Candidato[] = JSON.parse(dados);
-    const candidato = candidatos.find(e => e.cpf === cpf);
-    return candidato;
 
 
-}
 
 export function salvar_match(cpf:string,candidato:string,email_candidato:string,cnpj:string,empresa:string,email_empresa:string,) :void{
     if (!localStorage.getItem("Matchs")) {
@@ -672,5 +651,44 @@ export function remover_candidato(identificador: string){
 }
 
 
+export function calcular_afinidade_vaga(vaga: any, candidato_alvo:Candidato): number {
+
+    
+
+    if(!candidato_alvo) return 0;
+
+    const competencias: string[] = candidato_alvo.competencias || [];
+
+    const requisitos: string[] = vaga.requisitos || [];
+
+    if (requisitos.length === 0) return 0;
+
+    const coincidencias = requisitos.filter(req =>
+        competencias.includes(req)
+    );
+
+    const afinidade = (coincidencias.length / requisitos.length) * 100;
+
+    return Math.round(afinidade);
+}
 
 
+
+export function calcular_afinidade_candidato_empresa(candidato: Candidato, empresa:Empresa): number {
+
+   
+
+    const competencias_candidato: string[] = candidato.competencias || [];
+
+    const competencias_empresa: string[] = empresa.competencias || [];
+
+   
+
+    const coincidencias = competencias_candidato.filter(CC =>
+        competencias_empresa.includes(CC)
+    );
+
+    const afinidade = (coincidencias.length / competencias_empresa.length) * 100;
+
+    return Math.round(afinidade);
+}

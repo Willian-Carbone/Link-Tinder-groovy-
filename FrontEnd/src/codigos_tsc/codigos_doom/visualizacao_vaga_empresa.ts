@@ -3,20 +3,21 @@ capturar_usuario_logado,
 capturar_vagas,
 capturar_candidatos,
 checar_matches_existentes,
-retornar_empresa,
 salvar_match,
-capturar_matchs
+capturar_matchs,
+capturar_dados_usuario
 } from "../codigos_doom/localStorageControler";
 
 import {criptografar,nomeEspecialidade,nomeFormacao} from "../codigos_logicos/utilitarios";
 
 import {Candidato} from "../codigos_logicos/classes/candidato";
+import { Empresa } from "../codigos_logicos/classes/empresa";
 
 
 
 const listaVagas = document.getElementById("lista_vagas_empresa") as HTMLUListElement;
 const listaCandidatos = document.getElementById("lista_candidatos") as HTMLUListElement;
-const empresa = retornar_empresa(capturar_usuario_logado());
+const empresa = capturar_dados_usuario(capturar_usuario_logado()) as Empresa;
 
 
 const usuarioLogado = capturar_usuario_logado();

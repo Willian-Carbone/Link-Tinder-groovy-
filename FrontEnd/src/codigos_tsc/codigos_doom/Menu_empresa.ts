@@ -1,4 +1,4 @@
-import { capturar_usuario_logado, capturar_dados_usuario, capturar_candidatos,cadastrar_vaga,capturar_vagas,  retornar_quantidade_candidatos ,remover_empresa} from "../codigos_doom/localStorageControler";
+import { capturar_usuario_logado, capturar_dados_usuario, capturar_candidatos,cadastrar_vaga,capturar_vagas,  retornar_quantidade_candidatos ,remover_empresa, } from "../codigos_doom/localStorageControler";
 import { criptografar , nomeEspecialidade} from "../codigos_logicos/utilitarios";
 import { ESPECIALIDADES } from "../codigos_logicos/tiposFixos";
 import { pegarDadosFormulario , aoMenosUmaCheckboxMarcada, dispararErro,capturarEspecialidades, ativarHoverCandidato } from "./utilidades_domm";
@@ -36,11 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (candidato) {
 
+        
+
             const li = document.createElement("li");
 
             li.textContent = criptografar(candidato.cpf || "");
 
-            ativarHoverCandidato(li, candidato, candidato_info);
+            ativarHoverCandidato(li, candidato, candidato_info , usuario_atual as any);
 
             lista_candidatos.appendChild(li);
 

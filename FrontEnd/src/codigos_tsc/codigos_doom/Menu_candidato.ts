@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             li.textContent = criptografar(empresa.cnpj || "");
 
-            ativarHoverEmpresa(li, empresa, empresa_info);
+            ativarHoverEmpresa(li, empresa, empresa_info,usuario_atual as any);
 
             lista_empresa.appendChild(li);
 

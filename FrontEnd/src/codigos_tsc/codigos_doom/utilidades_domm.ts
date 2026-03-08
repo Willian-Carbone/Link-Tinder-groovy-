@@ -2,6 +2,7 @@ import{ ESPECIALIDADES,Especialidade} from "../codigos_logicos/tiposFixos";
 import { Candidato } from "../codigos_logicos/classes/candidato";
 import { nomeEspecialidade, nomeFormacao } from "../codigos_logicos/utilitarios";
 import { Empresa } from "../codigos_logicos/classes/empresa";
+import { calcular_afinidade_candidato_empresa } from "./localStorageControler";
 
 
 
@@ -88,9 +89,12 @@ export function capturarEspecialidades(container: HTMLElement): Especialidade[] 
 export function ativarHoverCandidato(
     elemento: HTMLElement,
     candidato: Candidato,
-    infoBox: HTMLElement
+    infoBox: HTMLElement,
+    empresa:Empresa
 ){
     elemento.addEventListener("mouseenter", () => {
+
+        let afinidade = calcular_afinidade_candidato_empresa(candidato, empresa)
 
         const habilidades = candidato.competencias
             ?.map(nomeEspecialidade)
@@ -106,7 +110,8 @@ export function ativarHoverCandidato(
         
         `
             Formação: ${formacao}<br>
-            Habilidades: ${habilidades}
+            Habilidades: ${habilidades}<br>
+            Afinidade : ${afinidade}%
         `;
     });
 
@@ -128,10 +133,14 @@ export function ativarHoverCandidato(
 export function ativarHoverEmpresa(
     elemento: HTMLElement,
     empresa: Empresa,
-    infoBox: HTMLElement
+    infoBox: HTMLElement,
+    candidato:Candidato
 ){
 
     elemento.addEventListener("mouseenter", () => {
+
+        let afinidade = calcular_afinidade_candidato_empresa(candidato, empresa)
+
 
         const habilidades = empresa.competencias
             ?.map(nomeEspecialidade)
@@ -146,7 +155,8 @@ export function ativarHoverEmpresa(
         
         `
             
-            Habilidades que a empresa busca: ${habilidades}
+            Habilidades que a empresa busca: ${habilidades}<br>
+            Afinidade : ${afinidade}%
         `;
 
     });
