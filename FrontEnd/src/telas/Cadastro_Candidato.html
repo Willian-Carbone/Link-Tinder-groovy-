@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro candidato</title>
+
+    <link rel="shortcut icon" href="../recursos_extras/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/basico.css">
+    <link rel="stylesheet" href="../css/Cadastro.css">
+
+    
+</head>
+<body>
+
+    <header>
+        <h1>Cadastre seu perfil no LinkETinder</h1>
+        <h2>Seja contratado pelas suas habilidades</h2>
+    </header>
+
+
+    <main>
+
+        <form action="" id="formulario_cadastro_candidato">
+
+            <div class="entrada_cadastro">
+
+            
+
+                
+                <div class="container">
+                    <label for="nome_candidato">Insira o nome do candidato</label>
+                    <input type="text" id="nome_candidato" name="nome_candidato" required>
+
+                    <label for="descricao">Informe uma descricao para o candidato</label>
+                    <input type="text" name="descricao" id="descricao" required>
+
+                    <label for="idade">Informe a idade do candidato</label>
+                    <input type="number" id="idade" name="idade" required min="18" max="80">
+
+
+                    <label for="cpf_candidato">Informe o CPF do candidato</label>
+                    <input type="text" id="cpf_candidato" name="cpf_candidato" required>
+
+                    
+
+
+                    <label for="email_candidato">Informe o email de contato</label>
+                    <input type="text" id="email_candidato" name="email_candidato" required>
+
+                    
+
+                    <label for="cep_candidato">Informe o CEP do candidato</label>
+                    <input type="text" id="cep_candidato" name="cep_candidato" required>
+
+                    
+
+                </div>
+
+
+
+                <div class="container">
+
+                    <label for="formacao">Insira o grau de formação do candidato</label>
+
+                    <select id="formacao" name="formacao" required>
+
+                    </select>
+
+
+                    <label for="estado">Escolha o estado do candidato:</label>
+                    <select id="estado" name="estado" required>
+
+                    </select>
+
+                    <label for="especialidades_container">Escolha Especialidades que o candidato possui:</label>
+                    <div id="especialidades_container">
+            
+                    </div>
+
+
+
+                    <div class="container_erros">
+                        <p class="mensagem_erro" id="cep_invalido" >O CEP informado não possui um formato valido</p>
+                        <p class="mensagem_erro" id="cpf_invalido">A sua entrada nao corresponde a um valor válido de CPF</p>
+                        <p class="mensagem_erro" id="cadastro_repetido">Já existe outro candidato cadastrado com esse CPF</p>
+                        <p class="mensagem_erro" id="email_invalido">O email informado não possui um formato valido</p>
+                        <p class="mensagem_erro" id="especialidade_faltante">Selecione ao menos uma especialidade</p>
+                        
+                        <h2 class="mensagem_sucesso" id="cadastro_sucesso">Cadastro realizado com sucesso</h2>
+
+                        
+
+                    </div>
+
+                
+
+                </div>
+
+            </div>
+
+
+            <div class="botoes">
+
+                <input type="submit" value="Cadastrar">
+                <input type="reset" value="Limpar" id="Limpar_form">
+
+            </div>
+
+
+
+
+        </form>
+
+        <a href="index.html">Retornar </a>
+
+
+    </main>
+
+    <script src="../../dist/Cadastro_Candidatos.bundle.js"></script>
+    
+</body>
+</html>

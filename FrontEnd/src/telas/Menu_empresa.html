@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu empresa</title> 
+
+    <link rel="stylesheet" href="../css/basico.css">
+    <link rel="stylesheet" href="../css/Menu.css">
+
+    <link rel="shortcut icon" href="../recursos_extras/fav.png" type="image/x-icon">
+
+</head>
+<body>
+
+    <header> 
+
+        <h1 id="saudacao"></h1>
+        <h2>Algumas funções uteis para você</h2>
+
+    </header>
+
+    <main>
+
+        <div class="dinamico">
+
+            <div id="usuarios">
+
+                <p class="titulo_usuarios">Uma lista dos nossos candidatos<p>
+
+                <ul id="usuarios_listados">
+
+                </ul>
+            </div>
+    
+
+
+            <div id="grafico">
+
+                <h2>Um Resumo das habilidades dos nossos candidatos</h2>
+
+                <canvas id="grafico_tecnologias"></canvas>
+
+
+
+            </div>
+
+            
+
+
+        </div>
+
+
+        <div class="acoes_empresa">
+
+            <div id="checar_vagas">
+
+                <p>Clique aqui para checar suas vagas </p>
+
+
+            </div>
+
+
+            <div id="criar_vaga">
+
+                <p>Clique aqui para criar uma vaga</p>
+
+            </div>
+
+
+
+            <div id="editar_perfil">
+
+                <p>Clique aqui para editar seu perfil</p>
+
+            </div>
+
+
+
+
+            <div id="remover_perfil">
+
+                <p>Clique aqui para deletar seu perfil</p>
+
+            </div>
+
+            
+
+            
+        </div>
+
+
+      
+
+        <a href="index.html">Retornar</a>
+
+        <div id="modal_remover" class="modal">
+
+            <div class="modal_conteudo">
+
+                <p>Quer apagar seu perfil? Essa ação é irreversível.</p>
+
+                <button id="btn_apagar">Apagar perfil</button>
+
+            </div>
+
+        </div>
+
+
+
+    </main>
+
+
+
+
+
+    <div id="modal_vaga" class="modal">
+
+        <div class="modal_conteudo">
+
+            <h2>Criar nova vaga</h2>
+
+            <form id="form_vaga">
+
+                <label for="nome_vaga">Nome</label>
+                <input type="text" name="nome_vaga" id="nome_vaga" required>
+
+                <label for="descricao_vaga">Descrição</label>
+                <input type="text" name="descricao_vaga" id="descricao_vaga" required>
+
+                <label  for="especialidades_vaga">Especialidades</label>
+                <div id="especialidades_vaga" ></div>
+
+                <p class="mensagem_erro" id="erro_especialidade">
+                    Selecione ao menos uma especialidade
+                </p>
+
+                <button type="submit">Criar vaga</button>
+                
+            </form>
+
+            
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div id="info_usuario"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="../../dist/Menu_empresa.bundle.js"></script>
+
+</body>
+</html>

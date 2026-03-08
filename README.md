@@ -34,7 +34,7 @@
 
 --> Tecnologias usadas:
 
-        Groovy , java 21 , Gradle, Spock
+        Groovy , java 21 , Gradle, Spock, webcrawler , html, css, Typescrypt
         
 --> Funcionalidades
 
@@ -47,4 +47,14 @@
         - listar todos os cadastros (necessita senha admin)
 
         -Listar todos os seus matchs confirmados (empresa e candidato)
+
+
+
+--> Adesão FrontEnd
+
+        - É possivel rodar uma versao do projeto desenvolvida em html pelo arquivo index.html encontrado em Link-Tinder-groovy-/FrontEnd/src/telas/index.html
+        
+        -Além de todas as caracteristicas do projeto padrão, é possivel editar e remover perfis  com uma iterface mais amigavel
+
+        - Ademais, foi incluido graficos para se ter um panorama das tecnologias utilizadas pelos usuários
 

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Candidato</title> 
+
+    <link rel="stylesheet" href="../css/basico.css">
+    <link rel="stylesheet" href="../css/Menu.css">
+
+    <link rel="shortcut icon" href="../recursos_extras/fav.png" type="image/x-icon">
+
+</head>
+<body>
+
+    <header> 
+
+        <h1 id="saudacao"></h1>
+        <h2>Algumas funções uteis para você</h2>
+
+    </header>
+
+    <main>
+
+        <div class="dinamico">
+
+            <div id="usuarios">
+
+                <p class="titulo_usuarios">Uma lista de nossas empresas<p>
+
+                <ul id="usuarios_listados">
+
+                </ul>
+            </div>
+    
+
+
+            <div id="grafico">
+
+                <h2>Um Resumo das areas que nossas empresas buscam</h2>
+
+                <canvas id="grafico_tecnologias"></canvas>
+
+
+
+            </div>
+
+            
+
+
+        </div>
+
+
+        <div class="acoes_candidato">
+
+            <div id="checar_vagas">
+
+                <p>Clique aqui para checar as vagas disponiveis </p>
+
+
+            </div>
+
+
+
+
+
+            <div id="editar_perfil">
+
+                <p>Clique aqui para editar seu perfil</p>
+
+            </div>
+
+
+
+
+            <div id="remover_perfil">
+
+                <p>Clique aqui para deletar seu perfil</p>
+
+            </div>
+
+            
+
+            
+        </div>
+
+
+      
+
+        <a href="index.html">Retornar</a>
+
+
+        <div id="modal_remover" class="modal">
+
+            <div class="modal_conteudo">
+
+                <p>Quer apagar seu perfil? Essa ação é irreversível.</p>
+
+                <button id="btn_apagar">Apagar perfil</button>
+
+            </div>
+
+        </div>
+
+
+        
+
+
+
+    </main>
+
+
+
+
+    <div id="info_usuario"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="../../dist/Menu_candidato.bundle.js"></script>
+
+</body>
+</html>

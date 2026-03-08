@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Empresa</title>
+
+    <link rel="shortcut icon" href="../recursos_extras/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/basico.css">
+    <link rel="stylesheet" href="../css/Cadastro.css">
+
+    
+</head>
+<body>
+
+    <header>
+        <h1>Edite as informações da sua empresa</h1>
+        
+    </header>
+
+
+    <main>
+
+        <form action="" id="formulario_cadastro_empresa">
+
+            <div class="entrada_cadastro">
+
+            
+
+                
+                <div class="container">
+                    <label for="nome_empresa">Insira o nome da Empresa</label>
+                    <input type="text" id="nome_empresa" name="nome_empresa" required>
+
+                    <label for="descricao">Informe uma descricao para a empresa</label>
+                    <input type="text" name="descricao" id="descricao" required>
+
+
+                    <label for="pais">Informe o País de atuação</label>
+                    <input type="text" id="pais" name="pais" required>
+
+
+                    <label for="email_empresa">Informe o email de contato</label>
+                    <input type="text" id="email_empresa" name="email_empresa" required>
+
+                    
+
+                    <label for="cep_empresa">Informe o CEP da empresa</label>
+                    <input type="text" id="cep_empresa" name="cep_empresa" required>
+
+                    
+
+                </div>
+
+
+
+                <div class="container">
+
+
+                    <label for="estado">Escolha o estado da empresa:</label>
+                    <select id="estado" name="estado" required>
+
+                    </select>
+
+                    <label for="especialidades_container">Escolha Especialidades que a empresa busca:</label>
+                    <div id="especialidades_container">
+            
+                    </div>
+
+
+
+                    <div class="container_erros">
+                        <p class="mensagem_erro" id="cep_invalido" >O CEP informado não possui um formato valido</p>
+                        <p class="mensagem_erro" id="cnpj_invalido">A sua entrada nao corresponde a um valor válido de CNPJ</p>
+                        <p class="mensagem_erro" id="email_invalido">O email informado não possui um formato valido</p>
+                        <p class="mensagem_erro" id="especialidade_faltante">Selecione ao menos uma especialidade</p>
+                        
+                        <h2 class="mensagem_sucesso" id="cadastro_sucesso">Cadastro realizado com sucesso</h2>
+
+                        
+
+                    </div>
+
+                
+
+                </div>
+
+            </div>
+
+
+            <div class="botoes">
+
+                <input type="submit" value="Confirmar mudanças">
+                <input type="reset" value="Limpar" id="Limpar_form">
+
+            </div>
+
+
+
+
+        </form>
+
+        <a href="Menu_empresa.html">Retornar </a>
+
+
+    </main>
+
+    <script src="../../dist/Edicao_empresa.bundle.js"></script>
+    
+</body>
+</html>

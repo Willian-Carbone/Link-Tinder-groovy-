@@ -1,0 +1,240 @@
+
+
+a{
+    color: white;
+    text-align: center;
+    
+}
+
+
+main{
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+
+#usuarios{
+
+  
+   
+    padding: 20px;
+
+    border-radius: 12px;
+
+    background: var(--cor-branco);
+
+    border: 1px solid #ddd;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+}
+
+
+.titulo_usuario::after{
+
+    content: "";
+
+    display: block;
+
+    width: 60%;
+
+    height: 2px;
+
+    background: #ddd;
+
+    margin: 8px auto 0 auto;
+
+}
+
+
+
+
+
+#usuarios_listados{
+    list-style: none;
+    border: 2px solid #444;
+    border-radius: 10px;
+    height: 100%;
+    overflow-y: auto;
+    background-color:rgb(230, 228, 225);
+}
+
+
+#usuarios_listados li{
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s;
+    color: black;
+}
+
+#usuarios_listados li:hover{
+    background-color: #e8e8e8;
+    cursor: pointer;
+}
+
+
+#info_usuario{
+
+    position: absolute;
+
+    color: black;
+
+    background-color: white;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    padding: 10px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+
+
+    font-size: 14px;
+
+    display: none;
+
+    z-index: 1000;
+
+    min-width: 180px;
+}
+
+
+
+
+#grafico{
+    
+    padding: 25px;
+
+    background: white;
+    border-radius: 10px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
+    text-align: center;
+}
+
+#usuarios,
+#grafico{
+    height: 350px;
+}
+
+
+#grafico h2{
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333;
+}
+
+#grafico canvas{
+    width: 100% !important;
+    height: 260px !important;
+}
+
+
+.dinamico{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    
+}
+
+
+.acoes_empresa,
+.acoes_candidato{
+    display: grid;
+    
+    gap: 20px;
+}
+
+.acoes_empresa{
+    grid-template-columns: repeat(4,1fr);
+}
+
+.acoes_candidato{
+    grid-template-columns: repeat(3,1fr);
+}
+
+
+.acoes_empresa div,
+.acoes_candidato div{
+
+    background: white;
+    color: black;
+
+    border-radius: 10px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.acoes_empresa div:hover,.acoes_candidato div:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+}
+
+
+
+
+
+
+
+.modal{
+   
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+    background: rgba(0,0,0,0.5);
+}
+
+
+.modal_conteudo{
+   background-color: white;
+    padding:30px;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    border: 1px solid black;
+    
+}
+
+
+#btn_apagar{
+
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#form_vaga{
+    box-shadow: none;
+}
+
+
+#especialidades_vaga label{
+    display: block;
+    margin-bottom: 6px;
+}

@@ -1,0 +1,47 @@
+form{
+    
+    width: 90%;
+    
+    
+}
+
+.container_erros{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;;
+}
+
+
+.botoes{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center
+}
+
+.entrada_cadastro{
+    display: flex;
+    gap: 10px;
+}
+
+a{
+    color: var(--cor-branco);
+    align-self: center;
+}
+
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+
+}
+

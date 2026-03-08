@@ -1,0 +1,113 @@
+
+a{
+    color:white;
+}
+
+
+#tela_vagas_empresa{
+
+max-width:1200px;
+
+display:flex;
+
+gap:30px;
+
+}
+
+#vagas_criadas,
+#usuarios_lista,
+#matchs_do_perfil{
+
+background:var(--cor-branco);
+
+color:var(--cor-secundaria);
+
+padding:20px;
+
+border-radius:var(--radius-padrao);
+
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+
+flex:1;
+
+}
+
+ul{
+
+list-style:none;
+
+margin-top:15px;
+
+max-height:400px;
+
+overflow-y:auto;
+
+}
+
+li{
+
+border-bottom:1px solid #e5e7eb;
+
+padding:12px 0;
+
+cursor:pointer;
+
+}
+
+li:hover{
+
+background:#f3f4f6;
+
+border-radius:var(--radius-padrao);
+
+padding-left:5px;
+
+transition:var(--transicao-padrao);
+
+}
+
+#curtir_candidatos{
+
+margin-top:15px;
+
+padding:10px;
+
+border:none;
+
+border-radius:var(--radius-padrao);
+
+background:var(--cor-primaria);
+
+color:white;
+
+font-weight:600;
+
+cursor:pointer;
+
+}
+
+
+#info_usuario{
+
+    position: absolute;
+
+    color: black;
+
+    background-color: white;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    padding: 10px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+
+    font-size: 14px;
+
+    display: none;
+
+    z-index: 1000;
+
+    min-width: 180px;
+}

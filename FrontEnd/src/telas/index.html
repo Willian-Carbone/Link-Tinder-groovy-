@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkeTinder</title>
+
+    <link rel="stylesheet" href="../css/basico.css">
+    
+
+    <link rel="shortcut icon" href="../recursos_extras/fav.png" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>Bem vindo ao LinkETinder</h1>
+        <h2>A plataforma numero 1 de contratações as cegas</h2>
+
+    </header>
+
+
+
+    <main>
+        <form action="" id="formulario_login">
+
+            <p>Realize seu login</p>
+
+            <div class="login">
+
+                <label for="entrada_login">Informe seu CPF ou CNPJ cadastrado</label>
+                <input type="text"  id="entrada_login" name="entrada" class="animacao_erro" required>
+
+
+            </div>
+
+            <p class="mensagem_erro" id="entrada_invalida">A sua entrada nao corresponde a um valor válido de CPF ou CNPJ , tente outro valor</p>
+            <p class="mensagem_erro" id="cadastro_inexistente">Não existe uma conta registrada com as informações dadas</p>
+
+            <input type="submit"  value="Confirmar">
+
+
+            <p>Ou se preferir, crie um novo perfil</p>
+
+            <a href="Cadastro_Candidato.html"> Cadastrar um candidato</a>
+            <a href="Cadastro_Empresa.html"> Cadastrar uma empresa</a>
+
+        
+
+        </form>
+
+        
+
+    </main>
+
+    <script src="../../dist/index.bundle.js"></script>
+    
+</body>
+</html>

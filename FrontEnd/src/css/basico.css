@@ -1,0 +1,199 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+:root {
+    --cor-primaria: #7C3AED;
+    --cor-secundaria: #111827;
+    --cor-branco: #FFFFFF;
+    --cor-cinza: #9CA3AF;
+
+    --fonte-principal: 'Montserrat', sans-serif;
+
+    --radius-padrao: 12px;
+    --transicao-padrao: 0.3s ease;
+}
+
+
+
+
+h1,h2{
+    text-align: center;
+}
+
+
+
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+
+
+
+body {
+
+    font-family: var(--fonte-principal);
+    height: 100vh;
+    width: 100vw;
+
+    background: linear-gradient(135deg, var(--cor-secundaria), var(--cor-primaria));
+
+    color: var(--cor-branco);
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    
+}
+
+form {
+    background: white;
+    color: var(--cor-secundaria);
+    padding: 40px;
+    border-radius: var(--radius-padrao);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 350px;
+}
+
+
+
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--cor-cinza);
+}
+
+p {
+    font-size: 1rem;
+    color: var(--cor-cinza);
+}
+
+
+
+
+
+input {
+    padding: 10px;
+    border-radius: var(--radius-padrao);
+    border: 1px solid var(--cor-cinza);
+    outline: none;
+    font-family: var(--fonte-principal);
+}
+
+input:focus {
+    border-color: var(--cor-primaria);
+}
+
+
+a {
+    
+    text-decoration: none;
+    transition: var(--transicao-padrao);
+}
+
+a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+    
+}
+
+
+
+
+input.erro {
+    border-color: red;
+    box-shadow: 0 0 5px red;
+}
+
+.mensagem_sucesso{
+    color:green;
+    display: none;
+}
+
+
+.mensagem_erro{
+    color: red;
+    display: none;
+    
+}
+
+.container_erros{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    
+}
+
+
+
+
+.emitido{
+    display: block;
+}
+
+
+.animacao-erro {
+    animation: animacao-erro 0.4s ease;
+}
+
+
+
+@keyframes animacao-erro {
+
+    0% {
+        transform: translateX(0);
+        border-color: var(--cor-cinza);
+    }
+
+    20% {
+        transform: translateX(-6px);
+        border-color: red;
+        box-shadow: 0 0 5px red;
+    }
+
+    40% {
+        transform: translateX(6px);
+    }
+
+    60% {
+        transform: translateX(-6px);
+    }
+
+    80% {
+        transform: translateX(6px);
+    }
+
+    100% {
+        transform: translateX(0);
+        border-color: red;
+        box-shadow: 0 0 5px red;
+    }
+}
+
