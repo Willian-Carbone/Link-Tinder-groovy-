@@ -1,5 +1,5 @@
 import { ESTADOS, ESPECIALIDADES ,FORMACAO} from "../codigos_logicos/tiposFixos"; 
-import { checagem_cpf,checagem_cep, checagem_email } from "../codigos_logicos/utilitarios";
+import { checagem_cpf,checagem_cep, checagem_email,validador_nome } from "../codigos_logicos/utilitarios";
 import { pegarDadosFormulario, dispararErro ,limpar_erros, aoMenosUmaCheckboxMarcada} from "./utilidades_domm";
 import { checagem_cadastro } from "../codigos_doom/localStorageControler";
 import {cadastrar_candidato} from "../codigos_doom/localStorageControler";
@@ -71,10 +71,12 @@ if(form!= null){
     let mensagem_erro_existencia = document.getElementById("cadastro_repetido")
     let mensagem_erro_email = document.getElementById("email_invalido")
     let mensagem_erro_cep = document.getElementById("cep_invalido")
+    let mensagem_erro_nome = document.getElementById("nome_invalido")
     let mensagem_erro_especialidade = document.getElementById("especialidade_faltante")
     let mensagem_sucesso = document.getElementById("cadastro_sucesso")
+    
 
-
+    let box_nome= document.getElementById("nome_candidato")
     let box_cpf= document.getElementById("cpf_candidato")
     let box_email= document.getElementById("email_candidato")
     let box_cep= document.getElementById("cep_candidato")
@@ -85,7 +87,7 @@ if(form!= null){
     
     
 
-    if (dados.cpf_candidato && dados.email_candidato && dados.cep_candidato ){
+    if (dados.cpf_candidato && dados.email_candidato && dados.cep_candidato && dados.nome_candidato){
 
         if (!checagem_cpf(dados.cpf_candidato)){
             
@@ -93,6 +95,13 @@ if(form!= null){
 
 
         }
+
+        else if(!validador_nome(dados.nome_candidato)){
+            
+            dispararErro(box_nome as HTMLElement, mensagem_erro_nome as HTMLElement);
+
+        }
+
 
         else if(checagem_cadastro(dados.cpf_candidato)){
             

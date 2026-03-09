@@ -58,6 +58,11 @@ export function nomeFormacao(codigo: string){
 
 }
 
+export function validador_nome(nome: string) : boolean{
+    return /^[A-Zà-ü]{2,}( [A-Zà-ü]{2,})+$/i.test(nome)
+
+}
+
 
 
 

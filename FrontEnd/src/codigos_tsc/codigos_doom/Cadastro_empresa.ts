@@ -1,5 +1,5 @@
 import { ESTADOS, ESPECIALIDADES } from "../codigos_logicos/tiposFixos"; 
-import { checagem_cnpj,checagem_cep, checagem_email } from "../codigos_logicos/utilitarios";
+import { checagem_cnpj,checagem_cep, checagem_email ,validador_nome} from "../codigos_logicos/utilitarios";
 import { pegarDadosFormulario, dispararErro ,limpar_erros, aoMenosUmaCheckboxMarcada} from "./utilidades_domm";
 import { checagem_cadastro } from "../codigos_doom/localStorageControler";
 import {cadastrar_empresa} from "../codigos_doom/localStorageControler";
@@ -55,12 +55,16 @@ if(form!= null){
     let mensagem_erro_email = document.getElementById("email_invalido")
     let mensagem_erro_cep = document.getElementById("cep_invalido")
     let mensagem_erro_especialidade = document.getElementById("especialidade_faltante")
+    let mensagem_erro_nome = document.getElementById("nome_invalido")
     let mensagem_sucesso = document.getElementById("cadastro_sucesso")
+    
 
 
     let box_cnpj= document.getElementById("cnpj_empresa")
     let box_email= document.getElementById("email_empresa")
     let box_cep= document.getElementById("cep_empresa")
+    let box_nome= document.getElementById("nome_empresa")
+
 
 
 
@@ -68,7 +72,7 @@ if(form!= null){
     
     
 
-    if (dados.cnpj_empresa && dados.email_empresa && dados.cep_empresa ){
+    if (dados.cnpj_empresa && dados.email_empresa && dados.cep_empresa && dados.nome_empresa ){
 
         if (!checagem_cnpj(dados.cnpj_empresa)){
             
@@ -80,6 +84,12 @@ if(form!= null){
         else if(checagem_cadastro(dados.cnpj_empresa)){
             
             dispararErro(box_cnpj as HTMLElement, mensagem_erro_existencia as HTMLElement);
+
+        }
+
+        else if(!validador_nome(dados.nome_empresa)){
+            
+            dispararErro(box_nome as HTMLElement, mensagem_erro_nome as HTMLElement);
 
         }
 

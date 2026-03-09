@@ -1,5 +1,5 @@
 import { ESTADOS, ESPECIALIDADES } from "../codigos_logicos/tiposFixos"; 
-import {checagem_cep, checagem_email } from "../codigos_logicos/utilitarios";
+import {checagem_cep, checagem_email, validador_nome } from "../codigos_logicos/utilitarios";
 import { pegarDadosFormulario, dispararErro ,limpar_erros, aoMenosUmaCheckboxMarcada} from "./utilidades_domm";
 import { capturar_usuario_logado, edicao_empresa, capturar_dados_usuario} from "../codigos_doom/localStorageControler";
 import { Empresa } from "../codigos_logicos/classes/empresa";
@@ -54,10 +54,11 @@ if(form!= null){
     let mensagem_erro_email = document.getElementById("email_invalido")
     let mensagem_erro_cep = document.getElementById("cep_invalido")
     let mensagem_erro_especialidade = document.getElementById("especialidade_faltante")
+    let mensagem_erro_nome = document.getElementById("nome_invalido")
     let mensagem_sucesso = document.getElementById("cadastro_sucesso")
 
 
-
+    let box_nome= document.getElementById("nome_empresa")
     let box_email= document.getElementById("email_empresa")
     let box_cep= document.getElementById("cep_empresa")
 
@@ -67,13 +68,19 @@ if(form!= null){
     
     
 
-    if (dados.email_empresa && dados.cep_empresa ){
+    if (dados.email_empresa && dados.cep_empresa && dados.nome_empresa ){
 
      
 
        if(!checagem_email(dados.email_empresa)){
             
             dispararErro(box_email as HTMLElement, mensagem_erro_email as HTMLElement);
+
+        }
+
+        else if(!validador_nome(dados.nome_empresa)){
+            
+            dispararErro(box_nome as HTMLElement, mensagem_erro_nome as HTMLElement);
 
         }
 

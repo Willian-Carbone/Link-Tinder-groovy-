@@ -1,7 +1,7 @@
 import { ESTADOS, ESPECIALIDADES ,FORMACAO} from "../codigos_logicos/tiposFixos"; 
-import { checagem_cep, checagem_email} from "../codigos_logicos/utilitarios";
+import { checagem_cep, checagem_email, validador_nome} from "../codigos_logicos/utilitarios";
 import { pegarDadosFormulario, dispararErro ,limpar_erros, aoMenosUmaCheckboxMarcada} from "./utilidades_domm";
-import { capturar_dados_usuario, capturar_usuario_logado, checagem_cadastro } from "../codigos_doom/localStorageControler";
+import { capturar_dados_usuario, capturar_usuario_logado, } from "../codigos_doom/localStorageControler";
 import {edicao_candidato} from "../codigos_doom/localStorageControler";
 import { Candidato } from "../codigos_logicos/classes/candidato";
 
@@ -72,15 +72,15 @@ if(form!= null){
 
     const dados = pegarDadosFormulario(form);
 
-    let mensagem_erro_formato = document.getElementById("cpf_invalido")
     
     let mensagem_erro_email = document.getElementById("email_invalido")
     let mensagem_erro_cep = document.getElementById("cep_invalido")
     let mensagem_erro_especialidade = document.getElementById("especialidade_faltante")
+    let mensagem_erro_nome = document.getElementById("nome_invalido")
     let mensagem_sucesso = document.getElementById("cadastro_sucesso")
 
 
-    let box_cpf= document.getElementById("cpf_candidato")
+    let box_nome= document.getElementById("nome_candidato")
     let box_email= document.getElementById("email_candidato")
     let box_cep= document.getElementById("cep_candidato")
 
@@ -90,13 +90,21 @@ if(form!= null){
     
     
 
-    if ( dados.email_candidato && dados.cep_candidato ){
+    if ( dados.email_candidato && dados.cep_candidato && dados.nome_candidato){
 
+       
 
 
         if(!checagem_email(dados.email_candidato)){
             
             dispararErro(box_email as HTMLElement, mensagem_erro_email as HTMLElement);
+
+        }
+
+        else if(!validador_nome(dados.nome_candidato)){
+            
+            dispararErro(box_nome as HTMLElement, mensagem_erro_nome as HTMLElement);
+            
 
         }
 
@@ -111,7 +119,6 @@ if(form!= null){
 
         else{
             mensagem_sucesso?.classList.add("emitido");
-
             edicao_candidato(dados,container_especialidades, usuario);
             
 
