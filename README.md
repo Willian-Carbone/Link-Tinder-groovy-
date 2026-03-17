@@ -62,11 +62,11 @@
 
 --> Adesão de modelagem de banco de dados
 
-    - o modelo foi desenvolvido utilizando a ferramenta [dbdiagram.io](https://dbdiagram.io/).
+- O modelo foi desenvolvido utilizando a ferramenta [dbdiagram.io](https://dbdiagram.io/).
 
-    -  o arquivo de criação das entidades e relacionamentos pode ser encontrado na raiz do projeto: [comandosCriacao.sql](./comandosCriacao.sql)
+- O arquivo de criação das entidades e relacionamentos pode ser encontrado na raiz do projeto: [comandosCriacao.sql](./comandosCriacao.sql)
 
-    ![Diagrama do Banco de Dados](imagensREADME/diagramaBancoDados.png)
+![Diagrama do Banco de Dados](imagensREADME/diagramaBancoDados.png)
 
 
     
