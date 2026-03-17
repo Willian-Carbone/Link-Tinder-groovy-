@@ -58,3 +58,16 @@
 
         - Ademais, foi incluido graficos para se ter um panorama das tecnologias utilizadas pelos usuários, além de informações sobre afinidade entre vaga X candidato e candidato x empresa
 
+
+
+--> Adesão de modelagem de banco de dados
+
+    - o modelo foi desenvolvido utilizando a ferramenta [dbdiagram.io](https://dbdiagram.io/).
+
+    -  o arquivo de criação das entidades e relacionamentos pode ser encontrado na raiz do projeto: [comandosCriacao.sql](./comandosCriacao.sql)
+
+    ![Diagrama do Banco de Dados](imagensREADME/diagramaBancoDados.png)
+
+
+    
+
