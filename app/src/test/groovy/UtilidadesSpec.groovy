@@ -1,14 +1,16 @@
 
 import spock.lang.Specification
 
-import Metodos.Metodos
+import Metodos.Utilidades
 
-class MetodosSpec extends Specification {
+import java.awt.image.AbstractMultiResolutionImage
+
+class UtilidadesSpec extends Specification {
 
     def "Teste para validar  formato do Cpf" (){
         expect:
 
-        Metodos.validador_cpf(ExemploCpf) == ValorEsperado
+        Utilidades.validadorCpf(ExemploCpf) == ValorEsperado
 
         where:
 
@@ -26,7 +28,7 @@ class MetodosSpec extends Specification {
     def "Teste para validar formato do Cnpj" (){
         expect:
 
-        Metodos.validador_cnpj(ExemploCnpj) == ValorEsperado
+        Utilidades.validadorCnpj(ExemploCnpj) == ValorEsperado
 
         where:
 
@@ -42,7 +44,7 @@ class MetodosSpec extends Specification {
     def "Teste para validar formato do Cep" (){
         expect:
 
-        Metodos.validador_cep(ExemploCep) == ValorEsperado
+        Utilidades.validadorCep(ExemploCep) == ValorEsperado
 
         where:
 
@@ -58,7 +60,7 @@ class MetodosSpec extends Specification {
     def "Teste para validar formato do Email" (){
         expect:
 
-        Metodos.validador_email(ExemploEmail) == ValorEsperado
+        Utilidades.validadorEmail(ExemploEmail) == ValorEsperado
 
         where:
 
@@ -75,7 +77,8 @@ class MetodosSpec extends Specification {
 
         expect:
 
-        Metodos.padronizar_entrada(ExemploEntrada) == ValorEsperado
+        Utilidades.padronizaEntrada(
+                ExemploEntrada) == ValorEsperado
 
         where:
 
@@ -91,11 +94,11 @@ class MetodosSpec extends Specification {
 
     def "Checar se a competencia existe no arquivo especialidades"(){
 
-        // sem necessidade de mock em enuns (final por natureza)
+
 
         expect:
 
-        Metodos.checar_competencia(ExemploCompetencia) == ValorEsperado
+        Utilidades.checarCompetencia(ExemploCompetencia) == ValorEsperado
 
         where:
 
@@ -115,17 +118,16 @@ class MetodosSpec extends Specification {
     def " Teste de existencia de estado + retorno de entrada normalizada(Sem Acentos , sem espaçamentos e em caixa alta)"(){
         expect:
 
-        Metodos.normalizador(ExemploDePossivelEstado) == ValorEsperado
+        Utilidades.normalizador(ExemploDePossivelEstado) == ValorEsperado
 
         where:
 
-        // qualquer estado em qualquer grafia, se existir, deve retornar se valor em caixa alta sem espaço, ignora acentuação
 
         ExemploDePossivelEstado | ValorEsperado
         "rio de janeiro" | "RIODEJANEIRO"
         "SaÕpÃuLo" | "SAOPAULO"
-        "StringAleatoria" | "O estado informado não corresponde a um estado válido"
-        "" | "O estado informado não corresponde a um estado válido"
+        "StringAleatoria" | null
+        "" | null
         null| null
 
 
@@ -133,7 +135,7 @@ class MetodosSpec extends Specification {
 
     def "Teste verificação idade minima"(){
         expect:
-        Metodos.validador_idade(PossivelIdade) == ValorEsperado
+        Utilidades.validadorIdade(PossivelIdade) == ValorEsperado
 
         where:
 
@@ -145,22 +147,40 @@ class MetodosSpec extends Specification {
         null|false
     }
 
-    def "Criptografia/Descriptografia são funcionais e reversiveis"(){
-        given :"entrada de CPF ja no padrão normalizado"
+    def "Teste nome valido"(){
+        expect:
 
-        String CpfNormalizado = "12345678901"
+        Utilidades.validadorNome(possivelNome)==valorEperado
 
+        where:
+        possivelNome|valorEperado
+        "João da silva" | true
+        "j0ao"| false
+        "12345"| false
+        "a"|false
+        "jo"| false
+        "jo p"|true
+        "  "|false
+        null|false
+    }
 
-        when: "Passo meu cpf pela criptografia e sua saida pela descriptografia"
-        String CpfCriptografado = Metodos.criptografia(CpfNormalizado)
-        String RetornoDaDescriptografia = Metodos.descriptografia(CpfCriptografado)
+    def "Teste de confirmação"() {
+        given:
 
-        then: "Saida da descriptografia deve ser identica ao cpf original"
+        def scan = new Scanner("${entrada}\n")
 
-        RetornoDaDescriptografia == CpfNormalizado
+        expect:
+        Utilidades.confirmacao("Deseja continuar?", scan) == esperado
 
+        where: "os cenários de teste são:"
+        entrada   | esperado
+        "S"       | true
+        "s"       | true
+        "N"       | false
+        "n"       | false
 
     }
+
 
 
 }

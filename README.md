@@ -2,61 +2,43 @@
 
 --> executando o projeto:
 
-        -execute Main.Groovy que pode ser encontrado em app/src/main/groovy
+execute [Main.Groovy](app/src/main/groovy/Main.groovy)
 
-        -tambem é possivel inicializar o programa digitando no terminal ./gradlew run (ou suas alternativas ./gradlew run -q  | ./gradlew run -q --console=plain)
+um menu em terminal te guiara pelas opções disponiveis
 
-        -é possivel listar candidatos ou empresas que ja estao em dados.json
-
-        -é possivel logar com cpf ou cnpj que ja estejam no mesmo arquivo
-
-        -como candidato é possivel ver vagas e dar curtidas
-
-        -como empresa é possivel responder curtidas e criar vagas
-
-
+Em paralalelo , tambem é possivel executar [index.html](FrontEnd/src/telas/index.html) , para uma versão em FRONTEND da aplicação
 
 --> Caracteristicas:
 
-    -Um terminal para cada cadastro (candidato e empresa)
-
-    - um terminal de ação para cada usuario (candidato empresa)
-    
-    - metodos.groovy contem métodos gerais e FileManeger.groovy todos os metodos que necessitam de leitura/escrita no banco de dados (json)
-    
-    -Persistencia de dados feita pro meio de Dados.json para cadastros, vagas.json para as vagas registradas, e match_registrados.json para matchs confirmados
-
-    - cada curtida possui um id criptografado (encodeBase64) , que caracteriza o usuario que curtiu,mas mantem seu anonimato
-
-    -existenica de testes uniarios cobrindo toda a parte essencial do codigo
-
-    -Alta taxa de desacoplamento
+    Um sistema MVP que simula uma plataforma de contratações as cegas, com um sistema integrado de registro, matchs ,criação de vagas e curtidas, com CRUD completo de perfis e vagas,
+    possuindo cobertura de teste uniários e integração com spock para garantir a integridade e controle dos dados no desenvolvimento do sistema
 
 --> Tecnologias usadas:
 
-        Groovy , java 21 , Gradle, Spock, webcrawler , html, css, Typescrypt
+-Groovy
+-java 21
+-Gradle
+-Spock
+-webcrawler
+-html
+-css
+-Typescrypt
+-PostgreSQL
         
 --> Funcionalidades
 
-        - Adicionar cadastros (empresa e candidato)
+        -Funcionalidade de candidato e empresa:
+            CRUD completo de perfil
+            listar usuarios da categoria oposto pelos filtros informados 
+            listar matchs confirmados
+
+        -Funcionalidaes Empresa
+            CRUD completo para vagas
+            e curtir candidados que curtiram uma vaga da sua empresa
         
-        - como empresa,listar suas vagas , adicionar vagas e curtir candidados que curtiram uma vaga pela sua empresa
-        
-        -como candidato, listar todas as vagas correntes e curtir vagas
-        
-        - listar todos os cadastros (necessita senha admin)
+        -Funcionalidade Candidato
+            curtir vagas de empresas cadastradas
 
-        -Listar todos os seus matchs confirmados (empresa e candidato)
-
-
-
---> Adesão FrontEnd
-
-        - É possivel rodar uma versao do projeto desenvolvida em html pelo arquivo index.html encontrado em Link-Tinder-groovy-/FrontEnd/src/telas/index.html
-        
-        -Além de todas as caracteristicas do projeto padrão, é possivel editar e remover perfis  com uma iterface mais amigavel
-
-        - Ademais, foi incluido graficos para se ter um panorama das tecnologias utilizadas pelos usuários, além de informações sobre afinidade entre vaga X candidato e candidato x empresa
 
 
 
@@ -64,7 +46,7 @@
 
 - O modelo foi desenvolvido utilizando a ferramenta [dbdiagram.io](https://dbdiagram.io/).
 
-- O arquivo de criação das entidades e relacionamentos pode ser encontrado na raiz do projeto: [comandosCriacao.sql](./comandosCriacao.sql)
+- O arquivo de criação das entidades e relacionamentos pode ser encontrado na raiz do projeto: [comandosCriacaoBancoDados.sql](app/src/main/resources/comandosCriacaoBancoDados.sql)
 
 ![Diagrama do Banco de Dados](imagensREADME/diagramaBancoDados.png)
 

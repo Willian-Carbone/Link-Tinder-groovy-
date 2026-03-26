@@ -1,63 +1,68 @@
 package Terminais
 
-import Enuns.Especialidades
-import Enuns.Estados
-import Metodos.FileManager
-import Metodos.Metodos
+import Enuns.*
+import Metodos.*
 import Objetos.Empresa
 
-class Cadastro_empresa {
+class CadastroEmpresa {
 
-    static void terminal_empresas (){
+    static void terminalEmpresa (GerenciadorBancoDados gbd){
+
+
 
         println("Digite o nome da empresa")
         Scanner scan = new Scanner(System.in)
         String nome = scan.nextLine()
 
-        println("Digite o CNPJ da empresa")
-        String entrada_cnpj =scan.nextLine()
-
-        while ( !Metodos.validador_cnpj(entrada_cnpj) || FileManager.cnpj_em_uso(Metodos.padronizar_entrada(entrada_cnpj))){
-            println("Insira um  cnpj válido")
-            entrada_cnpj=scan.nextLine()
+        while(!Utilidades.validadorNome(nome)){
+            println("Digite um nome de usuario válido")
+            nome = scan.nextLine()
         }
 
-        String cnpj_padronizado= Metodos.padronizar_entrada(entrada_cnpj)
+        println("Digite o CNPJ da empresa")
+        String entradaCnpj =scan.nextLine()
+
+        while ( !Utilidades.validadorCnpj(entradaCnpj) || gbd.cnpjEmUso(entradaCnpj)){
+            println("O cnpj informado não esta disponivel para cadastro ,tente novamente com outro")
+            entradaCnpj=scan.nextLine()
+        }
+
+        String cnpjPadronizado= Utilidades.padronizaEntrada(entradaCnpj)
 
         println("Digite o email comercial da empresa")
         String email = scan.nextLine()
 
-        while (!Metodos.validador_email(email)){
-            println("Insira um email válido")
+        while (!Utilidades.validadorEmail(email) || gbd.emailEmUso(email)){
+            println("Insira um email válido que não estaja sendo usado")
             email = scan.nextLine()
         }
         println("Informe uma breve descrição da empresa")
         String desc= scan.nextLine()
 
         println("Insira o país de atuação da empresa")
-        String pais = scan.nextLine()  // ideia de validação descartada
+        String pais = scan.nextLine()
 
         println("Insira o cep da empresa")
         String cep = scan.nextLine()
 
-        while (!Metodos.validador_cep(cep)){
+        while (!Utilidades.validadorCep(cep)){
             println ("Insira um cep válido")
             cep=scan.nextLine()
         }
 
-        String cep_padronizado = Metodos.padronizar_entrada(cep)
+        String cepPadronizado = Utilidades.padronizaEntrada(cep)
 
 
         println("insira o estado de atuação")
-        String possivel_estado = scan.nextLine()
+        String possivelEstado = scan.nextLine()
 
-        while(Metodos.normalizador(possivel_estado)==null) {
+        while(Utilidades.normalizador(possivelEstado)==null) {
             println("Insira um estado existente")
-            possivel_estado = scan.next()
+            possivelEstado = scan.next()
         }
 
 
-        Estados estado_confirmado = Estados.valueOf(Metodos.normalizador(possivel_estado))
+        Estados estadoConfirmado = Estados.valueOf(Utilidades.normalizador(possivelEstado))
 
 
 
@@ -82,7 +87,7 @@ class Cadastro_empresa {
         while (especialidade != "FIM" || competencias.size() == 0){
 
 
-                if (Metodos.checar_competencia(especialidade)){
+                if (Utilidades.checarCompetencia(especialidade)){
 
                     Especialidades espec = Especialidades.valueOf(especialidade)
                     if (!competencias.contains(espec)){
@@ -103,9 +108,11 @@ class Cadastro_empresa {
 
         println("Empresa cadastrada com sucesso")
 
-        Empresa cadastrado = new Empresa (nome,cnpj_padronizado,pais,cep_padronizado,email,estado_confirmado,desc,competencias)
+        Empresa cadastrado = new Empresa (nome,cnpjPadronizado,pais,cepPadronizado,email,estadoConfirmado,desc,competencias)
 
-        FileManager.adicionar(cadastrado,"Objetos.Empresa")
+        gbd.registrarEmpresa(cadastrado)
+
+
 
 
 

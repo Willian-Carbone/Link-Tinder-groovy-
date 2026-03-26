@@ -32,8 +32,11 @@ dependencies {
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation libs.spock.core
     testImplementation libs.junit
+    testImplementation 'com.h2database:h2:2.2.224'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.postgresql:postgresql:42.7.2'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

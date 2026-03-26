@@ -10,8 +10,6 @@ class Vaga {
     String descricao
     String contratante
     ArrayList<Especialidades> requisitos
-    ArrayList <String > curtidas
-
 
 
 }

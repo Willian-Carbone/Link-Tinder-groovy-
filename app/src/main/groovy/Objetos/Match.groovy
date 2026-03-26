@@ -4,7 +4,7 @@ import groovy.transform.Canonical
 
 @Canonical
 
-class Curtida {
+class Match {
     Object candidato
     Object empresa
 

@@ -1,33 +1,36 @@
 package Terminais
-
-import Enuns.Especialidades
-import Enuns.Estados
-import Metodos.FileManager
-import Metodos.Metodos
+import Enuns.*
+import Metodos.*
 import Objetos.Candidato
 
-class Cadastro_candidato {
+class CadastroCandidato {
 
-    static void terminal_candidatos (){
+    static void terminalCandidatos (GerenciadorBancoDados gbd){
         println("Digite o nome do candidato")
         Scanner scan = new Scanner(System.in)
         String nome = scan.nextLine()
+        
+        while(!Utilidades.validadorNome(nome)){
+            println("Digite um nome de usuario válido")
+            nome = scan.nextLine()
+        }
+        
 
         println("Digite o cpf do candidato")
-        String entrada_cpf =scan.nextLine()
+        String entradaCpf =scan.nextLine()
 
-        while ( !Metodos.validador_cpf(entrada_cpf) || FileManager.cpf_em_uso(Metodos.padronizar_entrada(entrada_cpf))){
-            println("Insira um cpf válido")
-            entrada_cpf=scan.nextLine()
+        while ( !Utilidades.validadorCpf(entradaCpf) || gbd.cpfEmUso(Utilidades.padronizaEntrada(entradaCpf))){
+            println("O  cpf informado não esta válido para cadastro, tente novamente com outro")
+            entradaCpf=scan.nextLine()
         }
 
-        String cpf_formatado = Metodos.padronizar_entrada(entrada_cpf)
+        String cpfFormatado = Utilidades.padronizaEntrada(entradaCpf)
 
         println("Digite o email do candidato")
         String email = scan.nextLine()
 
-        while (!Metodos.validador_email(email)){
-            println("Insira um email válido")
+        while (!Utilidades.validadorEmail(email) || gbd.emailEmUso(email)){
+            println("Insira um email válido que não esteja em uso")
             email = scan.nextLine()
         }
         println("Informe uma breve descrição do candidato")
@@ -35,7 +38,7 @@ class Cadastro_candidato {
 
         println("Informe a idade do candidato")
         String idade = scan.nextLine()
-        while (!Metodos.validador_idade(idade)){
+        while (!Utilidades.validadorIdade(idade)){
             println("Insira uma idade válida e maior que 18 anos")
             idade=scan.nextLine()
         }
@@ -44,25 +47,25 @@ class Cadastro_candidato {
         String cep = scan.nextLine()
 
 
-        while (!Metodos.validador_cep(cep) ){
+        while (!Utilidades.validadorCep(cep) ){
             println ("Insira um cep válido")
             cep=scan.nextLine()
         }
 
-        String cep_padronizado= Metodos.padronizar_entrada(cep)
+        String cepPadronizado= Utilidades.padronizaEntrada(cep)
 
 
 
         println("insira o estado de atuação")
-        String possivel_estado = scan.nextLine()
+        String possivelEstado = scan.nextLine()
 
-        while(Metodos.normalizador(possivel_estado)==null) {
+        while(!Utilidades.normalizador(possivelEstado)) {
             println("Insira um estado existente")
-            possivel_estado = scan.next()
+            possivelEstado = scan.nextLine()
         }
 
 
-        Estados estado_confirmado = Estados.valueOf(Metodos.normalizador(possivel_estado))
+        Estados EstadoConfirmado = Estados.valueOf(Utilidades.normalizador(possivelEstado))
 
 
 
@@ -87,7 +90,7 @@ class Cadastro_candidato {
         while (especialidade != "FIM" || competencias.size() == 0){
 
 
-            if (Metodos.checar_competencia(especialidade)){
+            if (Utilidades.checarCompetencia(especialidade)){
 
                 Especialidades espec = Especialidades.valueOf(especialidade)
                 if (!competencias.contains(espec)){
@@ -108,9 +111,11 @@ class Cadastro_candidato {
 
         println("Candidato cadastrado com sucesso")
 
-        Candidato cadastrado = new Candidato (nome,cpf_formatado,Integer.parseInt(idade),email,cep_padronizado,estado_confirmado,desc,competencias)
+        Candidato cadastrado = new Candidato (nome,cpfFormatado,Integer.parseInt(idade),email,cepPadronizado,EstadoConfirmado,desc,competencias)
 
-        FileManager.adicionar(cadastrado,"Objetos.Candidato")
+        gbd.registrarCandidato(cadastrado)
+
+
 
     }
 }
