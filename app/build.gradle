@@ -58,7 +58,7 @@ tasks.named('test') {
     outputs.upToDateWhen { false }
 
     testLogging {
-        // explicita os testes e seus resultados no terminal
+
         events "passed", "skipped", "failed", "standardOut", "standardError"
         showStandardStreams = true
         exceptionFormat = "full"
@@ -68,7 +68,7 @@ tasks.named('test') {
 }
 
 run {
-    // faz a ativação do main por comando aceiatr entradas , remover se necessario
+
     standardInput = System.in
 
 }

@@ -224,7 +224,7 @@ class GerenciadorBancoDadosSpec extends Specification {
 
     }
 
-    def"teste insercao curtida"(){
+    def"teste insercao match"(){
         given: "uma empresa cadastrada, um candidato cadastrado , e uma vaga cadastrada"
 
 
@@ -241,7 +241,7 @@ class GerenciadorBancoDadosSpec extends Specification {
 
         gbd.registrarMatch(c.getCpf(),emp.getCnpj(),idVaga)
 
-        then:"uma iha deve ser criada em matchs, com as informaçoes corretas"
+        then:"uma linha deve ser criada em matchs, com as informaçoes corretas"
 
         GroovyRowResult linha = sqlH2.firstRow "SELECT * FROM matchs WHERE empresa=? AND candidato=? AND vaga=?",[emp.getCnpj(),c.getCpf(),idVaga]
 
@@ -269,7 +269,7 @@ class GerenciadorBancoDadosSpec extends Specification {
         boolean cpfJaUsado = gbd.cpfEmUso(c.getCpf())
         boolean cpfNaoUsado = gbd.cpfEmUso(cpfDisponivel)
 
-        then: "Deve retornar true para um cpf ja utilizao e false apra um disponivel"
+        then: "Deve retornar true para um cpf ja utilizao e false para um disponivel"
 
         cpfJaUsado
         !cpfNaoUsado

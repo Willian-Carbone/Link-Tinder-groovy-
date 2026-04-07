@@ -1,27 +1,28 @@
 package Terminais
+
+import Metodos.ControladorTerminal
 import Metodos.GerenciadorBancoDados
-import Metodos.Utilidades
+
 import groovy.sql.GroovyRowResult
 
 class TerminalEdicaoEmpresa {
 
-    static edicaoEmpresa(String cnpj,GerenciadorBancoDados gbd) {
+    static edicaoEmpresa(String cnpj,GerenciadorBancoDados gerenciadorBancoDados) {
 
-        GroovyRowResult infosUsuario = gbd.capturarInfos(cnpj)
-        Integer idUsuario = gbd.capturarIdUsurio(cnpj)
+        GroovyRowResult infosUsuario = gerenciadorBancoDados.capturarInfos(cnpj)
+        Integer idUsuario = gerenciadorBancoDados.capturarIdUsurio(cnpj)
         Scanner scan = new Scanner(System.in)
 
-        TerminalEdicaoBase.edicao(idUsuario, infosUsuario, gbd, scan)
+        TerminalEdicaoBase.edicao(idUsuario, infosUsuario, gerenciadorBancoDados, scan)
 
-        if (Utilidades.confirmacao("O pais do seu perfil é ${infosUsuario.pais} , deseja altera-lo?", scan)) {
-            println("Digite o novo pais do seu perfil ")
-            String pais = scan.nextLine()
-
-            gbd.trocarPaisDaEmpresa(cnpj,pais)
-
+        String escolha = ControladorTerminal.solicitarOpcao(scan, "O pais do seu perfil é ${infosUsuario.pais} , deseja altera-lo? S/N", ["S", "N"])
+        if (escolha == "S") {
+            String pais = ControladorTerminal.solicitarPais(scan)
+            gerenciadorBancoDados.trocarPaisDaEmpresa(cnpj,pais)
 
         }
 
+        println("Edição realizada com sucesso!")
 
     }
 

@@ -1,9 +1,6 @@
 
 import spock.lang.Specification
-
 import Metodos.Utilidades
-
-import java.awt.image.AbstractMultiResolutionImage
 
 class UtilidadesSpec extends Specification {
 
@@ -73,11 +70,11 @@ class UtilidadesSpec extends Specification {
         null| false
     }
 
-    def "Teste de metodo que remove nao digitos"(){
+    def "Deve remover não digitos de uma string"(){
 
         expect:
 
-        Utilidades.padronizaEntrada(
+        Utilidades.padronizaInformacoesParaBancoDados(
                 ExemploEntrada) == ValorEsperado
 
         where:
@@ -98,7 +95,7 @@ class UtilidadesSpec extends Specification {
 
         expect:
 
-        Utilidades.checarCompetencia(ExemploCompetencia) == ValorEsperado
+        Utilidades.checarSeCompetenciaExiste(ExemploCompetencia) == ValorEsperado
 
         where:
 
@@ -115,10 +112,10 @@ class UtilidadesSpec extends Specification {
 
     }
 
-    def " Teste de existencia de estado + retorno de entrada normalizada(Sem Acentos , sem espaçamentos e em caixa alta)"(){
+    def "Deve retornar o nome do estado (sem espaços+ sem acentos+ caixa Alta) ou nulo"(){
         expect:
 
-        Utilidades.normalizador(ExemploDePossivelEstado) == ValorEsperado
+        Utilidades.capturarEstado(ExemploDePossivelEstado) == ValorEsperado
 
         where:
 
@@ -133,9 +130,9 @@ class UtilidadesSpec extends Specification {
 
     }
 
-    def "Teste verificação idade minima"(){
+    def "Deve verificar maior idade"(){
         expect:
-        Utilidades.validadorIdade(PossivelIdade) == ValorEsperado
+        Utilidades.verificacarMaiorIdade(PossivelIdade) == ValorEsperado
 
         where:
 
@@ -147,7 +144,7 @@ class UtilidadesSpec extends Specification {
         null|false
     }
 
-    def "Teste nome valido"(){
+    def "deve retorne true para nome valido"(){
         expect:
 
         Utilidades.validadorNome(possivelNome)==valorEperado
@@ -164,22 +161,9 @@ class UtilidadesSpec extends Specification {
         null|false
     }
 
-    def "Teste de confirmação"() {
-        given:
 
-        def scan = new Scanner("${entrada}\n")
 
-        expect:
-        Utilidades.confirmacao("Deseja continuar?", scan) == esperado
 
-        where: "os cenários de teste são:"
-        entrada   | esperado
-        "S"       | true
-        "s"       | true
-        "N"       | false
-        "n"       | false
-
-    }
 
 
 

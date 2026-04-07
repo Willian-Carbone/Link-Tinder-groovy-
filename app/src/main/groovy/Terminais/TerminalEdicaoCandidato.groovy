@@ -1,45 +1,31 @@
 package Terminais
 
+import Metodos.ControladorTerminal
 import Metodos.GerenciadorBancoDados
-import Metodos.Utilidades
 import groovy.sql.GroovyRowResult
 
 
 class TerminalEdicaoCandidato {
 
-    static edicaoCandidato(String cpf,GerenciadorBancoDados gbd){
+    static edicaoCandidato(String cpf, GerenciadorBancoDados gerenciadorBancoDados) {
 
-        GroovyRowResult infosUsuario = gbd.capturarInfos(cpf)
-        Integer idUsuario = gbd.capturarIdUsurio(cpf)
+        GroovyRowResult infosUsuario = gerenciadorBancoDados.capturarInfos(cpf)
+        Integer idUsuario = gerenciadorBancoDados.capturarIdUsurio(cpf)
         Scanner scan = new Scanner(System.in)
 
-        TerminalEdicaoBase.edicao(idUsuario,infosUsuario,gbd,scan)
+        TerminalEdicaoBase.edicao(idUsuario, infosUsuario, gerenciadorBancoDados, scan)
 
-        if (Utilidades.confirmacao("A idade do seu perfil é ${infosUsuario.idade} , deseja altera-la?", scan)) {
-            println("Digite a nova idade do seu perfil ")
-            String idade = scan.nextLine()
+        String escolha = ControladorTerminal.solicitarOpcao(scan, "A idade do seu perfil é ${infosUsuario.idade} , deseja altera-la? S/N", ["S", "N"])
+        if (escolha == "S") {
+            String idade = ControladorTerminal.solicitarIdadeValida(scan)
+            gerenciadorBancoDados.trocarIdadeDoCandidato(cpf, Integer.parseInt(idade))
 
-            while (!Utilidades.validadorIdade(idade)){
-                println("Insira uma idade válida e maior que 18 anos")
-                idade=scan.nextLine()
-            }
-
-            gbd.trocarIdadeDoCandidato(cpf, Integer.parseInt(idade))
         }
 
-
-
-
+        println("Edição realizada com sucesso!")
 
 
     }
-
-
-
-
-
-
-
 
 
 }

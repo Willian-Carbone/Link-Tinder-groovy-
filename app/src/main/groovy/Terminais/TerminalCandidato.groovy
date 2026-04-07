@@ -6,9 +6,8 @@ import groovy.sql.GroovyRowResult
 
 class TerminalCandidato {
 
-    static void terminalPrincipal(String cpf,GerenciadorBancoDados gdb){
+    static void terminalPrincipal(String cpf,GerenciadorBancoDados gdb,Scanner scan){
 
-        Scanner scan= new Scanner(System.in)
 
 
         println("Escolha 1 para ver vagas ou 2 para ver seus matchs,3 para editar seu perfil , 4 para exclui-lo, 5 para ver empresas ou 6 para sair")

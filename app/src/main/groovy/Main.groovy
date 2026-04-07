@@ -4,60 +4,48 @@ import Terminais.*
 
 
 
+GerenciadorBancoDados gerenciadorBanco = new GerenciadorBancoDados()
+ArrayList<String> opcoesDeEscolha =["1","2"]
 
-GerenciadorBancoDados gc = new GerenciadorBancoDados()
 
-
-println("Digite o serviço desejado, 1 para cadastro , 2 para login")
 Scanner scan = new Scanner(System.in)
-String entrada = scan.nextLine()
 
-while (entrada != "1" && entrada != "2") {
-    println("Insira um valor válido")
-    entrada = scan.nextLine()
-}
 
-switch (entrada) {
+String servico= ControladorTerminal.solicitarOpcao(scan,"Digite o serviço desejado, 1 para cadastro ou 2 para login",opcoesDeEscolha)
+
+
+switch (servico) {
 
     case "1":
-        println("Deseja cadastrar uma empresa ou candidato? , 1 para empresa ou 2 candidato")
-        entrada = scan.nextLine()
 
-        while (entrada != "1" && entrada != "2") {
-            println("Insira um valor válido")
-            entrada = scan.nextLine()
-        }
+        String cadastroSelecionado = ControladorTerminal.solicitarOpcao(scan,"Digite 1 para cadastrar uma empresa ou 2 para cadastrar um candidato",opcoesDeEscolha)
 
 
-        if (entrada == "1") {
-            CadastroEmpresa.terminalEmpresa(gc)
+        if (cadastroSelecionado == "1") {
+            CadastroEmpresa.terminalEmpresa(gerenciadorBanco,scan)
 
         } else {
 
-            CadastroCandidato.terminalCandidatos(gc)
+            CadastroCandidato.terminalCandidatos(gerenciadorBanco,scan)
         }
-
 
         break
 
 
     case "2":
-        println("Informe seu cpf para logar como empresa ou cnpj para logar como candidato")
-        String entradaId = scan.nextLine()
 
-        while ((!Utilidades.validadorCpf(entradaId) && !Utilidades.validadorCnpj(entradaId)) || (!gc.cnpjEmUso(Utilidades.padronizaEntrada(entradaId)) && !gc.cpfEmUso(Utilidades.padronizaEntrada(entradaId)))) {
-            println("A entrada informada não é valida para login, tente novamente informando outra entrada")
-            entradaId = scan.nextLine()
-        }
+        String identificador = ControladorTerminal.solicitarIdentificadorParaLogin(scan,gerenciadorBanco)
 
 
-         if (entradaId.length()!=11){
-             TerminalEmpresa.terminalPrincipal(Utilidades.padronizaEntrada(entradaId),gc)
+         if (Utilidades.validadorCnpj(identificador)){
+             TerminalEmpresa.terminalPrincipal(Utilidades.padronizaInformacoesParaBancoDados(identificador),gerenciadorBanco,scan)
          }
 
-        else (TerminalCandidato.terminalPrincipal(Utilidades.padronizaEntrada(entradaId),gc))
+        else {
+             TerminalCandidato.terminalPrincipal(Utilidades.padronizaInformacoesParaBancoDados(identificador),gerenciadorBanco,scan)
+         }
 
 
         scan.close()
 }
-2
+

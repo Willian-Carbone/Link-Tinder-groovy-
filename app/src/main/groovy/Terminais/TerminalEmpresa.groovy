@@ -9,9 +9,9 @@ import groovy.sql.GroovyRowResult
 
 
 class TerminalEmpresa {
-    static void terminalPrincipal(String cnpj,GerenciadorBancoDados gbd) {
+    static void terminalPrincipal(String cnpj,GerenciadorBancoDados gbd,Scanner scan) {
         println("digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair")
-        Scanner scan = new Scanner(System.in)
+
 
         String acao = scan.nextLine()
 
@@ -52,7 +52,7 @@ class TerminalEmpresa {
                     while (especialidade != "FIM" || competencias.size() == 0) {
 
 
-                        if (Utilidades.checarCompetencia(especialidade)) {
+                        if (Utilidades.checarSeCompetenciaExiste(especialidade)) {
 
                             Especialidades espec = Especialidades.valueOf(especialidade)
                             if (!competencias.contains(espec)) {
@@ -207,7 +207,7 @@ class TerminalEmpresa {
                             println("--------------------------------------------")
                             println("Edicão da vaga de numero ${identificador}")
 
-                            if (Utilidades.confirmacao(" Deseja deletar a vaga?", scan)){
+                            if (Utilidades.confirmarAcaoEmTerminal(" Deseja deletar a vaga?", scan)){
 
 
                                 gbd.removerVaga(identificador as Integer)
@@ -217,7 +217,7 @@ class TerminalEmpresa {
 
                             }
 
-                            if (Utilidades.confirmacao("o Nome atual da vaga é ${mapaDeVaga[identificador].nome} , deseja altera-lo?", scan)) {
+                            if (Utilidades.confirmarAcaoEmTerminal("o Nome atual da vaga é ${mapaDeVaga[identificador].nome} , deseja altera-lo?", scan)) {
                                 println("Digite o novo nome da vaga")
                                 String nome = scan.nextLine()
 
@@ -227,7 +227,7 @@ class TerminalEmpresa {
 
                             }
 
-                            if (Utilidades.confirmacao("a descrição atual da vaga é ${mapaDeVaga[identificador].descricao} , deseja altera-la?", scan)) {
+                            if (Utilidades.confirmarAcaoEmTerminal("a descrição atual da vaga é ${mapaDeVaga[identificador].descricao} , deseja altera-la?", scan)) {
                                 println("Digite a nova descricao da vaga")
                                 String desc = scan.nextLine()
 

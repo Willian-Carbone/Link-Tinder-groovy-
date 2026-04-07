@@ -15,29 +15,25 @@ abstract class Utilidades {
         return (nome ==~ /(?U)^\p{L}{2,} [\p{L} ]+$/)
     }
 
-    static boolean confirmacao(String mensagem, Scanner scan) {
-        println("${mensagem} (S/N)")
-        String entrada = scan.nextLine().toUpperCase()
+    static boolean validadorCnpj (String cnpj){
+        return (cnpj ==~ /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/ || cnpj ==~ /\d{14}/)
+
+    }
+
+    static boolean validadorEmail (String email){
+        return (email ==~ /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/)
+    }
+
+    static boolean validadorCpf (String cpf){
+        return (cpf ==~ /\d{3}\.\d{3}\.\d{3}-\d{2}/ || cpf ==~ /\d{11}/)
 
 
-        while (entrada != "S" && entrada != "N") {
-            println("Entrada inválida. Por favor, insira S ou N:")
-            entrada = scan.nextLine().toUpperCase()
-        }
-
-        return entrada == "S"
     }
 
 
 
 
-
-
-
-
-
-
-    static String padronizaEntrada (String entrada){
+    static String padronizaInformacoesParaBancoDados(String entrada){
 
         if (entrada == null){
             return "Dado não informado"
@@ -50,13 +46,13 @@ abstract class Utilidades {
 
 
 
-    static boolean checarCompetencia(String competencia){
+    static boolean checarSeCompetenciaExiste(String competencia){
         return Especialidades.values().any {it.name() == competencia}
     }
 
 
 
-    static String normalizador (String estado){
+    static String capturarEstado(String estado){
 
         if(estado==null) {return null}
 
@@ -75,22 +71,9 @@ abstract class Utilidades {
 
 
 
-    static boolean validadorCnpj (String cnpj){
-        return (cnpj ==~ /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/ || cnpj ==~ /\d{14}/)
-
-    }
-
-    static boolean validadorEmail (String email){
-        return (email ==~ /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/)
-    }
-
-    static boolean validadorCpf (String cpf){
-        return (cpf ==~ /\d{3}\.\d{3}\.\d{3}-\d{2}/ || cpf ==~ /\d{11}/)
 
 
-    }
-
-    static boolean validadorIdade(String idade){
+    static boolean verificacarMaiorIdade(String idade){
         try{
             return Integer.parseInt(idade)>=18
         }
