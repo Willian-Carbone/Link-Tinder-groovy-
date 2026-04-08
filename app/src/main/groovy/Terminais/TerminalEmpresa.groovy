@@ -1,79 +1,32 @@
 package Terminais
 
 import Enuns.Especialidades
+import Metodos.ControladorTerminal
 import Metodos.GerenciadorBancoDados
-import Metodos.Utilidades
 import Objetos.Vaga
 import groovy.sql.GroovyRowResult
 
 
-
 class TerminalEmpresa {
-    static void terminalPrincipal(String cnpj,GerenciadorBancoDados gbd,Scanner scan) {
-        println("digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair")
+    static void terminalPrincipal(String cnpj, GerenciadorBancoDados gerenciadorBancoDados, Scanner scan) {
+
+        List<String> opcoesMenuEmpresa = ["1", "2", "3", "4", "5", "6", "7", "8"]
+        String opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair", opcoesMenuEmpresa)
 
 
-        String acao = scan.nextLine()
-
-        while (acao != "8") {
-
-            while (acao != "1" && acao != "2" && acao != "3" && acao != "4" && acao != "5" && acao !="6" && acao!="7")  {
-                println("Insira um valor valido")
-                acao = scan.nextLine()
-            }
+        while (opcaoSelecionada != "8") {
 
 
-            switch (acao) {
+            switch (opcaoSelecionada) {
+
                 case "1":
-                    println("informe o nome da vaga")
-                    String nome = scan.nextLine()
+                    String nomeVaga = ControladorTerminal.solicitarNomeValido(scan)
+                    String descricaoVaga = ControladorTerminal.solicitarDescricao(scan)
+                    ArrayList<Especialidades> especialidadesDaVaga = ControladorTerminal.solicitarConjuntoEspecialidadesValidas(scan)
 
-                    println("Informe uma descrição para a vaga")
-                    String desc = scan.nextLine()
+                    Vaga vaga = new Vaga(nomeVaga, descricaoVaga, cnpj, especialidadesDaVaga)
 
-
-                    ArrayList<Especialidades> competencias = new ArrayList<>()
-
-                    println("informe as habilidades necessárias para a vaga, ao menos 1 deve ser selecionada")
-
-                    println("""
-                   PT --> phyton
-                   JAV --> java
-                   Ang --> Angular
-                   Spr --> spring
-                   HT--> html
-                   Cs --> para css
-                   Fim --> saida
-                                """)
-
-                    String especialidade = scan.nextLine().toUpperCase()
-
-
-                    while (especialidade != "FIM" || competencias.size() == 0) {
-
-
-                        if (Utilidades.checarSeCompetenciaExiste(especialidade)) {
-
-                            Especialidades espec = Especialidades.valueOf(especialidade)
-                            if (!competencias.contains(espec)) {
-                                competencias.add(espec)
-                            }
-                            especialidade = scan.nextLine().toUpperCase()
-                        } else {
-
-                            println("insira um valor válido")
-                            especialidade = scan.nextLine().toUpperCase()
-
-                        }
-
-
-                    }
-
-
-                    Vaga vaga = new Vaga(nome, desc, cnpj, competencias)
-
-                    gbd.registrarVaga(vaga)
-
+                    gerenciadorBancoDados.registrarVaga(vaga)
 
                     println("Vaga adicionada com sucesso")
 
@@ -81,238 +34,124 @@ class TerminalEmpresa {
 
 
 
-
                 case "2":
 
-                    List<GroovyRowResult> minhasVagas = gbd.capturarVagasDaEmpresa(cnpj)
+                    List<GroovyRowResult> vagasDaEmpresa = gerenciadorBancoDados.capturarVagasDaEmpresa(cnpj)
 
+                    if (!vagasDaEmpresa) {
+                        println("Não foram encontradas vagas cadastradas")
+                    } else {
 
+                        vagasDaEmpresa.forEach { GroovyRowResult vaga ->
+                            ControladorTerminal.exibirVagaParaEmpresas(vaga)
 
-                    if(minhasVagas) {
+                            List<Map> candidatosQueCurtiramVaga = gerenciadorBancoDados.capturarCandidatosInteressados(vaga.id as Integer, cnpj)
 
-                        Map<String, Map> mapaDeMatch = [:]
-
-                        minhasVagas.each { vaga ->
-
-                            List<Map> candidatosCurtiramVaga = gbd.capturarCandidatosInteressados(vaga.id as Integer,cnpj)
-                            println("*************************************")
-                            println("Numero da Vaga:${vaga.id}")
-                             println("Nome da Vaga: ${vaga.nome}")
-                             println("Descrição da vaga:${vaga.descricao}")
-                            println("_________________________________________")
-
-                            println("Candidatos que curtiram a vaga e suas habilidades")
-
-                            if(candidatosCurtiramVaga) {
-
-                                candidatosCurtiramVaga.forEach {
-                                    candidato->
-                                        println("Numero do Candidato: ${candidato.id}")
-                                        println("Habilidades : ${candidato.competencias}")
-                                        println("_______________________________________")
-
-
-
-                                        mapaDeMatch[(candidato.id as String)] = [
-                                                cpf: candidato.cpf,
-                                                vagaId: vaga.id as Integer
-                                        ]
-                                }
-
-
-                            }
-
-                            else{
-                                println("Nenhum candidato demostrou interesse nessa vaga")
-                            }
-
-
-
-                        }
-
-
-                        println("Digite o numero do candidato para curti-lo devolta ou fim para sair")
-                        String decisao = scan.nextLine().toUpperCase()
-
-                        while (decisao != "FIM") {
-                            if (mapaDeMatch.containsKey(decisao)) {
-                                Map dadosParaMatch = mapaDeMatch[decisao]
-
-                                gbd.registrarMatch(dadosParaMatch.cpf as String, cnpj, dadosParaMatch.vagaId as Integer)
-
-                                println("Match realizado com sucesso para o candidato ${decisao}!")
-
-
-                                mapaDeMatch.remove(decisao)
+                            if (!candidatosQueCurtiramVaga) {
+                                println("Nenhum candidato curtiu a vaga")
                             } else {
-                                println("Identificador não encontrado ou já processado.")
-
+                                ControladorTerminal.imprimirCandidatosInteressados(candidatosQueCurtiramVaga)
                             }
 
-                            println("Digite outro ID ou 'FIM' para sair:")
-                            decisao = scan.nextLine().toUpperCase()
                         }
 
+                        Map relacaoCandidatoEVagasCurtida = ControladorTerminal.capturarCandidatosEVagasQueCurtiram(cnpj, gerenciadorBancoDados)
 
+                        if (relacaoCandidatoEVagasCurtida) {
+                            ControladorTerminal.cederOpcaoCurtirCandidatoDevolta(scan, relacaoCandidatoEVagasCurtida, gerenciadorBancoDados, cnpj)
+                        }
                     }
 
-                    else{
-                        println("Vocẽ nao possui vagas cadastradas")
-                    }
 
                     break
 
+
                 case "3":
-                    List<GroovyRowResult> minhasVagas = gbd.capturarVagasDaEmpresa(cnpj)
-                    if(minhasVagas){
+                    List<GroovyRowResult> vagas = gerenciadorBancoDados.capturarVagasDaEmpresa(cnpj)
 
-                        Map<String, Map> mapaDeVaga = [:]
+                    if (!vagas) {
+                        println("Não foram encontradas vagas registradas")
+                    } else {
 
-                        println("Foram encontradas as seguintes vagas")
+                        Map<String, Map> infosVagas = [:]
+                        vagas.forEach { GroovyRowResult vaga ->
 
-                        minhasVagas.forEach {vaga->
-                            println("-----------------------------------------")
-                            println("Numero da Vaga:${vaga.id}")
-                            println("Nome da Vaga: ${vaga.nome}")
-                            println("Descrição da vaga:${vaga.descricao}")
+                            ControladorTerminal.exibirVagaParaEmpresas(vaga)
 
-                            mapaDeVaga[(vaga.id as String)] = [
-                                    vagaId: vaga.id as Integer,
-                                    nome:vaga.nome,
-                                    descricao:vaga.descricao
+                            infosVagas[(vaga.id as String)] = [
+                                    vagaId   : vaga.id as Integer,
+                                    nome     : vaga.nome,
+                                    descricao: vaga.descricao
                             ]
+
                         }
 
-                        List<String> vagasParaEditar=[]
+                        List<String> vagasParaEditar = ControladorTerminal.escolherVagasParaEditar(scan, infosVagas)
+                        ArrayList<String> opcoesResposta = ["S", "N"]
 
-                        println("Digite o numero da vaga para coloca-la na fila de edição  ou fim para sair")
-                        String decisao = scan.nextLine().toUpperCase()
+                        vagasParaEditar.forEach { identificador ->
 
-
-                        while (decisao != "FIM") {
-                            if (mapaDeVaga.containsKey(decisao)) {
-                                if (vagasParaEditar.add(decisao)) {
-                                    println "Vaga ${decisao} adicionada à fila."
-                                } else {
-                                    println "Vaga ${decisao} já está na fila!"
-                                }
-                            } else {
-                                println "Identificador [${decisao}] não encontrado."
-                            }
-                            println "Próximo ID ou 'FIM':"
-                            decisao = scan.nextLine().trim().toUpperCase()
-                        }
-
-                        vagasParaEditar.forEach {identificador->
                             println("--------------------------------------------")
                             println("Edicão da vaga de numero ${identificador}")
 
-                            if (Utilidades.confirmarAcaoEmTerminal(" Deseja deletar a vaga?", scan)){
+                            opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "Deseja deletar a vaga? S/N", opcoesResposta)
 
-
-                                gbd.removerVaga(identificador as Integer)
-
+                            if (opcaoSelecionada == "S") {
+                                gerenciadorBancoDados.removerVaga(identificador as Integer)
                                 return
-
-
                             }
 
-                            if (Utilidades.confirmarAcaoEmTerminal("o Nome atual da vaga é ${mapaDeVaga[identificador].nome} , deseja altera-lo?", scan)) {
+                            opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "o Nome atual da vaga é ${infosVagas[identificador].nome} , deseja altera-lo? S/N", opcoesResposta)
+
+                            if (opcaoSelecionada == "S") {
                                 println("Digite o novo nome da vaga")
                                 String nome = scan.nextLine()
-
-
-                                gbd.trocarNomeDaVaga(identificador as Integer, nome)
-
+                                gerenciadorBancoDados.trocarNomeDaVaga(identificador as Integer, nome)
 
                             }
 
-                            if (Utilidades.confirmarAcaoEmTerminal("a descrição atual da vaga é ${mapaDeVaga[identificador].descricao} , deseja altera-la?", scan)) {
+                            opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "a descrição atual da vaga é ${infosVagas[identificador].descricao} , deseja altera-la? S/N", opcoesResposta)
+
+                            if (opcaoSelecionada == "S") {
                                 println("Digite a nova descricao da vaga")
                                 String desc = scan.nextLine()
-
-
-                                gbd.trocarDescricaoDaVaga(identificador as Integer, desc)
-
+                                gerenciadorBancoDados.trocarDescricaoDaVaga(identificador as Integer, desc)
 
                             }
 
+
+
+
                         }
-
                     }
 
-                    else{
-                        println("Você não possui vagas cadastradas")
-                    }
-
-                break
+                    break
 
 
 
                 case "4":
-
-                    List<GroovyRowResult> listagemMatchs = gbd.buscarMatches(cnpj)
-
-                    if(listagemMatchs){
-                        println("Os seguintes candidatos possuem um match registardo com sua empresa")
-                        println("---------------------------")
-
-                        for (match in listagemMatchs){
-
-                            println("Nome do candidato:${match.nome}")
-                            println("Descricao do candidato:${match.descricao}")
-                            println("Email de contato:${match.email}")
-                            println("idade:${match.idade}")
-                            println("Estado de atuação:${match.estado}")
-                            println("Identificador da vaga onde ocorreu o match:${match.vaga}")
-                            println("---------------------------")
-
-                        }
-                    }
-
-                    else{
-
-                        println("Não foram encontrados matchs realizados para seu perfil")
-
-                    }
-
-
-
+                    List<GroovyRowResult> listagemMatchs = gerenciadorBancoDados.buscarMatches(cnpj)
+                    ControladorTerminal.exibirMatchsParaEmpresas(listagemMatchs)
                     break
 
                 case "5":
-                    TerminalFiltro.filtragem(cnpj,gbd,scan)
+                    TerminalFiltro.filtragem(cnpj, gerenciadorBancoDados, scan)
                     break
 
 
 
                 case "6":
-
-                    TerminalEdicaoEmpresa.edicaoEmpresa(cnpj,gbd)
+                    TerminalEdicaoEmpresa.edicaoEmpresa(cnpj, gerenciadorBancoDados)
                     break
 
                 case "7":
-
-                    println("Essa ação nao poderá ser desfeita, se tiver certeza, digite seu cnpj para que seu perfil seja deletado, qualquer outra entrada retornara ")
-                    String checkDelet=scan.nextLine()
-
-                    if(checkDelet==cnpj){
-                        gbd.removerPerfil(cnpj)
-
-                        System.exit(0)
-
-                    }
-
-
+                   ControladorTerminal.solicitarRespostaRemocaoPerfil(cnpj,scan,gerenciadorBancoDados,)
                     break
 
 
             }
 
-            println("digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair")
-            acao = scan.nextLine()
-
-
+            opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair", opcoesMenuEmpresa)
 
 
         }

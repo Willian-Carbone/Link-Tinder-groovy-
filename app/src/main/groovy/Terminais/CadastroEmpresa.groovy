@@ -6,7 +6,7 @@ import Objetos.Empresa
 
 class CadastroEmpresa {
 
-    static void terminalEmpresa (GerenciadorBancoDados gerenciadorBancoDados,scan){
+    static void terminalEmpresa (GerenciadorBancoDados gerenciadorBancoDados,Scanner scan){
 
 
 

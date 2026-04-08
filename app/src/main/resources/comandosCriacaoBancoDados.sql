@@ -129,5 +129,6 @@ INSERT INTO especialidade ("sigla","nome") VALUES ('ANG','Angular');
 INSERT INTO especialidade ("sigla","nome") VALUES ('SPR','Spring');
 INSERT INTO especialidade ("sigla","nome") VALUES ('HT','Html');
 INSERT INTO especialidade ("sigla","nome") VALUES ('CS','Css');
+INSERT INTO especialidade ("sigla","nome") VALUES ('C','C++');
 
 

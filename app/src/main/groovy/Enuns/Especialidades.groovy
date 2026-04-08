@@ -7,7 +7,8 @@ enum Especialidades {
     ANG ("Angular"),
     SPR ("Spring"),
     HT ("Html"),
-    CS ("Css")
+    CS ("Css"),
+    C("C++")
 
     String valor
 
