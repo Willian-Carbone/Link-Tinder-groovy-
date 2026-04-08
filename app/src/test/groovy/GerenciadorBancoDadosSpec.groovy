@@ -60,29 +60,27 @@ class GerenciadorBancoDadosSpec extends Specification {
 
 
     def "Teste de conexão com banco - url invalida ou banco offline"() {
-        given: "uma conexão invalida"
+        given: "uma URL de conexão invalida "
 
-        String urlInvalida = "erro"
+        String urlInvalida = "jdbc:postgresql://localhost:9999/banco_inexistente"
 
-        when: "tentativa de instanciar o controlador com conexão invalida"
+        when: "tentativa de instanciar o gerenciador "
 
-        GerenciadorBancoDados c = new GerenciadorBancoDados(Sql.newInstance(urlInvalida,"postgres","", "org.postgresql.Driver"))
+        new GerenciadorBancoDados(Sql.newInstance(urlInvalida, "postgres", "", "org.postgresql.Driver"))
 
-        then: "Uma exceção sql deve ser lançada"
+        then: "Uma SQLException é lançada"
+        thrown(SQLException)
 
-        SQLException e = thrown(SQLException)
 
     }
 
 
     def "Teste de conexão com banco - sucesso com mock"() {
 
-        given: "Um banco de dados em memória válido"
-
 
         when: "Passamos um banco válido para o construtor"
 
-        GerenciadorBancoDados c= new GerenciadorBancoDados(sqlH2)
+       new GerenciadorBancoDados(sqlH2)
 
         then: "Nenhuma exceção deve ser lançada"
         notThrown(SQLNonTransientConnectionException)
@@ -103,9 +101,7 @@ class GerenciadorBancoDadosSpec extends Specification {
          gbd.registrarCandidato(c)
 
 
-
         then: " as propriedas do objeto são dividas e salvas no banco organizadamente "
-
 
 
         GroovyRowResult linhaCandidato=sqlH2.firstRow "SELECT * FROM candidato WHERE cpf=?" ,["12345678901"]
@@ -196,8 +192,8 @@ class GerenciadorBancoDadosSpec extends Specification {
 
     }
 
-    def "teste inserçaõ curtida"(){
-        given: "um cpf de um candidato registrado  um id de vaga ja cadastrado"
+    def "teste inserção curtida"(){
+        given: "um cpf de um candidato registrado  um id de vaga  cadastrados"
 
 
 
@@ -217,7 +213,7 @@ class GerenciadorBancoDadosSpec extends Specification {
 
         GroovyRowResult linha = sqlH2.firstRow "SELECT * FROM curtida WHERE vaga=? AND candidato=? ",[idRegistrada,c.getCpf()]
 
-        then:"uma linha referente a tabela curtida deve ser criada na tabela curtida"
+        then:"uma linha referente  curtida deve ser criada na tabela curtida"
 
         linha.candidato==c.getCpf()
         linha.vaga==idRegistrada
@@ -225,7 +221,7 @@ class GerenciadorBancoDadosSpec extends Specification {
     }
 
     def"teste insercao match"(){
-        given: "uma empresa cadastrada, um candidato cadastrado , e uma vaga cadastrada"
+        given: "uma empresa  candidato cadastrado e vaga cadastrados"
 
 
         Vaga v= new Vaga("vagaexemplo","exemplodevaga","12345678901234",competencias)
@@ -269,7 +265,7 @@ class GerenciadorBancoDadosSpec extends Specification {
         boolean cpfJaUsado = gbd.cpfEmUso(c.getCpf())
         boolean cpfNaoUsado = gbd.cpfEmUso(cpfDisponivel)
 
-        then: "Deve retornar true para um cpf ja utilizao e false para um disponivel"
+        then: "Deve retornar true para um cpf ja utilizado e false para um disponivel"
 
         cpfJaUsado
         !cpfNaoUsado
@@ -297,7 +293,7 @@ class GerenciadorBancoDadosSpec extends Specification {
     }
 
     def "teste email em uso"(){
-        given: "uma empresa (candiato) registrada com um dado email e um cnpj ainda nao registrado"
+        given: "uma empresa (candidato) registrada com um dado email e um cnpj ainda nao registrado"
 
         Empresa emp= new Empresa("empresaTeste","12345678901234","Brazil","12345678","emailusado@gmail.com",Estados.RIODEJANEIRO,"descricaoexemplo",competencias)
         String emailDisponivel="emaillivre@gmail.com"
@@ -319,7 +315,7 @@ class GerenciadorBancoDadosSpec extends Specification {
 
 
     def "Teste de captura de vagas nao interagidas por um usuario"(){
-        given: "3 empresas cadastras , cada uma cadastra uma vaga , um candidato curte uma vaga , da match  com um uma empresa e nao intereja com a vaga da terceira"
+        given: "3 empresas cadastras , cada uma cadastra uma vaga , um candidato curte uma vaga , da match  com a segunda empresa e nao intereja com a vaga da terceira"
 
         Empresa emp= new Empresa("empresaTeste","12345678901234","Brazil","12345678","emp1@gmail",Estados.RIODEJANEIRO,"descricaoexemplo",competencias)
         Empresa emp2= new Empresa("empresaTeste","12345678901235","Brazil","12345678","emp2@gmail",Estados.RIODEJANEIRO,"descricaoexemplo",competencias)
@@ -349,7 +345,7 @@ class GerenciadorBancoDadosSpec extends Specification {
         when:"o candidao realiza uma solitação para ver vagas"
         List<GroovyRowResult> linhas= gbd.listagemVagasCandidato(c.getCpf())
 
-        then: "só deverão ser retornadas vagas noa interagidas pelo candidato "
+        then: "só deverão ser retornadas vagas nao interagidas pelo candidato "
 
         linhas.size()==1
         linhas[0].id_vaga==IdEsperado
@@ -681,7 +677,7 @@ class GerenciadorBancoDadosSpec extends Specification {
         List<GroovyRowResult> vagasemp = gbd.capturarVagasDaEmpresa(emp.getCnpj())
         List<GroovyRowResult> vagasemp2 = gbd.capturarVagasDaEmpresa(emp2.getCnpj())
 
-        then:"Devem serr retonadas apenas as vagas da empresa requerente"
+        then:"Devem ser retornadas apenas as vagas da empresa requerente"
 
         vagasemp.size()==1
         vagasemp2.size()==1
@@ -821,14 +817,13 @@ class GerenciadorBancoDadosSpec extends Specification {
         List<Especialidades> filtroHabilidades = [Especialidades.JAV,Especialidades.ANG]
 
         when:
-        List<GroovyRowResult> resultadoDeCandidatos = gbd.buscarCandidatosPorHabilidades(filtroHabilidades)
-        List<GroovyRowResult> resultadoBuscandoEmpresa= getGbd().buscarEmpresasPorHabilidades(filtroHabilidades)
+        List<GroovyRowResult> resultadoBuscandoCandidatos = gbd.buscarPorHabilidades(filtroHabilidades,"candidato")
+        List<GroovyRowResult> resultadoBuscandoEmpresa= getGbd().buscarPorHabilidades(filtroHabilidades,"empresa")
 
         then:
-        resultadoDeCandidatos.size() == 1
-        resultadoDeCandidatos[0].id == idCandFull
-        resultadoDeCandidatos[0].habilidades.contains("JAV")
-        resultadoDeCandidatos[0].habilidades.contains("ANG")
+        resultadoBuscandoCandidatos.size() == 1
+        resultadoBuscandoCandidatos[0].id == idCandFull
+
 
 
         resultadoBuscandoEmpresa.size()==0

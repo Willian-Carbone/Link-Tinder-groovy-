@@ -58,9 +58,9 @@ class TerminalFiltro {
             List<GroovyRowResult> usuariosHabilitados
 
             if (Utilidades.validadorCnpj(identificador)) {
-                usuariosHabilitados = gerenciadorBancoDados.buscarCandidatosPorHabilidades(especialidades)
+                usuariosHabilitados = gerenciadorBancoDados.buscarPorHabilidades(especialidades,"candidato")
             } else {
-                usuariosHabilitados = gerenciadorBancoDados.buscarEmpresasPorHabilidades(especialidades)
+                usuariosHabilitados = gerenciadorBancoDados.buscarPorHabilidades(especialidades,"empresa")
             }
 
 

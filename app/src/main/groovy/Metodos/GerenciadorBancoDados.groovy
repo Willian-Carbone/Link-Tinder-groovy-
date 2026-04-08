@@ -21,6 +21,7 @@ class GerenciadorBancoDados {
 
     GerenciadorBancoDados(Sql sql = null) throws SQLException {
 
+
         try {
             if (sql) {
                 this.sql = sql
@@ -28,16 +29,19 @@ class GerenciadorBancoDados {
                 this.sql = Sql.newInstance(url, usuario, senha, driver)
             }
 
-        } catch (Exception e) {
-            throw new SQLException("Não foi possivel se conectar ao Banco de dados , tente novamente mais tarde, codigo do erro ${e.message}")
+            this.sql.connection
 
+        } catch (Exception ignored) {
+            throw new SQLException("Não foi possivel se conectar ao Banco de dados")
         }
+
+
     }
 
     private Integer registrarUsuario(String nome, String email, String cep, Estados estado, String descricao, ArrayList<Especialidades> especialidades) {
 
         def insercao = sql.executeInsert "INSERT INTO usuario (nome, email, cep, estado,descricao) VALUES (?,?,?,?,?)", [nome, email, cep, estado.getSigla(), descricao]
-        Integer idGerado = insercao[0][0]
+        Integer idGerado = insercao[0][0] as Integer
 
         especialidades.forEach { especialidade ->
             registrarEspecialidadeUsuario(idGerado, especialidade.name())
@@ -73,7 +77,7 @@ class GerenciadorBancoDados {
 
     Integer registrarVaga(Vaga vaga) {
         def insercao = sql.executeInsert "INSERT INTO vaga (nome,descricao,contratante) VALUES (?,?,?)", [vaga.getNome(), vaga.getDescricao(), vaga.getContratante()]
-        Integer idVaga = insercao[0][0]
+        Integer idVaga = insercao[0][0] as Integer
         registrarEspecialidadeVaga(idVaga, vaga.getRequisitos())
 
         return idVaga
@@ -102,7 +106,7 @@ class GerenciadorBancoDados {
 
         def mapa = sql.executeInsert "INSERT INTO curtida (vaga,candidato) VALUES (?,?)", [idVaga, cpf]
 
-        Integer idCurtida = mapa[0][0]
+        Integer idCurtida = mapa[0][0] as Integer
 
         return idCurtida
 
@@ -112,6 +116,7 @@ class GerenciadorBancoDados {
     void registrarMatch(String cpf, String cnpj, Integer idVaga) {
         sql.executeInsert "INSERT INTO matchs (empresa,candidato,vaga) VALUES (?,?,?)", [cnpj, cpf, idVaga]
     }
+
 
     boolean cpfEmUso(String cpf) {
         return sql.firstRow("SELECT 1 FROM candidato WHERE cpf = ?", [cpf]) ? true : false
@@ -201,7 +206,7 @@ class GerenciadorBancoDados {
         if (identificador.length() == 11) {
 
             GroovyRowResult candidato = sql.firstRow("SELECT candidato_id FROM candidato WHERE cpf = ?", [identificador])
-            Integer idParaDeletar = candidato.candidato_id
+            Integer idParaDeletar = candidato.candidato_id as Integer
 
             sql.withTransaction {
 
@@ -220,7 +225,7 @@ class GerenciadorBancoDados {
             GroovyRowResult empresa = sql.firstRow("SELECT empresa_id FROM empresa WHERE cnpj = ?", [identificador])
 
             if (empresa) {
-                Integer idParaDeletar = empresa.empresa_id
+                Integer idParaDeletar = empresa.empresa_id as Integer
 
                 sql.withTransaction {
 
@@ -288,11 +293,41 @@ class GerenciadorBancoDados {
 
         GroovyRowResult linhaUsuario = sql.firstRow(busca, identificador)
 
-        Integer idUsuario = linhaUsuario.id
+        Integer idUsuario = linhaUsuario.id as Integer
         return idUsuario
 
 
     }
+
+    List<GroovyRowResult> buscarPorHabilidades(List<Especialidades> habilidadesBusca, String tipo) {
+        List<String> habilidadesFormatadas = habilidadesBusca.collect { it.toString() }
+        String placeholders = habilidadesFormatadas.collect { '?' }.join(',')
+        Integer total = habilidadesFormatadas.size()
+
+
+        String tabelaRelacionada = (tipo == 'candidato') ? 'candidato' : 'empresa'
+        String idRelacionado = (tipo == 'candidato') ? 'candidato_id' : 'empresa_id'
+        String colunaIdentificacao = (tipo == 'candidato') ? 'c.cpf' : 'e.cnpj'
+        String alias = (tipo == 'candidato') ? 'c' : 'e'
+
+        String sqlConsulta = """
+        SELECT 
+            u.id, u.nome, $colunaIdentificacao,
+            STRING_AGG(DISTINCT eu.especialidade, ', ') AS habilidades
+        FROM usuario u
+        JOIN $tabelaRelacionada $alias ON u.id = ${alias}.${idRelacionado}
+        JOIN especialidade_usuario eu ON u.id = eu.usuario
+        WHERE u.id IN (
+            SELECT usuario FROM especialidade_usuario 
+            WHERE especialidade IN ($placeholders)
+            GROUP BY usuario HAVING COUNT(DISTINCT especialidade) = ?
+        )
+        GROUP BY u.id, u.nome, $colunaIdentificacao
+    """
+
+        return sql.rows(sqlConsulta, habilidadesFormatadas + [total])
+    }
+
 
     List<GroovyRowResult> capturarVagasDaEmpresa(String cnpj) {
         List<GroovyRowResult> vagas = sql.rows "SELECT * FROM vaga WHERE contratante=?", [cnpj]
@@ -392,29 +427,7 @@ class GerenciadorBancoDados {
         return sql.rows(sqlConsulta, [estado.getSigla()])
     }
 
-    List<GroovyRowResult> buscarCandidatosPorHabilidades(List<Especialidades> habilidadesBusca) {
 
-        List<String> habilidadesFormatadas = habilidadesBusca.collect { it.toString() }
-
-        String placeholders = habilidadesFormatadas.collect { '?' }.join(',')
-        Integer total = habilidadesFormatadas.size()
-
-        String sqlConsulta = """
-        SELECT 
-            u.id, u.nome, c.cpf,
-            STRING_AGG(DISTINCT eu.especialidade, ', ') AS habilidades
-            FROM usuario u
-            JOIN candidato c ON u.id = c.candidato_id
-            JOIN especialidade_usuario eu ON u.id = eu.usuario
-            WHERE u.id IN (
-                SELECT usuario FROM especialidade_usuario 
-                WHERE especialidade IN ($placeholders)
-                GROUP BY usuario HAVING COUNT(DISTINCT especialidade) = ?
-            )
-            GROUP BY u.id, u.nome, c.cpf
-        """
-        return sql.rows(sqlConsulta, habilidadesFormatadas + [total])
-    }
 
     List<GroovyRowResult> buscarEmpresasPorEstado(Estados estado) {
         String sqlConsulta = """
@@ -430,29 +443,7 @@ class GerenciadorBancoDados {
         return sql.rows(sqlConsulta, [estado.getSigla()])
     }
 
-    List<GroovyRowResult> buscarEmpresasPorHabilidades(List<Especialidades> habilidadesBusca) {
 
-        List<String> habilidadesFormatadas = habilidadesBusca.collect { it.toString() }
-
-        String placeholders = habilidadesFormatadas.collect { '?' }.join(',')
-        Integer total = habilidadesFormatadas.size()
-
-        String sqlConsulta = """
-        SELECT 
-            u.id, u.nome, e.cnpj,
-            STRING_AGG(DISTINCT eu.especialidade, ', ') AS habilidades
-        FROM usuario u
-        JOIN empresa e ON u.id = e.empresa_id
-        JOIN especialidade_usuario eu ON u.id = eu.usuario
-        WHERE u.id IN (
-            SELECT usuario FROM especialidade_usuario 
-            WHERE especialidade IN ($placeholders)
-            GROUP BY usuario HAVING COUNT(DISTINCT especialidade) = ?
-        )
-        GROUP BY u.id, u.nome, e.cnpj
-    """
-        return sql.rows(sqlConsulta, habilidadesFormatadas + [total])
-    }
 
     Integer removerVaga(Integer idDaVagaRemovida){
         sql.withTransaction {
