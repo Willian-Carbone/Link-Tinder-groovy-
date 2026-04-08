@@ -1,6 +1,6 @@
 import { checagem_cnpj,checagem_cpf } from "../codigos_logicos/utilitarios";
 import { pegarDadosFormulario, dispararErro, limpar_erros } from "./utilidades_domm";
-import { checagem_cadastro , setar_usuario} from "../codigos_doom/localStorageControler";
+import { checagem_cadastro , setar_usuario} from "./localStorageControler";
 
 
 const form = document.querySelector("#formulario_login") as HTMLFormElement;

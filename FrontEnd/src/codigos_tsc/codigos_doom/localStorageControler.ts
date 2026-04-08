@@ -1,11 +1,10 @@
-import { Candidato } from "../codigos_logicos/classes/candidato";
-import { Empresa } from "../codigos_logicos/classes/empresa";
-import { Vaga } from "../codigos_logicos/classes/vaga";
-import { ESTADOS, Formacao} from "../codigos_logicos/tiposFixos";
-import { capturarEspecialidades } from "./utilidades_domm";
-import { Match} from "../codigos_logicos/classes/Match";
-import { criptografar } from "../codigos_logicos/utilitarios";
-
+import {Candidato} from "../codigos_logicos/classes/candidato";
+import {Empresa} from "../codigos_logicos/classes/empresa";
+import {Vaga} from "../codigos_logicos/classes/vaga";
+import {ESTADOS, Formacao} from "../codigos_logicos/tiposFixos";
+import {capturarEspecialidades} from "./utilidades_domm";
+import {Match} from "../codigos_logicos/classes/Match";
+import {criptografar} from "../codigos_logicos/utilitarios";
 
 
 export function checagem_cadastro(entrada: string): boolean {
@@ -372,9 +371,7 @@ export function setar_usuario(entrada: string) :void{
 
 export function capturar_usuario_logado() : string {
 
-    const usuario_logado  = localStorage.getItem("usuario_logado") || "";
-
-    return usuario_logado;
+    return localStorage.getItem("usuario_logado") || "";
 
 }
 
@@ -391,8 +388,7 @@ export function capturar_dados_usuario(entrada :string) : Candidato | Empresa | 
         if (!dados) return;
 
         const candidatos: Candidato[] = JSON.parse(dados);
-        const candidato = candidatos.find(c => c.cpf === entrada);
-        return candidato;
+        return candidatos.find(c => c.cpf === entrada);
     }
 
     else{
@@ -400,8 +396,7 @@ export function capturar_dados_usuario(entrada :string) : Candidato | Empresa | 
         if (!dados) return;
 
         const empresas: Empresa[] = JSON.parse(dados);
-        const empresa = empresas.find(e => e.cnpj === entrada);
-        return empresa;
+        return empresas.find(e => e.cnpj === entrada);
     }
 
 
@@ -413,8 +408,7 @@ export function capturar_candidatos() : Candidato[]{
     const dados = localStorage.getItem("Candidatos");
     if (!dados) return [];
 
-    const candidatos: Candidato[] = JSON.parse(dados);
-    return candidatos;
+    return JSON.parse(dados);
 
 }
 
@@ -423,8 +417,7 @@ export function capturar_empresas() : Empresa[]{
     const dados = localStorage.getItem("Empresas");
     if(!dados) return [];
 
-    const empresas: Empresa[] = JSON.parse(dados);
-    return empresas;
+    return JSON.parse(dados);
 
 }
 
@@ -433,8 +426,7 @@ export  function capturar_vagas() : Vaga[]{
     const dados = localStorage.getItem("Vagas");
     if(!dados) return [];
 
-    const vagas: Vaga[] = JSON.parse(dados);
-    return vagas;
+    return JSON.parse(dados);
 
 
 
@@ -487,8 +479,7 @@ export function capturar_matchs() : Match[]{
     const dados = localStorage.getItem("Matchs");
     if(!dados) return [];
 
-    const matches: Match[] = JSON.parse(dados);
-    return matches;
+    return JSON.parse(dados);
 
 }
 
@@ -644,7 +635,7 @@ export function remover_candidato(identificador: string){
     localStorage.setItem("Candidatos", JSON.stringify(candidatos));
     localStorage.setItem("candidatos_tecnologias", JSON.stringify(tecnologias));
     localStorage.setItem("cadastros_candidato", String(novo_total));
-    localStorage.setItem("Matchs", JSON.stringify(novosMatchs));;
+    localStorage.setItem("Matchs", JSON.stringify(novosMatchs));
     localStorage.setItem("total_cadastros", String(novo_total_cadastros));
     localStorage.setItem("Vagas", JSON.stringify(vagas));
 

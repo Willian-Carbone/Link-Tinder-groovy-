@@ -1,6 +1,6 @@
 import { nomeEspecialidade, criptografar } from "../codigos_logicos/utilitarios";
 import { Vaga } from "../codigos_logicos/classes/vaga";
-import { capturar_vagas, capturar_usuario_logado,capturar_matchs, calcular_afinidade_vaga, capturar_dados_usuario} from "../codigos_doom/localStorageControler";
+import { capturar_vagas, capturar_usuario_logado,capturar_matchs, calcular_afinidade_vaga, capturar_dados_usuario} from "./localStorageControler";
 import { Candidato } from "../codigos_logicos/classes/candidato";
 
 

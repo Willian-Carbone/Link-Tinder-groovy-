@@ -1,22 +1,17 @@
-import{ ESPECIALIDADES,Especialidade} from "../codigos_logicos/tiposFixos";
-import { Candidato } from "../codigos_logicos/classes/candidato";
-import { nomeEspecialidade, nomeFormacao } from "../codigos_logicos/utilitarios";
-import { Empresa } from "../codigos_logicos/classes/empresa";
-import { calcular_afinidade_candidato_empresa } from "./localStorageControler";
-
-
-
+import {Especialidade, ESPECIALIDADES} from "../codigos_logicos/tiposFixos";
+import {Candidato} from "../codigos_logicos/classes/candidato";
+import {nomeEspecialidade, nomeFormacao} from "../codigos_logicos/utilitarios";
+import {Empresa} from "../codigos_logicos/classes/empresa";
+import {calcular_afinidade_candidato_empresa} from "./localStorageControler";
 
 
 export function pegarDadosFormulario(
     form: HTMLFormElement
 ): Record<string, string> {
 
-    const dados = Object.fromEntries(
+    return Object.fromEntries(
         new FormData(form).entries()
     ) as Record<string, string>;
-
-    return dados;
 }
 
 

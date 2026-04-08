@@ -1,4 +1,4 @@
-import { capturar_usuario_logado, capturar_dados_usuario,  capturar_empresas, retornar_quantidade_empresas,remover_candidato } from "../codigos_doom/localStorageControler";
+import { capturar_usuario_logado, capturar_dados_usuario,  capturar_empresas, retornar_quantidade_empresas,remover_candidato } from "./localStorageControler";
 import { criptografar , nomeEspecialidade} from "../codigos_logicos/utilitarios";
 import { ativarHoverEmpresa } from "./utilidades_domm";
 

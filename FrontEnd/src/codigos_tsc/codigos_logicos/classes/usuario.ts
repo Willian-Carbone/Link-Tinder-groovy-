@@ -10,7 +10,7 @@ export abstract class Usuario {
 
     
 
-    constructor( nome:string,descricao:string, email:string, cep:string,  estado:Estado,competencias:Especialidade[]) {
+    protected constructor(nome:string, descricao:string, email:string, cep:string, estado:Estado, competencias:Especialidade[]) {
         this.nome = nome;
         this.email = email;
         this.cep = cep;

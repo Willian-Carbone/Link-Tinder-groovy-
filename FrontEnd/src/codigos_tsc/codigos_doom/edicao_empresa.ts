@@ -1,7 +1,7 @@
 import { ESTADOS, ESPECIALIDADES } from "../codigos_logicos/tiposFixos"; 
 import {checagem_cep, checagem_email, validador_nome } from "../codigos_logicos/utilitarios";
 import { pegarDadosFormulario, dispararErro ,limpar_erros, aoMenosUmaCheckboxMarcada} from "./utilidades_domm";
-import { capturar_usuario_logado, edicao_empresa, capturar_dados_usuario} from "../codigos_doom/localStorageControler";
+import { capturar_usuario_logado, edicao_empresa, capturar_dados_usuario} from "./localStorageControler";
 import { Empresa } from "../codigos_logicos/classes/empresa";
 
 

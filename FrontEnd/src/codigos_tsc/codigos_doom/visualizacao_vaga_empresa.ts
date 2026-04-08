@@ -6,7 +6,7 @@ checar_matches_existentes,
 salvar_match,
 capturar_matchs,
 capturar_dados_usuario
-} from "../codigos_doom/localStorageControler";
+} from "./localStorageControler";
 
 import {criptografar,nomeEspecialidade,nomeFormacao} from "../codigos_logicos/utilitarios";
 
@@ -103,7 +103,6 @@ botaoMatch.addEventListener("click",()=>{
         return;
     }
 
-    const listaMatchs = document.getElementById("lista_matchs") as HTMLUListElement;
 
 
     if(!empresa) return;

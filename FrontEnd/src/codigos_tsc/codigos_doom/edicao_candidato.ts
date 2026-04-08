@@ -1,8 +1,8 @@
 import { ESTADOS, ESPECIALIDADES ,FORMACAO} from "../codigos_logicos/tiposFixos"; 
 import { checagem_cep, checagem_email, validador_nome} from "../codigos_logicos/utilitarios";
 import { pegarDadosFormulario, dispararErro ,limpar_erros, aoMenosUmaCheckboxMarcada} from "./utilidades_domm";
-import { capturar_dados_usuario, capturar_usuario_logado, } from "../codigos_doom/localStorageControler";
-import {edicao_candidato} from "../codigos_doom/localStorageControler";
+import { capturar_dados_usuario, capturar_usuario_logado, } from "./localStorageControler";
+import {edicao_candidato} from "./localStorageControler";
 import { Candidato } from "../codigos_logicos/classes/candidato";
 
 

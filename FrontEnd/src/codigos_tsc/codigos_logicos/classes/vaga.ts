@@ -1,5 +1,4 @@
 import { Especialidade } from "../tiposFixos"
-import { Candidato } from "./candidato"
 export class Vaga{
 
     nome:string

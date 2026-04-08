@@ -1,8 +1,8 @@
 import { ESTADOS, ESPECIALIDADES } from "../codigos_logicos/tiposFixos"; 
 import { checagem_cnpj,checagem_cep, checagem_email ,validador_nome} from "../codigos_logicos/utilitarios";
 import { pegarDadosFormulario, dispararErro ,limpar_erros, aoMenosUmaCheckboxMarcada} from "./utilidades_domm";
-import { checagem_cadastro } from "../codigos_doom/localStorageControler";
-import {cadastrar_empresa} from "../codigos_doom/localStorageControler";
+import { checagem_cadastro } from "./localStorageControler";
+import {cadastrar_empresa} from "./localStorageControler";
 
 
 
