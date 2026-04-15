@@ -32,5 +32,12 @@
 ![Diagrama do Banco de Dados](imagensREADME/diagramaBancoDados.png)
 
 
+## Implementação Solid
+
+- Implementação de interfaces
+- CRUDS separados por categoria
+- minimação de god classes
+
+
     
 
