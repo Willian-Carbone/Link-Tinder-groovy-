@@ -2,31 +2,42 @@ package Terminais
 
 import Enuns.Especialidades
 import Enuns.Estados
-import Metodos.ControladorTerminal
-import Metodos.GerenciadorBancoDados
-import Metodos.Utilidades
+
+import GerenciadoresDeBanco.GerenciadorUsuario
+
+import Modulos.ConversoresEntrada.ConversorParaNomeEnum
+import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.LocalizadorDadoEmEnum.LocalizadorEstado
+import Modulos.validadoresDeEntradas.ValidadorCnpj
+import Modulos.validadoresDeEntradas.ValidadorCpf
+import Modulos.validadoresDeEntradas.ValidadorEstado
 import groovy.sql.GroovyRowResult
+import groovy.sql.Sql
 
 
 class TerminalFiltro {
 
-    static filtragem(String identificador, GerenciadorBancoDados gerenciadorBancoDados, Scanner scan) {
+    static filtragem(String identificador, Sql conexao, Scanner scan) {
 
-        String escolhaFiltro = ControladorTerminal.solicitarOpcao(scan, "Digite 1 para filtar os resultados por estado ou 2 para filtra-los pelas suas habilidades ", ["1", "2"])
+        GerenciadorUsuario gerenciador= new GerenciadorUsuario(conexao)
+
+        String escolhaFiltro = RequisidorDeEntradas.solicitarOpcao(scan, "Digite 1 para filtar os resultados por estado ou 2 para filtra-los pelas suas habilidades ", ["1", "2"])
 
         if (escolhaFiltro == "1") {
 
-            Estados estadoEscolhido = ControladorTerminal.solicitarEstadoValido(scan)
+            String estadoNome = RequisidorDeEntradas.solicitarDadoBasicoValido( "ESTADO",scan,new ValidadorEstado(), new ConversorParaNomeEnum())
+            Estados estadoEscolhido = new LocalizadorEstado().capturarDadoEnum(estadoNome)
+
 
             List<GroovyRowResult> usuariosNoEstado
 
 
-            if (Utilidades.validadorCnpj(identificador)) {
-                usuariosNoEstado = gerenciadorBancoDados.buscarCandidatosPorEstado(estadoEscolhido)
+            if (new ValidadorCpf().validarDado(identificador)) {
+                usuariosNoEstado = gerenciador.buscarPorEstado(estadoEscolhido,"empresa")
             }
 
             else {
-                usuariosNoEstado = gerenciadorBancoDados.buscarEmpresasPorEstado(estadoEscolhido)
+                usuariosNoEstado = gerenciador.buscarPorEstado(estadoEscolhido,"candidato")
             }
 
 
@@ -52,15 +63,15 @@ class TerminalFiltro {
 
         else {
 
-            ArrayList<Especialidades> especialidades = ControladorTerminal.solicitarConjuntoEspecialidadesValidas(scan)
+            ArrayList<Especialidades> especialidades = RequisidorDeEntradas.solicitarConjuntoEspecialidadesValidas(scan)
 
 
             List<GroovyRowResult> usuariosHabilitados
 
-            if (Utilidades.validadorCnpj(identificador)) {
-                usuariosHabilitados = gerenciadorBancoDados.buscarPorHabilidades(especialidades,"candidato")
+            if (new ValidadorCnpj().validarDado(identificador)) {
+                usuariosHabilitados = gerenciador.buscarPorHabilidades(especialidades,"candidato")
             } else {
-                usuariosHabilitados = gerenciadorBancoDados.buscarPorHabilidades(especialidades,"empresa")
+                usuariosHabilitados =  gerenciador.buscarPorHabilidades(especialidades,"empresa")
             }
 
 

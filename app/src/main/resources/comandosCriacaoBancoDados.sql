@@ -3,65 +3,65 @@
 
 CREATE TABLE "usuario" (
    "id" SERIAL PRIMARY KEY,
-   "nome" VARCHAR(50),
-   "email"  VARCHAR(50) UNIQUE,
-   "cep" VARCHAR(8),
-   "estado" VARCHAR(2),
+   "nome" VARCHAR(50) NOT NULL,
+   "email"  VARCHAR(50) NOT NULL UNIQUE,
+   "cep" VARCHAR(8) NOT NULL,
+   "estado" VARCHAR(2) NOT NULL,
     "descricao" TEXT
  );
 
  CREATE TABLE "candidato" (
    "cpf" VARCHAR(11) PRIMARY KEY,
-   "idade" INT,
-   "candidato_id" INT
+   "idade" INT NOT NULL,
+   "candidato_id" INT NOT NULL
  );
 
  CREATE TABLE "empresa" (
    "cnpj" VARCHAR(14) PRIMARY KEY,
-   "pais" VARCHAR(15),
-   "empresa_id" INT
+   "pais" VARCHAR(15) NOT NULL,
+   "empresa_id" INT NOT NULL
  );
 
  CREATE TABLE "vaga" (
    "id" SERIAL PRIMARY KEY,
-   "nome" VARCHAR(100),
-   "descricao" TEXT,
-   "contratante" VARCHAR(14)
+   "nome" VARCHAR(100) NOT NULL,
+   "descricao" TEXT NOT NULL,
+   "contratante" VARCHAR(14) NOT NULL
  );
 
  CREATE TABLE "especialidade_vaga" (
    "id" SERIAL PRIMARY KEY,
-   "vaga" INT,
-   "especialidade" VARCHAR(5)
+   "vaga" INT NOT NULL,
+   "especialidade" VARCHAR(5) NOT NULL
  );
 
  CREATE TABLE "curtida" (
    "id" SERIAL PRIMARY KEY,
-   "vaga" INT,
-   "candidato" VARCHAR(11)
+   "vaga" INT NOT NULL,
+   "candidato" VARCHAR(11) NOT NULL
  );
 
  CREATE TABLE "estado" (
    "sigla" VARCHAR(2) PRIMARY KEY,
-   "nome" VARCHAR(20) UNIQUE
+   "nome" VARCHAR(20) UNIQUE NOT NULL
  );
 
  CREATE TABLE "especialidade" (
-   "sigla" VARCHAR(5) PRIMARY KEY,
-   "nome" VARCHAR(20) UNIQUE
+   "sigla" VARCHAR(5) PRIMARY KEY NOT NULL,
+   "nome" VARCHAR(20) UNIQUE NOT NULL
  );
 
  CREATE TABLE "especialidade_usuario" (
    "id" SERIAL PRIMARY KEY,
-   "especialidade" VARCHAR(5),
-   "usuario" INT
+   "especialidade" VARCHAR(5) NOT NULL,
+   "usuario" INT NOT NULL
  );
 
  CREATE TABLE "matchs" (
    "id" SERIAL PRIMARY KEY,
-   "empresa" VARCHAR(14),
-   "candidato" VARCHAR(11),
-   "vaga" INT
+   "empresa" VARCHAR(14) NOT NULL,
+   "candidato" VARCHAR(11) NOT NULL,
+   "vaga" INT NOT NULL
  );
 
  ALTER TABLE "usuario" ADD FOREIGN KEY ("estado") REFERENCES "estado" ("sigla") ;

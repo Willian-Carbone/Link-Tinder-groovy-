@@ -1,24 +1,27 @@
 package Terminais
 
-import Metodos.ControladorTerminal
-import Metodos.GerenciadorBancoDados
 
+import GerenciadoresDeBanco.GerenciadorEmpresa
+import GerenciadoresDeBanco.GerenciadorUsuario
+import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
 import groovy.sql.GroovyRowResult
+import groovy.sql.Sql
 
 class TerminalEdicaoEmpresa {
 
-    static edicaoEmpresa(String cnpj,GerenciadorBancoDados gerenciadorBancoDados) {
+    static edicaoEmpresa(String cnpj, Sql conexao, Scanner scan) {
 
-        GroovyRowResult infosUsuario = gerenciadorBancoDados.capturarInfos(cnpj)
-        Integer idUsuario = gerenciadorBancoDados.capturarIdUsurio(cnpj)
-        Scanner scan = new Scanner(System.in)
+        GerenciadorEmpresa gerenciador=new GerenciadorEmpresa(conexao)
 
-        TerminalEdicaoBase.edicao(idUsuario, infosUsuario, gerenciadorBancoDados, scan)
+        GroovyRowResult infosUsuario = gerenciador.capturarInformacoesPerfil(cnpj)
+        Integer idUsuario = gerenciador.capturarId(cnpj)
 
-        String escolha = ControladorTerminal.solicitarOpcao(scan, "O pais do seu perfil é ${infosUsuario.pais} , deseja altera-lo? S/N", ["S", "N"])
+        TerminalEdicaoBase.edicao(idUsuario, infosUsuario, new GerenciadorUsuario(conexao), scan ,conexao)
+
+        String escolha = RequisidorDeEntradas.solicitarOpcao(scan, "O pais do seu perfil é ${infosUsuario.pais} , deseja altera-lo? S/N", ["S", "N"])
         if (escolha == "S") {
-            String pais = ControladorTerminal.solicitarPais(scan)
-            gerenciadorBancoDados.trocarPaisDaEmpresa(cnpj,pais)
+            String pais = RequisidorDeEntradas.solicitarPais(scan)
+           gerenciador.editarPerfil(cnpj,pais)
 
         }
 

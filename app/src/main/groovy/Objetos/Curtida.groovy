@@ -4,9 +4,7 @@ import groovy.transform.Canonical
 
 @Canonical
 
-class Match {
+class Curtida {
     String cpf
-    String Cnpj
     Integer idVaga
-
 }

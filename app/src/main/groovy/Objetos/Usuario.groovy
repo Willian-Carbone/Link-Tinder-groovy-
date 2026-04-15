@@ -13,4 +13,5 @@ import groovy.transform.Canonical
     Estados estado
     String descricao
     ArrayList<Especialidades> competencias
+   Integer identificador =null
 }

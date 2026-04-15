@@ -1,17 +1,21 @@
 package Terminais
 
 import Enuns.Especialidades
-import Metodos.ControladorTerminal
-import Metodos.GerenciadorBancoDados
+import GerenciadoresDeBanco.GerenciadorCandidato
+import GerenciadoresDeBanco.GerenciadorEmpresa
+import GerenciadoresDeBanco.GerenciadorVaga
+import Modulos.GerenciadoresTerminal.ExibicaoInfos
+import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
 import Objetos.Vaga
 import groovy.sql.GroovyRowResult
+import groovy.sql.Sql
 
 
 class TerminalEmpresa {
-    static void terminalPrincipal(String cnpj, GerenciadorBancoDados gerenciadorBancoDados, Scanner scan) {
+    static void terminalPrincipal(String cnpj, Sql conexao, Scanner scan) {
 
         List<String> opcoesMenuEmpresa = ["1", "2", "3", "4", "5", "6", "7", "8"]
-        String opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair", opcoesMenuEmpresa)
+        String opcaoSelecionada = RequisidorDeEntradas.solicitarOpcao(scan, "digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair", opcoesMenuEmpresa)
 
 
         while (opcaoSelecionada != "8") {
@@ -20,13 +24,22 @@ class TerminalEmpresa {
             switch (opcaoSelecionada) {
 
                 case "1":
-                    String nomeVaga = ControladorTerminal.solicitarNomeValido(scan)
-                    String descricaoVaga = ControladorTerminal.solicitarDescricao(scan)
-                    ArrayList<Especialidades> especialidadesDaVaga = ControladorTerminal.solicitarConjuntoEspecialidadesValidas(scan)
+
+                    GerenciadorVaga gerenciadorVaga = new GerenciadorVaga(conexao)
+
+                    println("Informe o nome da Vaga")
+
+                    String nomeVaga=scan.nextLine()
+
+                    println("Informe a descrição da vaga")
+
+                    String descricaoVaga= scan.nextLine()
+
+                    ArrayList<Especialidades> especialidadesDaVaga = RequisidorDeEntradas.solicitarConjuntoEspecialidadesValidas(scan)
 
                     Vaga vaga = new Vaga(nomeVaga, descricaoVaga, cnpj, especialidadesDaVaga)
 
-                    gerenciadorBancoDados.registrarVaga(vaga)
+                    gerenciadorVaga.gravarVaga(vaga)
 
                     println("Vaga adicionada com sucesso")
 
@@ -36,29 +49,36 @@ class TerminalEmpresa {
 
                 case "2":
 
-                    List<GroovyRowResult> vagasDaEmpresa = gerenciadorBancoDados.capturarVagasDaEmpresa(cnpj)
+                    GerenciadorEmpresa gerenciador = new GerenciadorEmpresa(conexao)
+
+                    List<GroovyRowResult> vagasDaEmpresa = gerenciador.buscarVagas(cnpj)
 
                     if (!vagasDaEmpresa) {
                         println("Não foram encontradas vagas cadastradas")
                     } else {
 
-                        vagasDaEmpresa.forEach { GroovyRowResult vaga ->
-                            ControladorTerminal.exibirVagaParaEmpresas(vaga)
+                        GerenciadorVaga gerenciadorVaga =new GerenciadorVaga(conexao)
 
-                            List<Map> candidatosQueCurtiramVaga = gerenciadorBancoDados.capturarCandidatosInteressados(vaga.id as Integer, cnpj)
+                        vagasDaEmpresa.forEach { GroovyRowResult vaga ->
+                            ExibicaoInfos.exibirVagaParaEmpresas(vaga)
+
+                            List<GroovyRowResult> candidatosQueCurtiramVaga=gerenciadorVaga.capturarInteressadosNaVaga(vaga.id as Integer,cnpj,new GerenciadorCandidato(conexao))
+
 
                             if (!candidatosQueCurtiramVaga) {
                                 println("Nenhum candidato curtiu a vaga")
                             } else {
-                                ControladorTerminal.imprimirCandidatosInteressados(candidatosQueCurtiramVaga)
+
+                                ExibicaoInfos.imprimirCandidatosInteressados(candidatosQueCurtiramVaga)
+
                             }
 
                         }
 
-                        Map relacaoCandidatoEVagasCurtida = ControladorTerminal.capturarCandidatosEVagasQueCurtiram(cnpj, gerenciadorBancoDados)
+                        Map relacaoCandidatoEVagasCurtida = ExibicaoInfos.capturarCandidatosEVagasQueCurtiram(cnpj, conexao)
 
                         if (relacaoCandidatoEVagasCurtida) {
-                            ControladorTerminal.cederOpcaoCurtirCandidatoDevolta(scan, relacaoCandidatoEVagasCurtida, gerenciadorBancoDados, cnpj)
+                            RequisidorDeEntradas.cederOpcaoCurtirCandidatoDevolta(scan,relacaoCandidatoEVagasCurtida,conexao,cnpj)
                         }
                     }
 
@@ -67,7 +87,11 @@ class TerminalEmpresa {
 
 
                 case "3":
-                    List<GroovyRowResult> vagas = gerenciadorBancoDados.capturarVagasDaEmpresa(cnpj)
+
+                   GerenciadorEmpresa gerenciador= new GerenciadorEmpresa(conexao)
+
+
+                    List<GroovyRowResult> vagas = gerenciador.buscarVagas(cnpj)
 
                     if (!vagas) {
                         println("Não foram encontradas vagas registradas")
@@ -76,7 +100,7 @@ class TerminalEmpresa {
                         Map<String, Map> infosVagas = [:]
                         vagas.forEach { GroovyRowResult vaga ->
 
-                            ControladorTerminal.exibirVagaParaEmpresas(vaga)
+                            ExibicaoInfos.exibirVagaParaEmpresas(vaga)
 
                             infosVagas[(vaga.id as String)] = [
                                     vagaId   : vaga.id as Integer,
@@ -86,36 +110,39 @@ class TerminalEmpresa {
 
                         }
 
-                        List<String> vagasParaEditar = ControladorTerminal.escolherVagasParaEditar(scan, infosVagas)
+                        List<String> vagasParaEditar = RequisidorDeEntradas.escolherVagasParaEditar(scan,infosVagas)
                         ArrayList<String> opcoesResposta = ["S", "N"]
+
+                        GerenciadorVaga gerenciadorVaga = new GerenciadorVaga(conexao)
+
 
                         vagasParaEditar.forEach { identificador ->
 
                             println("--------------------------------------------")
                             println("Edicão da vaga de numero ${identificador}")
 
-                            opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "Deseja deletar a vaga? S/N", opcoesResposta)
+                            opcaoSelecionada = RequisidorDeEntradas.solicitarOpcao(scan, "Deseja deletar a vaga? S/N", opcoesResposta)
 
                             if (opcaoSelecionada == "S") {
-                                gerenciadorBancoDados.removerVaga(identificador as Integer)
+                               gerenciadorVaga.removerVaga(identificador as Integer)
                                 return
                             }
 
-                            opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "o Nome atual da vaga é ${infosVagas[identificador].nome} , deseja altera-lo? S/N", opcoesResposta)
+                            opcaoSelecionada = RequisidorDeEntradas.solicitarOpcao(scan, "o Nome atual da vaga é ${infosVagas[identificador].nome} , deseja altera-lo? S/N", opcoesResposta)
 
                             if (opcaoSelecionada == "S") {
                                 println("Digite o novo nome da vaga")
                                 String nome = scan.nextLine()
-                                gerenciadorBancoDados.trocarNomeDaVaga(identificador as Integer, nome)
+                                gerenciadorVaga.trocarNomeDaVaga(identificador as Integer,nome)
 
                             }
 
-                            opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "a descrição atual da vaga é ${infosVagas[identificador].descricao} , deseja altera-la? S/N", opcoesResposta)
+                            opcaoSelecionada = RequisidorDeEntradas.solicitarOpcao(scan, "a descrição atual da vaga é ${infosVagas[identificador].descricao} , deseja altera-la? S/N", opcoesResposta)
 
                             if (opcaoSelecionada == "S") {
                                 println("Digite a nova descricao da vaga")
                                 String desc = scan.nextLine()
-                                gerenciadorBancoDados.trocarDescricaoDaVaga(identificador as Integer, desc)
+                                gerenciadorVaga.trocarDescricaoDaVaga(identificador as Integer,desc)
 
                             }
 
@@ -130,29 +157,28 @@ class TerminalEmpresa {
 
 
                 case "4":
-                    List<GroovyRowResult> listagemMatchs = gerenciadorBancoDados.buscarMatches(cnpj)
-                    ControladorTerminal.exibirMatchsParaEmpresas(listagemMatchs)
+                    List<GroovyRowResult> listagemMatchs = new GerenciadorEmpresa(conexao).buscarMatchs(cnpj)
+                    ExibicaoInfos.exibirMatchsParaEmpresas(listagemMatchs)
                     break
 
                 case "5":
-                    TerminalFiltro.filtragem(cnpj, gerenciadorBancoDados, scan)
+                    TerminalFiltro.filtragem(cnpj, conexao, scan)
                     break
 
 
 
                 case "6":
-                    TerminalEdicaoEmpresa.edicaoEmpresa(cnpj, gerenciadorBancoDados)
+                    TerminalEdicaoEmpresa.edicaoEmpresa(cnpj, conexao,scan)
                     break
 
                 case "7":
-                   ControladorTerminal.solicitarRespostaRemocaoPerfil(cnpj,scan,gerenciadorBancoDados,)
+                   RequisidorDeEntradas.solicitarRespostaRemocaoPerfil(cnpj,scan,new GerenciadorEmpresa(conexao))
                     break
 
 
             }
 
-            opcaoSelecionada = ControladorTerminal.solicitarOpcao(scan, "digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair", opcoesMenuEmpresa)
-
+            opcaoSelecionada = RequisidorDeEntradas.solicitarOpcao(scan, "digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair", opcoesMenuEmpresa)
 
         }
     }

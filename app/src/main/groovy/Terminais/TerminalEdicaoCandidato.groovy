@@ -1,24 +1,29 @@
 package Terminais
 
-import Metodos.ControladorTerminal
-import Metodos.GerenciadorBancoDados
+import GerenciadoresDeBanco.GerenciadorCandidato
+import GerenciadoresDeBanco.GerenciadorUsuario
+import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.validadoresDeEntradas.ValidadorIdade
 import groovy.sql.GroovyRowResult
+import groovy.sql.Sql
 
 
 class TerminalEdicaoCandidato {
 
-    static edicaoCandidato(String cpf, GerenciadorBancoDados gerenciadorBancoDados) {
+    static edicaoCandidato(String cpf, Sql conexao,Scanner scan) {
 
-        GroovyRowResult infosUsuario = gerenciadorBancoDados.capturarInfos(cpf)
-        Integer idUsuario = gerenciadorBancoDados.capturarIdUsurio(cpf)
-        Scanner scan = new Scanner(System.in)
+        GerenciadorCandidato gerenciador = new GerenciadorCandidato(conexao)
 
-        TerminalEdicaoBase.edicao(idUsuario, infosUsuario, gerenciadorBancoDados, scan)
+        GroovyRowResult infosUsuario = gerenciador.capturarInformacoesPerfil(cpf)
+        Integer idUsuario = gerenciador.capturarId(cpf)
 
-        String escolha = ControladorTerminal.solicitarOpcao(scan, "A idade do seu perfil é ${infosUsuario.idade} , deseja altera-la? S/N", ["S", "N"])
+
+        TerminalEdicaoBase.edicao(idUsuario, infosUsuario, new GerenciadorUsuario(conexao), scan,conexao)
+
+        String escolha = RequisidorDeEntradas.solicitarOpcao(scan, "A idade do seu perfil é ${infosUsuario.idade} , deseja altera-la? S/N", ["S", "N"])
         if (escolha == "S") {
-            String idade = ControladorTerminal.solicitarIdadeValida(scan)
-            gerenciadorBancoDados.trocarIdadeDoCandidato(cpf, Integer.parseInt(idade))
+            String idade = RequisidorDeEntradas.solicitarDadoBasicoValido("idade",scan,new ValidadorIdade())
+            gerenciador.editarPerfil(cpf, idade as Integer)
 
         }
 
