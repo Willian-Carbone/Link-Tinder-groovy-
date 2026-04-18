@@ -1,4 +1,4 @@
-package Terminais
+package Terminais.Interacao
 
 import GerenciadoresDeBanco.GerenciadorCandidato
 import GerenciadoresDeBanco.GerenciadorUsuario
@@ -8,9 +8,11 @@ import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 
 
-class TerminalEdicaoCandidato {
+class TerminalEdicaoCandidato implements TerminalInterativo{
 
-    static edicaoCandidato(String cpf, Sql conexao,Scanner scan) {
+    @Override
+
+    void navegar(String cpf, Sql conexao,Scanner scan) {
 
         GerenciadorCandidato gerenciador = new GerenciadorCandidato(conexao)
 

@@ -1,10 +1,10 @@
-package Terminais
+package Terminais.Interacao
 
 import Enuns.Especialidades
 import Enuns.Estados
 import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaEmail
 import GerenciadoresDeBanco.GerenciadorUsuario
-import Modulos.ControladorTerminal
+
 import Modulos.ConversoresEntrada.ConversorParaNomeEnum
 import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
 import Modulos.LocalizadorDadoEmEnum.LocalizadorEstado
@@ -26,6 +26,7 @@ class TerminalEdicaoBase {
             String nome = RequisidorDeEntradas.solicitarDadoBasicoValido("nome",scan,new ValidadorNome())
             gerenciador.editarNomeUsuario(idUsuario,nome)
         }
+
 
 
         escolha = RequisidorDeEntradas.solicitarOpcao(scan, "Sua descrição de usuário  atual é ${infosUsuario.descricao} , deseja altera-lo? S/N", opcoes)

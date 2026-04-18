@@ -16,6 +16,9 @@ import groovy.sql.Sql
 
 class RequisidorDeEntradas {
 
+    Scanner scan
+
+
     static String solicitarOpcao(Scanner scan, String mensagem, List<String> opcoes) {
         println(mensagem)
         String entrada = scan.nextLine().toUpperCase()
@@ -45,7 +48,6 @@ class RequisidorDeEntradas {
         while(!validadorDado.validarDado(dado)){
             println("Informe um valor válido")
             dado=processarEntrada()
-
 
         }
 

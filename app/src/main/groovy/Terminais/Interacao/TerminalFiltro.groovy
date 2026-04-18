@@ -1,4 +1,4 @@
-package Terminais
+package Terminais.Interacao
 
 import Enuns.Especialidades
 import Enuns.Estados
@@ -15,9 +15,11 @@ import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 
 
-class TerminalFiltro {
+class TerminalFiltro implements  TerminalInterativo{
 
-    static filtragem(String identificador, Sql conexao, Scanner scan) {
+    @Override
+
+    void navegar(String identificador, Sql conexao, Scanner scan)  {
 
         GerenciadorUsuario gerenciador= new GerenciadorUsuario(conexao)
 

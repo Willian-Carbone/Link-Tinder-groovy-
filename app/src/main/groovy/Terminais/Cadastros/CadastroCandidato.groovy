@@ -1,4 +1,4 @@
-package Terminais
+package Terminais.Cadastros
 import Enuns.*
 
 import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaCpf
@@ -20,9 +20,12 @@ import Objetos.Candidato
 import Objetos.EspecialidadeUsuario
 import groovy.sql.Sql
 
-class CadastroCandidato {
+class CadastroCandidato implements TerminalCadastro {
 
-    static void terminalCandidatos (Sql conexao, Scanner scan){
+
+    @Override
+
+     void cadastrar (Sql conexao, Scanner scan){
 
         println "--- Cadastro de Candidato ---"
 

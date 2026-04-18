@@ -1,21 +1,34 @@
-package Terminais
+package Terminais.Interacao
 
 import Enuns.Especialidades
+
 import GerenciadoresDeBanco.GerenciadorCandidato
 import GerenciadoresDeBanco.GerenciadorEmpresa
 import GerenciadoresDeBanco.GerenciadorVaga
-import Modulos.GerenciadoresTerminal.ExibicaoInfos
+import Modulos.GerenciadoresTerminal.Impressores.ExibicaoCandidatosQueCurtiramVaga
+
+import Modulos.GerenciadoresTerminal.Impressores.ExibicaoMatchEmpresa
+import Modulos.GerenciadoresTerminal.Impressores.ExibicaoVagasEmpresa
+import Modulos.GerenciadoresTerminal.Impressores.Impressor
 import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
 import Objetos.Vaga
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 
 
-class TerminalEmpresa {
-    static void terminalPrincipal(String cnpj, Sql conexao, Scanner scan) {
+class TerminalEmpresa implements TerminalInterativo {
+
+    @Override
+    void navegar(String cnpj, Sql conexao, Scanner scan) {
 
         List<String> opcoesMenuEmpresa = ["1", "2", "3", "4", "5", "6", "7", "8"]
         String opcaoSelecionada = RequisidorDeEntradas.solicitarOpcao(scan, "digite 1 para registrar uma vaga, 2 para checar suas vagas , 3 editar vagas , 4 para visualizar matchs, 5 para visualizar candidatos, 6 para editar perfil ,7 para exclui-lo  ou 8 para sair", opcoesMenuEmpresa)
+
+        Impressor impressora
+
+       GerenciadorEmpresa gerenciadorEmpresa=new GerenciadorEmpresa(conexao)
+        GerenciadorVaga gerenciadorVaga = new GerenciadorVaga(conexao)
+
 
 
         while (opcaoSelecionada != "8") {
@@ -25,7 +38,7 @@ class TerminalEmpresa {
 
                 case "1":
 
-                    GerenciadorVaga gerenciadorVaga = new GerenciadorVaga(conexao)
+
 
                     println("Informe o nome da Vaga")
 
@@ -49,18 +62,20 @@ class TerminalEmpresa {
 
                 case "2":
 
-                    GerenciadorEmpresa gerenciador = new GerenciadorEmpresa(conexao)
+                    ExibicaoCandidatosQueCurtiramVaga impressorCandidatos = new ExibicaoCandidatosQueCurtiramVaga()
+                    ExibicaoVagasEmpresa impressorVaga = new ExibicaoVagasEmpresa()
 
-                    List<GroovyRowResult> vagasDaEmpresa = gerenciador.buscarVagas(cnpj)
+
+                    List<GroovyRowResult> vagasDaEmpresa = gerenciadorEmpresa.buscarVagas(cnpj)
 
                     if (!vagasDaEmpresa) {
                         println("Não foram encontradas vagas cadastradas")
                     } else {
 
-                        GerenciadorVaga gerenciadorVaga =new GerenciadorVaga(conexao)
 
                         vagasDaEmpresa.forEach { GroovyRowResult vaga ->
-                            ExibicaoInfos.exibirVagaParaEmpresas(vaga)
+                            impressora = impressorVaga
+                            impressora.exibirDado(vaga)
 
                             List<GroovyRowResult> candidatosQueCurtiramVaga=gerenciadorVaga.capturarInteressadosNaVaga(vaga.id as Integer,cnpj,new GerenciadorCandidato(conexao))
 
@@ -69,13 +84,15 @@ class TerminalEmpresa {
                                 println("Nenhum candidato curtiu a vaga")
                             } else {
 
-                                ExibicaoInfos.imprimirCandidatosInteressados(candidatosQueCurtiramVaga)
+                                impressora = impressorCandidatos
+                                impressora.exibirDado(candidatosQueCurtiramVaga)
+
 
                             }
 
                         }
 
-                        Map relacaoCandidatoEVagasCurtida = ExibicaoInfos.capturarCandidatosEVagasQueCurtiram(cnpj, conexao)
+                        Map relacaoCandidatoEVagasCurtida = gerenciadorEmpresa.capturarCandidatosEVagasQueCurtiram(cnpj,vagasDaEmpresa,conexao)
 
                         if (relacaoCandidatoEVagasCurtida) {
                             RequisidorDeEntradas.cederOpcaoCurtirCandidatoDevolta(scan,relacaoCandidatoEVagasCurtida,conexao,cnpj)
@@ -88,10 +105,11 @@ class TerminalEmpresa {
 
                 case "3":
 
-                   GerenciadorEmpresa gerenciador= new GerenciadorEmpresa(conexao)
+                    impressora = new ExibicaoVagasEmpresa()
 
 
-                    List<GroovyRowResult> vagas = gerenciador.buscarVagas(cnpj)
+
+                    List<GroovyRowResult> vagas = gerenciadorEmpresa.buscarVagas(cnpj)
 
                     if (!vagas) {
                         println("Não foram encontradas vagas registradas")
@@ -100,7 +118,7 @@ class TerminalEmpresa {
                         Map<String, Map> infosVagas = [:]
                         vagas.forEach { GroovyRowResult vaga ->
 
-                            ExibicaoInfos.exibirVagaParaEmpresas(vaga)
+                            impressora.exibirDado(vaga)
 
                             infosVagas[(vaga.id as String)] = [
                                     vagaId   : vaga.id as Integer,
@@ -113,7 +131,6 @@ class TerminalEmpresa {
                         List<String> vagasParaEditar = RequisidorDeEntradas.escolherVagasParaEditar(scan,infosVagas)
                         ArrayList<String> opcoesResposta = ["S", "N"]
 
-                        GerenciadorVaga gerenciadorVaga = new GerenciadorVaga(conexao)
 
 
                         vagasParaEditar.forEach { identificador ->
@@ -157,18 +174,22 @@ class TerminalEmpresa {
 
 
                 case "4":
-                    List<GroovyRowResult> listagemMatchs = new GerenciadorEmpresa(conexao).buscarMatchs(cnpj)
-                    ExibicaoInfos.exibirMatchsParaEmpresas(listagemMatchs)
+                    impressora = new ExibicaoMatchEmpresa()
+                    List<GroovyRowResult> listagemMatchs = gerenciadorEmpresa.buscarMatchs(cnpj)
+                    impressora.exibirDado(listagemMatchs)
                     break
 
                 case "5":
-                    TerminalFiltro.filtragem(cnpj, conexao, scan)
+                    TerminalInterativo terminal = new TerminalFiltro()
+                   terminal.navegar(cnpj, conexao, scan)
                     break
 
 
 
                 case "6":
-                    TerminalEdicaoEmpresa.edicaoEmpresa(cnpj, conexao,scan)
+
+                    TerminalInterativo terminal = new TerminalEdicaoEmpresa()
+                    terminal.navegar(cnpj, conexao, scan)
                     break
 
                 case "7":

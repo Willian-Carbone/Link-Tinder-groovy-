@@ -67,4 +67,23 @@ class GerenciadorVaga extends GerenciadorBancoTemplate{
         return listaCompleta
     }
 
+
+
+     ArrayList<Integer> capturarIdentificadoresDasVagas(List<GroovyRowResult> vagas) {
+
+        ArrayList<Integer> identificadoresVagas = new ArrayList<>()
+
+        for (vaga in vagas) {
+            identificadoresVagas.add(vaga.id_vaga as Integer)
+        }
+
+        return identificadoresVagas
+    }
+
+
+
+
+
+
+
 }

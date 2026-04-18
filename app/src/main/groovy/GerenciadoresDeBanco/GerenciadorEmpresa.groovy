@@ -160,4 +160,32 @@ class GerenciadorEmpresa extends GerenciadorBancoTemplate implements CrudPerfilP
     }
 
 
+
+    Map<String, Map> capturarCandidatosEVagasQueCurtiram(String cnpj,  List<GroovyRowResult> vagas ,Sql conexao){
+
+
+        Map<String, Map> relacaoCandidatoVagaCurtida = [:]
+
+        vagas.each {GroovyRowResult vaga->
+
+            List<GroovyRowResult> candidatosCurtiramVaga = new  GerenciadorVaga(conexao).capturarInteressadosNaVaga(vaga.id as Integer,cnpj,new GerenciadorCandidato(conexao))
+
+
+            candidatosCurtiramVaga.forEach {
+                candidato->
+
+                    relacaoCandidatoVagaCurtida[(candidato.id as String)] = [
+                            cpf: candidato.cpf,
+                            vagaId: vaga.id as Integer
+                    ]
+            }
+
+        }
+
+        return relacaoCandidatoVagaCurtida
+
+
+    }
+
+
 }

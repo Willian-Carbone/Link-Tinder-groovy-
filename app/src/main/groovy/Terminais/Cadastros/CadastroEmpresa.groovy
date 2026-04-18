@@ -1,9 +1,8 @@
-package Terminais
+package Terminais.Cadastros
 
 import Enuns.*
 import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaCnpj
 import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaEmail
-import GerenciadoresDeBanco.GerenciadorCandidato
 import GerenciadoresDeBanco.GerenciadorEmpresa
 import GerenciadoresDeBanco.GerenciadorUsuario
 import Modulos.ConversoresEntrada.ConversorParaNomeEnum
@@ -19,9 +18,10 @@ import Objetos.Empresa
 import Objetos.EspecialidadeUsuario
 import groovy.sql.Sql
 
-class CadastroEmpresa {
+class CadastroEmpresa implements TerminalCadastro {
 
-    static void terminalEmpresa (Sql conexao,Scanner scan){
+    @Override
+     void cadastrar(Sql conexao, Scanner scan){
 
 
 

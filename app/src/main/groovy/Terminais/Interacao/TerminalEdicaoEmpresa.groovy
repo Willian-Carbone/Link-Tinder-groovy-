@@ -1,4 +1,4 @@
-package Terminais
+package Terminais.Interacao
 
 
 import GerenciadoresDeBanco.GerenciadorEmpresa
@@ -7,9 +7,11 @@ import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 
-class TerminalEdicaoEmpresa {
+class TerminalEdicaoEmpresa implements TerminalInterativo {
 
-    static edicaoEmpresa(String cnpj, Sql conexao, Scanner scan) {
+    @Override
+
+    void navegar(String cnpj, Sql conexao, Scanner scan) {
 
         GerenciadorEmpresa gerenciador=new GerenciadorEmpresa(conexao)
 

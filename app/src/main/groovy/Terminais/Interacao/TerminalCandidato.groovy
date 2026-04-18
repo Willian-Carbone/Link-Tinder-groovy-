@@ -1,19 +1,27 @@
-package Terminais
+package Terminais.Interacao
 
 import GerenciadoresDeBanco.GerenciadorCandidato
-import Modulos.GerenciadoresTerminal.ExibicaoInfos
+import GerenciadoresDeBanco.GerenciadorVaga
+
+import Modulos.GerenciadoresTerminal.Impressores.ExibicaoMatchCandidato
+import Modulos.GerenciadoresTerminal.Impressores.ExibicaoVagasCandidato
+import Modulos.GerenciadoresTerminal.Impressores.Impressor
 import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 
 
-class TerminalCandidato {
+class TerminalCandidato implements TerminalInterativo {
 
-    static void terminalPrincipal(String cpf, Sql conexao, Scanner scan) {
+    @Override
+
+    void navegar(String cpf, Sql conexao, Scanner scan) {
 
         List<String> opcoesMenuCandidato = ["1", "2", "3", "4", "5", "6"]
 
         String opcaoSelecionada = RequisidorDeEntradas.solicitarOpcao(scan, "Escolha 1 para ver vagas ou 2 para ver seus matchs,3 para editar seu perfil , 4 para exclui-lo, 5 para ver empresas ou 6 para sair", opcoesMenuCandidato)
+
+        Impressor impressora
 
         GerenciadorCandidato gerenciadorCandidato = new GerenciadorCandidato(conexao)
 
@@ -21,9 +29,13 @@ class TerminalCandidato {
 
             switch (opcaoSelecionada) {
                 case "1":
+
                     List<GroovyRowResult> listaVagas = gerenciadorCandidato.buscarVagas(cpf)
 
-                    ArrayList<Integer> identificadoresDasVagas = ExibicaoInfos.exibirVagasParaCandidatos(listaVagas)
+                    impressora= new ExibicaoVagasCandidato()
+
+                    ArrayList<Integer> identificadoresDasVagas = new GerenciadorVaga(conexao).capturarIdentificadoresDasVagas(listaVagas)
+                    impressora.exibirDado(listaVagas)
 
                     if (identificadoresDasVagas) {
                         RequisidorDeEntradas.darOpcaoDeCurtirVagas(scan, identificadoresDasVagas, gerenciadorCandidato, cpf)
@@ -34,14 +46,19 @@ class TerminalCandidato {
 
 
                 case "2":
+
+                    impressora = new ExibicaoMatchCandidato()
+
+
                     List<GroovyRowResult> listagemMatchs = gerenciadorCandidato.buscarMatchs(cpf)
-                    ExibicaoInfos.exibirMatchsParaCandidato(listagemMatchs)
+                    impressora.exibirDado(listagemMatchs)
 
                     break
 
                 case "3":
 
-                    TerminalEdicaoCandidato.edicaoCandidato(cpf,conexao,scan)
+                    TerminalInterativo terminal = new TerminalEdicaoCandidato()
+                    terminal.navegar(cpf,conexao,scan)
 
                     break
 
@@ -53,7 +70,8 @@ class TerminalCandidato {
 
                 case "5":
 
-                    TerminalFiltro.filtragem(cpf,conexao,scan)
+                    TerminalInterativo terminal = new TerminalFiltro()
+                    terminal.navegar(cpf,conexao,scan)
 
                     break
             }

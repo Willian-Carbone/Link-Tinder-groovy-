@@ -8,9 +8,8 @@ class LocalizadorEstado implements LocalizadorDadoEnumI<Estados> {
 
         if(!estadoBuscado){return null}
 
-        String normalizado = Normalizer.normalize(estadoBuscado,Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+","").replaceAll(" ","").toUpperCase()
 
-        return Estados.find { Estados it-> it.name()==normalizado} as Estados
+        return Estados.find { Estados it-> it.name()==estadoBuscado} as Estados
 
 
 
