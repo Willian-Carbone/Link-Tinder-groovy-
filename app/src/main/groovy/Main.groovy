@@ -2,9 +2,11 @@ import GerenciadoresDeBanco.BuscadoresDeInformacao.CheckerDadoRegistradoI
 import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaCnpj
 import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaCpf
 import GerenciadoresDeBanco.Conectores.ConectorBancoPostgreBase
+import GerenciadoresDeBanco.Conectores.FactoryConexao.FabricaConexao
+import GerenciadoresDeBanco.Conectores.FactoryConexao.FabricaConexaoBancoBase
 import Modulos.ConversoresEntrada.RemovedorNaoDigitos
 
-import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.GerenciadoresTerminal.Requisitores.RequisidorDeEntradas
 import Terminais.Cadastros.CadastroCandidato
 import Terminais.Cadastros.CadastroEmpresa
 import Terminais.Cadastros.TerminalCadastro
@@ -14,7 +16,9 @@ import Terminais.Interacao.TerminalInterativo
 import groovy.sql.Sql
 
 
-Sql conexao = ConectorBancoPostgreBase.getConexao()
+FabricaConexao fabricaConexao = new FabricaConexaoBancoBase()
+
+Sql conexao = fabricaConexao.criarConexao()
 
 ArrayList<String> opcoesDeEscolha = ["1", "2"]
 

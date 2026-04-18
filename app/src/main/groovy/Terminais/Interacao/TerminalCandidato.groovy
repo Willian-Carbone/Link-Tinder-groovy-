@@ -6,7 +6,7 @@ import GerenciadoresDeBanco.GerenciadorVaga
 import Modulos.GerenciadoresTerminal.Impressores.ExibicaoMatchCandidato
 import Modulos.GerenciadoresTerminal.Impressores.ExibicaoVagasCandidato
 import Modulos.GerenciadoresTerminal.Impressores.Impressor
-import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.GerenciadoresTerminal.Requisitores.RequisidorDeEntradas
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 

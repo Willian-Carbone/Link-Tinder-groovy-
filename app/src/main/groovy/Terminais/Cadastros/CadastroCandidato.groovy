@@ -7,7 +7,7 @@ import GerenciadoresDeBanco.GerenciadorCandidato
 import GerenciadoresDeBanco.GerenciadorUsuario
 import Modulos.ConversoresEntrada.ConversorParaNomeEnum
 import Modulos.ConversoresEntrada.RemovedorNaoDigitos
-import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.GerenciadoresTerminal.Requisitores.RequisidorDeEntradas
 import Modulos.LocalizadorDadoEmEnum.LocalizadorEstado
 import Modulos.validadoresDeEntradas.ValidadorCep
 

@@ -3,7 +3,7 @@ package Terminais.Interacao
 
 import GerenciadoresDeBanco.GerenciadorEmpresa
 import GerenciadoresDeBanco.GerenciadorUsuario
-import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.GerenciadoresTerminal.Requisitores.RequisidorDeEntradas
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 

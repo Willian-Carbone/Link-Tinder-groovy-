@@ -1,4 +1,4 @@
-package Modulos.GerenciadoresTerminal
+package Modulos.GerenciadoresTerminal.Requisitores
 
 import Enuns.Especialidades
 import GerenciadoresDeBanco.BuscadoresDeInformacao.CheckerDadoRegistradoI
@@ -16,8 +16,6 @@ import groovy.sql.Sql
 
 class RequisidorDeEntradas {
 
-    Scanner scan
-
 
     static String solicitarOpcao(Scanner scan, String mensagem, List<String> opcoes) {
         println(mensagem)
@@ -31,6 +29,7 @@ class RequisidorDeEntradas {
 
         return entrada.toUpperCase()
     }
+
 
     static String solicitarDadoBasicoValido(String nomeDoDado, Scanner scan,ValidadadorI validadorDado, ConversorDadoI conversor=null){
         println("Insira o dado ${nomeDoDado}")

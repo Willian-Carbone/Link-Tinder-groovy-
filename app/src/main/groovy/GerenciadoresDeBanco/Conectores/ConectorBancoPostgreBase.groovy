@@ -2,11 +2,15 @@ package GerenciadoresDeBanco.Conectores
 
 import groovy.sql.Sql
 
-class ConectorBancoPostgreBase  {
 
-    private static Sql conexao
+class ConectorBancoPostgreBase {
+
+    static Sql conexao
+
 
     private ConectorBancoPostgreBase() {
+
+
 
         try {
 
@@ -19,6 +23,8 @@ class ConectorBancoPostgreBase  {
 
 
 
+
+
         }
 
         catch (Exception e) {
@@ -26,7 +32,9 @@ class ConectorBancoPostgreBase  {
         }
     }
 
-    static getConexao(){
+
+
+    static Sql getConexao(){
         if(conexao==null){
             return new ConectorBancoPostgreBase().conexao
         }

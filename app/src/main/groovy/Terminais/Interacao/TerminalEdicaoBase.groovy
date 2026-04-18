@@ -6,7 +6,7 @@ import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaEmail
 import GerenciadoresDeBanco.GerenciadorUsuario
 
 import Modulos.ConversoresEntrada.ConversorParaNomeEnum
-import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.GerenciadoresTerminal.Requisitores.RequisidorDeEntradas
 import Modulos.LocalizadorDadoEmEnum.LocalizadorEstado
 import Modulos.validadoresDeEntradas.ValidadorCep
 import Modulos.validadoresDeEntradas.ValidadorEmail

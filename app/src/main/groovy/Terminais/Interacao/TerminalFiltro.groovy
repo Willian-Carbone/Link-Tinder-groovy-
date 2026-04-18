@@ -6,7 +6,7 @@ import Enuns.Estados
 import GerenciadoresDeBanco.GerenciadorUsuario
 
 import Modulos.ConversoresEntrada.ConversorParaNomeEnum
-import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.GerenciadoresTerminal.Requisitores.RequisidorDeEntradas
 import Modulos.LocalizadorDadoEmEnum.LocalizadorEstado
 import Modulos.validadoresDeEntradas.ValidadorCnpj
 import Modulos.validadoresDeEntradas.ValidadorCpf

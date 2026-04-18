@@ -10,7 +10,7 @@ import Modulos.GerenciadoresTerminal.Impressores.ExibicaoCandidatosQueCurtiramVa
 import Modulos.GerenciadoresTerminal.Impressores.ExibicaoMatchEmpresa
 import Modulos.GerenciadoresTerminal.Impressores.ExibicaoVagasEmpresa
 import Modulos.GerenciadoresTerminal.Impressores.Impressor
-import Modulos.GerenciadoresTerminal.RequisidorDeEntradas
+import Modulos.GerenciadoresTerminal.Requisitores.RequisidorDeEntradas
 import Objetos.Vaga
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
