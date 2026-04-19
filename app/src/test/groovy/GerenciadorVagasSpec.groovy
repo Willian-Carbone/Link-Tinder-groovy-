@@ -1,9 +1,8 @@
-import Enuns.Especialidades
-import GerenciadoresDeBanco.CrudPerfilPrincipal
-import GerenciadoresDeBanco.GerenciadorCandidato
-import GerenciadoresDeBanco.GerenciadorVaga
-
-import Objetos.Vaga
+import Daos.CrudPerfilPrincipal
+import Daos.GerenciadorCandidato
+import Daos.GerenciadorVaga
+import Model.Objetos.Vaga
+import Model.Enuns.*
 import groovy.sql.GroovyRowResult
 import spock.lang.Shared
 

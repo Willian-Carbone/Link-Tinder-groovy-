@@ -1,10 +1,10 @@
-import Modulos.validadoresDeEntradas.ValidadadorI
-import Modulos.validadoresDeEntradas.ValidadorCep
-import Modulos.validadoresDeEntradas.ValidadorCnpj
-import Modulos.validadoresDeEntradas.ValidadorCpf
-import Modulos.validadoresDeEntradas.ValidadorEmail
-import Modulos.validadoresDeEntradas.ValidadorIdade
-import Modulos.validadoresDeEntradas.ValidadorNome
+import Model.validadoresDeEntradas.ValidadadorI
+import Model.validadoresDeEntradas.ValidadorCep
+import Model.validadoresDeEntradas.ValidadorCnpj
+import Model.validadoresDeEntradas.ValidadorCpf
+import Model.validadoresDeEntradas.ValidadorEmail
+import Model.validadoresDeEntradas.ValidadorIdade
+import Model.validadoresDeEntradas.ValidadorNome
 import spock.lang.Specification
 
 class ValidadoresEntradaSpec extends Specification{

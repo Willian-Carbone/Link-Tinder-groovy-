@@ -1,8 +1,5 @@
-
-
-import Modulos.ConversoresEntrada.ConversorDadoI
-import Modulos.ConversoresEntrada.RemovedorNaoDigitos
-
+import Utilits.ConversorDados.ConversorDadoI
+import Utilits.ConversorDados.RemovedorNaoDigitos
 import spock.lang.Specification
 
 class RemovedorNaoDigitosSpec extends Specification{

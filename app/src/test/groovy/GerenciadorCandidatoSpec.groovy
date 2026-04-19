@@ -1,8 +1,7 @@
-import Enuns.Especialidades
-import Enuns.Estados
-import GerenciadoresDeBanco.GerenciadorCandidato
-import Objetos.Candidato
-import Objetos.Curtida
+import Daos.GerenciadorCandidato
+import Model.Objetos.Candidato
+import Model.Enuns.*
+import Model.Objetos.Curtida
 import groovy.sql.GroovyRowResult
 import spock.lang.Shared
 

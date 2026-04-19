@@ -1,11 +1,8 @@
-import Enuns.Especialidades
-import Enuns.Estados
-
-import GerenciadoresDeBanco.GerenciadorEmpresa
-
-import Objetos.Empresa
-import Objetos.Match
+import Daos.GerenciadorEmpresa
+import Model.Objetos.Empresa
+import Model.Objetos.Match
 import groovy.sql.GroovyRowResult
+import Model.Enuns.*
 import spock.lang.Shared
 
 class GerenciadorEmpresaSpec extends FakeBancoConfigure {

@@ -1,6 +1,6 @@
-import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaCnpj
-import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaCpf
-import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaEmail
+import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaCnpj
+import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaCpf
+import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaEmail
 
 class CheckDadoRegistrado extends FakeBancoConfigure{
 

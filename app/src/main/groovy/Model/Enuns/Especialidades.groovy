@@ -1,0 +1,24 @@
+package Model.Enuns
+
+enum Especialidades {
+
+    PT ("phyton"),
+    JAV ("java"),
+    ANG ("Angular"),
+    SPR ("Spring"),
+    HT ("Html"),
+    CS ("Css"),
+    C("C++")
+
+    String valor
+
+    Especialidades (String valor){
+
+        this.valor = valor
+
+    }
+
+
+
+
+}

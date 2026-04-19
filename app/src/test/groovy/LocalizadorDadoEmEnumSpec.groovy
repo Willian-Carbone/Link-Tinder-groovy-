@@ -1,7 +1,7 @@
+import Model.Enuns.Estados
+import Utilits.LocalizadorDadoEmEnum.LocalizadorDadoEmEnumI
+import Utilits.LocalizadorDadoEmEnum.LocalizadorEstadoEmEnum
 
-
-import Enuns.Estados
-import Modulos.LocalizadorDadoEmEnum.*
 import spock.lang.Specification
 
 
@@ -9,7 +9,7 @@ class LocalizadorDadoEmEnumSpec extends Specification{
     def "localizar e retornar estado valido"(){
         given:
 
-        LocalizadorDadoEnumI localizadorEstado = new LocalizadorEstado()
+        LocalizadorDadoEmEnumI localizadorEstado = new LocalizadorEstadoEmEnum()
         expect:
 
         localizadorEstado.capturarDadoEnum(ExemploDePossivelEstado) == ValorEsperado
@@ -23,9 +23,6 @@ class LocalizadorDadoEmEnumSpec extends Specification{
         "" | null
         null| null
     }
-
-
-
 
 
 }

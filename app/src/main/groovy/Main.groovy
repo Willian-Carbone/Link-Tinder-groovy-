@@ -1,18 +1,16 @@
-import GerenciadoresDeBanco.BuscadoresDeInformacao.CheckerDadoRegistradoI
-import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaCnpj
-import GerenciadoresDeBanco.BuscadoresDeInformacao.ConfirmadorExistenciaCpf
-import GerenciadoresDeBanco.Conectores.ConectorBancoPostgreBase
-import GerenciadoresDeBanco.Conectores.FactoryConexao.FabricaConexao
-import GerenciadoresDeBanco.Conectores.FactoryConexao.FabricaConexaoBancoBase
-import Modulos.ConversoresEntrada.RemovedorNaoDigitos
-
-import Modulos.GerenciadoresTerminal.Requisitores.RequisidorDeEntradas
-import Terminais.Cadastros.CadastroCandidato
-import Terminais.Cadastros.CadastroEmpresa
-import Terminais.Cadastros.TerminalCadastro
-import Terminais.Interacao.TerminalCandidato
-import Terminais.Interacao.TerminalEmpresa
-import Terminais.Interacao.TerminalInterativo
+import Controller.Cadastros.CadastroCandidato
+import Controller.Cadastros.CadastroEmpresa
+import Controller.Cadastros.TerminalCadastro
+import Controller.Interacao.TerminalCandidato
+import Controller.Interacao.TerminalEmpresa
+import Controller.Interacao.TerminalInterativo
+import Daos.BuscadoresDeInformacao.CheckerDadoRegistradoI
+import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaCnpj
+import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaCpf
+import Daos.Conectores.FactoryConexao.FabricaConexao
+import Daos.Conectores.FactoryConexao.FabricaConexaoBancoBase
+import Utilits.ConversorDados.RemovedorNaoDigitos
+import View.Requisitores.RequisidorDeEntradas
 import groovy.sql.Sql
 
 
