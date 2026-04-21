@@ -3,10 +3,10 @@ package Controller.Cadastros
 import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaCpf
 import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaEmail
 import Daos.*
+import Daos.Facade.FacadeRegistroGeral
 import Model.Enuns.Especialidades
 import Model.Enuns.Estados
 import Model.Objetos.Candidato
-import Model.Objetos.EspecialidadeUsuario
 import Model.validadoresDeEntradas.*
 import Utilits.ConversorDados.ConversorParaNomeEnum
 import View.Requisitores.RequisidorDeEntradas
@@ -24,7 +24,6 @@ class CadastroCandidato implements TerminalCadastro {
 
         println "--- Cadastro de Candidato ---"
 
-        GerenciadorUsuario gerenciadorUsuario = new GerenciadorUsuario(conexao)
 
          String nome =  RequisidorDeEntradas.solicitarDadoBasicoValido("nome",scan,new ValidadorNome())
          String cpf = RequisidorDeEntradas.solicitarCredencialValida(scan ,new ValidadorCpf(),new ConfirmadorExistenciaCpf(conexao),"CPF", new RemovedorNaoDigitos())
@@ -41,16 +40,8 @@ class CadastroCandidato implements TerminalCadastro {
 
         Candidato candidato = new Candidato (nome,cpf,Integer.parseInt(idade),email,cep,estado,desc,competencias)
 
+        new FacadeRegistroGeral().realizarRequisicao(conexao,candidato)
 
-        Integer idGerado = gerenciadorUsuario.criarPerfilUsuario(candidato)
-
-        candidato.identificador=idGerado
-
-        candidato.competencias.forEach {Especialidades especialidade->
-            EspecialidadeUsuario especialidadeUsuario = new EspecialidadeUsuario(idGerado,especialidade)
-            gerenciadorUsuario.gravarEspecialidadeUsusario(especialidadeUsuario)
-
-        }
         new GerenciadorCandidato(conexao).criarPerfil(candidato)
 
         println("Candidato cadastrado com sucesso")

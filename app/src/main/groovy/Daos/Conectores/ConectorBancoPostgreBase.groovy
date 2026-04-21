@@ -14,9 +14,9 @@ class ConectorBancoPostgreBase {
 
         try {
 
-            String url = 'jdbc:postgresql://localhost:5432/linkEtinder'
-            String usuario = 'postgres'
-            String senha = '5550178wcb'
+            String url = 'jdbc:postgresql://localhost:5432/LinkEtinder'
+            String usuario = 'willian'
+            String senha = '5550178'
             String driver = 'org.postgresql.Driver'
 
             conexao = Sql.newInstance(url, usuario, senha, driver)

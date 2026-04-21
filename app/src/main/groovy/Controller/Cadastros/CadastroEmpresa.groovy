@@ -2,12 +2,13 @@ package Controller.Cadastros
 
 import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaCnpj
 import Daos.BuscadoresDeInformacao.ConfirmadorExistenciaEmail
+import Daos.Facade.FacadeRegistroGeral
 import Daos.GerenciadorEmpresa
-import Daos.GerenciadorUsuario
+
 import Model.Enuns.Especialidades
 import Model.Enuns.Estados
 import Model.Objetos.Empresa
-import Model.Objetos.EspecialidadeUsuario
+
 import Model.validadoresDeEntradas.ValidadorCep
 import Model.validadoresDeEntradas.ValidadorCnpj
 import Model.validadoresDeEntradas.ValidadorEmail
@@ -29,7 +30,7 @@ class CadastroEmpresa implements TerminalCadastro {
 
         println "--- Cadastro de Empresa ---"
 
-        GerenciadorUsuario gerenciadorUsuario = new GerenciadorUsuario(conexao)
+
 
         String nome = RequisidorDeEntradas.solicitarDadoBasicoValido("nome",scan,new ValidadorNome())
 
@@ -51,18 +52,9 @@ class CadastroEmpresa implements TerminalCadastro {
 
         Empresa empresa= new Empresa (nome,cnpj,pais,cep,email,estado,desc,competencias)
 
-        Integer idGerado = gerenciadorUsuario.criarPerfilUsuario(empresa)
-
-        empresa.identificador=idGerado
+        new FacadeRegistroGeral().realizarRequisicao(conexao,empresa)
 
         new GerenciadorEmpresa(conexao).criarPerfil(empresa)
-
-
-        empresa.competencias.forEach {Especialidades especialidade->
-            EspecialidadeUsuario especialidadeUsuario = new EspecialidadeUsuario(idGerado,especialidade)
-            gerenciadorUsuario.gravarEspecialidadeUsusario(especialidadeUsuario)
-
-        }
 
         println("Empresa cadastrada com sucesso")
 
